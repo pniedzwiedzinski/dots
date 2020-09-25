@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
-
+let
+  pnvim = import ./programs/nvim.nix pkgs;
+in
 {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -15,6 +17,7 @@
 
   home.packages = with pkgs; [
     gnupg
+    pnvim
     nur.repos.pn.larbs-mail
   ];
 
