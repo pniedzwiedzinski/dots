@@ -4,7 +4,8 @@ let
   isDarwin = builtins.currentSystem == "x86_64-darwin";
   platformAliases =
     if isDarwin then ../../platforms/darwin/aliases.nix
-    else ../../platforms/linux/aliases.nix
+    else ../../platforms/linux/aliases.nix;
+in
 {
   programs.zsh = {
     enable = true;
@@ -20,9 +21,7 @@ let
     shellAliases = import ../aliases.nix // import platformAliases;
     defaultKeymap = "viins";
     initExtraBeforeCompInit = builtins.readFile ./precomp.zshrc;
-    initExtra = ''
-      _comp_options+=(globdots)
-    '';
+    initExtra = builtins.readFile ./postcomp.zshrc;
 
     sessionVariables = rec {
       PROMPT="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b ";
