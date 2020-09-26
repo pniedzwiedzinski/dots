@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 let
   pnvim = import ./programs/nvim.nix pkgs;
+  isDarwin = builtins.currentSystem == "x86_64-darwin";
+  platformSetup =
+    if isDarwin then ./platforms/darwin else ./platforms/linux;
 in
 {
   # Let Home Manager install and manage itself.
@@ -9,16 +12,30 @@ in
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "pn";
-  home.homeDirectory = "/Users/pn";
+  home.homeDirectory =
+    if isDarwin then "/Users/pn" else "/home/pn";
 
   imports = [
+    # Platform specific config
+    platformSetup
+    ./programs/zsh
     ./programs/git.nix
   ];
 
   home.packages = with pkgs; [
+    # Basic
     gnupg
     pnvim
     nur.repos.pn.larbs-mail
+
+    # Misc
+    spotifyd
+    spotify-tui
+    # gimp
+    slack-dark
+    pandoc
+    texlive.combined.scheme-basic
+    zathura
   ];
 
   # This value determines the Home Manager release that your
