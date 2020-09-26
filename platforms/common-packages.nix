@@ -1,0 +1,11 @@
+[
+  curl
+  wget
+  vim
+  htop
+  zip
+  unzip
+  ripgrep
+  jq
+  file
+];
