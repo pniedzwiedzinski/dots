@@ -1,6 +1,7 @@
 { config, pkgs, ... }:
 let
   pnvim = import ./programs/nvim.nix pkgs;
+  common_packages = import ./platforms/common-packages.nix pkgs;
   isDarwin = builtins.currentSystem == "x86_64-darwin";
   platformSetup =
     if isDarwin then ./platforms/darwin else ./platforms/linux;
@@ -37,7 +38,8 @@ in
     pandoc
     texlive.combined.scheme-basic
     zathura
-  ];
+  ]
+  ++ common_packages;
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

@@ -12,6 +12,15 @@ in
   ]
   ++ common_packages;
 
+  system.defaults.dock = {
+    orientation = "left";
+    autohide = true;
+    autohide-time-modifier = "1.0";
+    mineffect = "scale";
+    minimize-to-application = true;
+    static-only = true;
+  };
+
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
   environment.darwinConfig = "$HOME/.config/nixpkgs/platforms/darwin/configuration.nix";
