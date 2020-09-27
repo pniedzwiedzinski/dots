@@ -29,6 +29,7 @@ in
     nur.repos.pn.larbs-mail
 
     # Misc
+    browserpass
     spotifyd
     spotify-tui
     # gimp

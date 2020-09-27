@@ -1,4 +1,7 @@
+pkgs:
+with pkgs;
 [
+  stdenv
   curl
   wget
   vim
@@ -8,4 +11,4 @@
   ripgrep
   jq
   file
-];
+]

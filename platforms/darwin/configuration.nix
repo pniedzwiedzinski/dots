@@ -1,13 +1,16 @@
 { config, pkgs, ... }:
 
 let
-  common-packages = import ../common-packages.nix;
+  common_packages = import ../common-packages.nix pkgs;
+in
 {
   # List packages installed in system profile. To search by name, run:
   # $ nix-env -qaP | grep wget
   environment.systemPackages = with pkgs; [
     # Packages
-  ] ++ common-packages;
+    hello
+  ]
+  ++ common_packages;
 
   # Use a custom configuration.nix location.
   # $ darwin-rebuild switch -I darwin-config=$HOME/.config/nixpkgs/darwin/configuration.nix
