@@ -1,13 +1,30 @@
-pkgs:
+{ pkgs, ... }:
+let
+  pndwmblocks = pkgs.nur.repos.pn.dwmblocks.override {
+    patches = [
+      ./dwmblocks.diff
+    ];
+  };
+  pndwm = pkgs.nur.repos.pn.dwm.override {
+    patches = [
+      ./dwm-systray.diff
+      ./dwm-center.diff
+      ./dwm-apps.diff
+      ./dwm-autostart.diff
+      # ./dwm-rounded.diff - Resize dont work
+    ];
+  };
+in
 {
   home.packages = with pkgs; [
-    nur.repos.pn.pndwm
     mpd
     xcompmgr
     picom
     dunst
     unclutter
     nur.repos.pn.dockd
+    pndwmblocks
+    pndwm
   ];
 
   xsession = {
@@ -28,10 +45,10 @@ pkgs:
       unclutter &		# Remove mouse when idle
       #sxhkd &
       dockd --daemon &
-      screen-orient &
       for app in `ls ~/.config/autostart/*.desktop`; do
         $(grep '^Exec' $app | sed 's/^Exec=//') &
       done
+      sleep .5 && screen-orient &
     '';
     scriptPath = ".xinitrc";
   };

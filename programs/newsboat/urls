@@ -1,0 +1,36 @@
+## ZHR
+zhr "~## ZHR ##"
+https://azymut.zhr.pl/feed/ "~Azymut ZHR" "zhr"
+https://bridge.suumitsu.eu/?action=display&bridge=Facebook&context=User&u=7pdhbinduga&media_type=all&limit=-1&format=Atom "~7PDH Binduga (FB)" "zhr"
+https://bridge.suumitsu.eu/?action=display&bridge=Facebook&context=User&u=watra7pdh&media_type=all&limit=-1&format=Atom "~7PDH Watra (FB)" "zhr"
+https://bridge.suumitsu.eu/?action=display&bridge=Facebook&context=User&u=19pdhpuszcza&media_type=all&limit=-1&format=Atom "~19PDH Puszcza (FB)" "zhr"
+https://puszcza.netlify.app/rss.xml "~19PDH Puszcza (www)"
+
+## Personal
+personal "~## PERSONAL ##"
+#https://bridge.suumitsu.eu/?action=display&bridge=Facebook&context=Group&g=EarthshipPolska&limit=-1&format=Atom "~Earthship Polska (FB)" "personal"
+https://www.poznan.pl/mim/feeds/rss.xml "~Poznań"
+
+## Tech
+tech "~## TECH ##"
+https://github.com/pniedzwiedzinski.private.atom?token=AESSVFF6BRN4OM6S2436XX5475TTA "~GitHub" "tech"
+https://weekly.nixos.org/feeds/all.rss.xml "~NixOS Weekly" "tech"
+https://christine.website/blog.rss "~Christine Dodrill"
+
+## Youtube
+yt "~## YOUTUBE ##"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCq2rNse2XX4Rjzmldv9GqrQ "~rctestflight (YouTube)" "yt"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCnTE-dcLgMecF9s-bG-4maw "~Janusz Filmu" "yt"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC9z7EZAbkphEMg0SP7rw44A "~carykh" "yt"
+https://www.youtube.com/feeds/videos.xml?channel_id=UC3d3_X0dUnt8YXVKyqr-XLA "~Team Starkid" "yt"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCkPjHTuNd_ycm__29dXM3Nw "~GF Darwin" "yt"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCpPndhUatYo4NLn3fleQ2Fw "~HRejterzy" "yt"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCMGoHTJH-ZjsKLfpWON8Q1g "~Earthship" "yt"
+
+## Luke Smith
+luke "~## LUKE SMITH ##"
+https://github.com/lukesmithxyz/voidrice/commits/master.atom "~LARBS"
+https://lukesmith.xyz/rss.xml
+https://notrelated.libsyn.com/rss
+https://lukesmith.xyz/youtube.xml "~Luke Smith (yt)" "yt"
+https://videos.lukesmith.xyz/feeds/videos.xml?accountId=3 "~Luke Smith vids"

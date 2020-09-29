@@ -9,6 +9,6 @@ with pkgs;
   zip
   unzip
   ripgrep
-  jq
+  # jq
   file
 ]

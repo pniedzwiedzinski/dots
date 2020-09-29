@@ -7,6 +7,10 @@ let
     if isDarwin then ./platforms/darwin else ./platforms/linux;
 in
 {
+  # Errors on linux
+  manual.manpages.enable = if isDarwin then true else false;
+  dconf.enable = if isDarwin then true else false;
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
@@ -20,6 +24,7 @@ in
     # Platform specific config
     platformSetup
     ./programs/zsh
+    ./programs/newsboat
     ./programs/git.nix
   ];
 
@@ -28,6 +33,7 @@ in
     gnupg
     pnvim
     nur.repos.pn.larbs-mail
+    nur.repos.pn.larbs-news
 
     # Misc
     browserpass

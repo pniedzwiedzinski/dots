@@ -1,4 +1,4 @@
-pkgs:
+{ pkgs, ... }:
 
 let
   isDarwin = builtins.currentSystem == "x86_64-darwin";
@@ -21,10 +21,12 @@ in
     shellAliases = import ../aliases.nix // import platformAliases;
     defaultKeymap = "viins";
     initExtraBeforeCompInit = builtins.readFile ./precomp.zshrc;
-    initExtra = builtins.readFile ./postcomp.zshrc;
+    initExtra = builtins.readFile ./postcomp.zshrc
+    + ''
+      eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
+    '';
 
     sessionVariables = rec {
-      PROMPT="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b ";
       NVIM_TUI_ENABLE_TRUE_COLOR = "1";
 
       ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=3";
@@ -44,4 +46,6 @@ in
     # logoutExtra
     # localVariables
   };
+
+  home.file.".zprofile".source = ./zprofile;
 }

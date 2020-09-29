@@ -1,13 +1,16 @@
+{ pkgs, ... }:
 {
-  imports = [
-    ./user-dirs.nix
-    ./gtk.nix
-    ./xorg.nix
-  ];
-
-  home.packages = [
+  home.packages = with pkgs; [
     spotify
     discord
     python37Packages.pywal
   ];
+
+  imports = [
+    ./xorg
+    ./user-dirs.nix
+    ./gtk.nix
+  ];
+
+
 }

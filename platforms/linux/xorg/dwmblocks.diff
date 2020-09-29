@@ -1,0 +1,26 @@
+diff --git a/config.h b/config.h
+index cc9281b..3df46fc 100644
+--- a/config.h
++++ b/config.h
+@@ -10,17 +10,17 @@ static const Block blocks[] = {
+ 	/* {"",	"price btc Bitcoin 💰",				0,	21}, */
+ 	/* {"",	"price lbc \"LBRY Token\" 📚",			0,	22}, */
+ 	{"",	"torrent",	20,	7},
+-	/* {"",	"memory",	10,	14}, */
+-	/* {"",	"cpu",		10,	18}, */
++	{"",	"memory",	10,	14},
++	{"",	"cpu",		10,	18},
+ 	/* {"",	"moonphase",	18000,	17}, */
+ 	{"",	"weather",	18000,	5},
+ 	{"",	"mailbox",	180,	12},
+-	/* {"",	"nettraf",	1,	16}, */
++	{"",	"nettraf",	1,	16},
+ 	{"",	"volume",	0,	10},
+ 	{"",	"battery",	5,	3},
+ 	{"",	"clock",	60,	1},
+ 	{"",	"internet",	5,	4},
+-	{"",	"help-icon",	0,	15},
++	/* {"",	"help-icon",	0,	15}, */
+ };
+ 
+ //Sets delimiter between status commands. NULL character ('\0') means no delimiter.
