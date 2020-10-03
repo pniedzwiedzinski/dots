@@ -21,7 +21,6 @@ in
     xcompmgr
     picom
     dunst
-    unclutter
     nur.repos.pn.dockd
     pndwmblocks
     pndwm
@@ -42,7 +41,7 @@ in
       picom &
       dunst &			# dunst for notifications
       xset r rate 300 50 &	# Speed xrate up
-      unclutter &		# Remove mouse when idle
+      # unclutter &		# Remove mouse when idle
       #sxhkd &
       dockd --daemon &
       for app in `ls ~/.config/autostart/*.desktop`; do

@@ -4,7 +4,12 @@ let
   common_packages = import ./platforms/common-packages.nix pkgs;
   isDarwin = builtins.currentSystem == "x86_64-darwin";
   platformSetup =
-    if isDarwin then ./platforms/darwin else ./platforms/linux;
+    if isDarwin then [
+      ./platforms/darwin
+    ] else [
+      ./platforms/linux
+      ./programs/rclone.nix
+    ];
 in
 {
   # Errors on linux
@@ -22,11 +27,10 @@ in
 
   imports = [
     # Platform specific config
-    platformSetup
     ./programs/zsh
     ./programs/newsboat
     ./programs/git.nix
-  ];
+  ] ++ platformSetup;
 
   home.packages = with pkgs; [
     # Basic
@@ -34,6 +38,9 @@ in
     pnvim
     nur.repos.pn.larbs-mail
     nur.repos.pn.larbs-news
+    amfora
+    translate-shell
+    nix-index
 
     # Misc
     browserpass

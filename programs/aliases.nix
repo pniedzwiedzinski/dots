@@ -1,4 +1,6 @@
 {
+  cfd = "cd ~/.config/nixpkgs";
+
   cp = "cp -iv";
   mv = "mv -iv";
   rm = "rm -iv";
