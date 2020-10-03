@@ -135,6 +135,8 @@ pkgs.neovim.override {
       nnoremap <silent> <C-f> :GFiles<CR>
       nnoremap <silent> <Leader>f :Rg<CR>
       map <C-n> :NERDTreeToggle<CR>
+
+      map <F9> gg=G
     '';
 
     packages.myVimPackage = with pkgs.vimPlugins; {
