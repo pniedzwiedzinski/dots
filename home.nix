@@ -8,7 +8,7 @@ let
       ./platforms/darwin
     ] else [
       ./platforms/linux
-      ./programs/rclone.nix
+      # ./programs/rclone.nix
     ];
 in
 {
@@ -33,21 +33,27 @@ in
   ] ++ platformSetup;
 
   home.packages = with pkgs; [
+    wywozik
     # Basic
     gnupg
     pnvim
     nur.repos.pn.larbs-mail
     nur.repos.pn.larbs-news
+    nur.repos.pn.dmenu
     amfora
     translate-shell
     nix-index
+    minecraft
 
     # Misc
+    irssi
+    todoist
     browserpass
     spotifyd
     spotify-tui
     # gimp
     slack-dark
+    signal-desktop
     pandoc
     texlive.combined.scheme-basic
     zathura

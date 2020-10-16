@@ -1,5 +1,7 @@
 {
   cfd = "cd ~/.config/nixpkgs";
+  ch = "vim ~/.config/nixpkgs/home.nix";
+  github = "gh repo view --web";
 
   cp = "cp -iv";
   mv = "mv -iv";

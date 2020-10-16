@@ -23,7 +23,7 @@ in
                 Type = "notify";
                 Restart = "always";
                 RestartSec = "10s";
-                Environment = [ "PATH=${pkgs.fuse}/bin:$PATH" ];
+                # Environment = [ "PATH=${pkgs.fuse}/bin:$PATH" ];
             };
         };
     };

@@ -1,21 +1,23 @@
 ## ZHR
 zhr "~## ZHR ##"
 https://azymut.zhr.pl/feed/ "~Azymut ZHR" "zhr"
-https://bridge.suumitsu.eu/?action=display&bridge=Facebook&context=User&u=7pdhbinduga&media_type=all&limit=-1&format=Atom "~7PDH Binduga (FB)" "zhr"
-https://bridge.suumitsu.eu/?action=display&bridge=Facebook&context=User&u=watra7pdh&media_type=all&limit=-1&format=Atom "~7PDH Watra (FB)" "zhr"
-https://bridge.suumitsu.eu/?action=display&bridge=Facebook&context=User&u=19pdhpuszcza&media_type=all&limit=-1&format=Atom "~19PDH Puszcza (FB)" "zhr"
+https://rssbridge.co.uk/?action=display&bridge=Facebook&context=User&u=7pdhbinduga&media_type=all&limit=-1&format=Atom "~7PDH Binduga (FB)" "zhr"
+https://rssbridge.co.uk/?action=display&bridge=Facebook&context=User&u=watra7pdh&media_type=all&limit=-1&format=Atom "~7PDH Watra (FB)" "zhr"
+https://rssbridge.co.uk/?action=display&bridge=Facebook&context=User&u=19pdhpuszcza&media_type=all&limit=-1&format=Atom "~19PDH Puszcza (FB)" "zhr"
 https://puszcza.netlify.app/rss.xml "~19PDH Puszcza (www)"
 
 ## Personal
 personal "~## PERSONAL ##"
 #https://bridge.suumitsu.eu/?action=display&bridge=Facebook&context=Group&g=EarthshipPolska&limit=-1&format=Atom "~Earthship Polska (FB)" "personal"
 https://www.poznan.pl/mim/feeds/rss.xml "~Poznań"
+#https://tvn24.pl/najwazniejsze.xml "~Polska"
 
 ## Tech
 tech "~## TECH ##"
 https://github.com/pniedzwiedzinski.private.atom?token=AESSVFF6BRN4OM6S2436XX5475TTA "~GitHub" "tech"
 https://weekly.nixos.org/feeds/all.rss.xml "~NixOS Weekly" "tech"
 https://christine.website/blog.rss "~Christine Dodrill"
+https://portal.mozz.us/gemini/makeworld.gq/gemlog/atom.xml?raw=1 "~makeworld"
 
 ## Youtube
 yt "~## YOUTUBE ##"
@@ -26,6 +28,7 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UC3d3_X0dUnt8YXVKyqr-XLA "~T
 https://www.youtube.com/feeds/videos.xml?channel_id=UCkPjHTuNd_ycm__29dXM3Nw "~GF Darwin" "yt"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCpPndhUatYo4NLn3fleQ2Fw "~HRejterzy" "yt"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCMGoHTJH-ZjsKLfpWON8Q1g "~Earthship" "yt"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCFzGyNKXPAglNq28qWYTDFA "~Kai Hendry" "yt"
 
 ## Luke Smith
 luke "~## LUKE SMITH ##"
@@ -34,3 +37,9 @@ https://lukesmith.xyz/rss.xml
 https://notrelated.libsyn.com/rss
 https://lukesmith.xyz/youtube.xml "~Luke Smith (yt)" "yt"
 https://videos.lukesmith.xyz/feeds/videos.xml?accountId=3 "~Luke Smith vids"
+
+## School
+school "~## School ##"
+https://www.zsk.poznan.pl/feed/ "~ZSK Poznań"
+https://github.com/BbqGamer/MaturaExercises/commits/master.atom "~Adam Matura" "yt"
+https://github.com/tykazzz/matury_inf/commits/master.atom "~Tomek Matura" "yt"
