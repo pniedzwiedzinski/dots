@@ -16,11 +16,21 @@ let
     ];
     header_config_file = ./config.h;
   };
+
+  todos = pkgs.writeScriptBin "todos" ''
+    #!${pkgs.stdenv.shell}
+    case $BLOCK_BUTTON in
+      1) notify-send "Tasks" "\n$(todoist l | cut -d\  -f5- | sed 's/^/* /')" ;;
+	    6) "$TERMINAL" -e "$EDITOR" "$0" ;;
+    esac
+
+    echo "✅$(todoist list | wc -l)"
+  '';
 in
   {
     imports = [
       ./dunst
-    };
+    ];
 
     home.packages = with pkgs; [
       mpd
@@ -29,7 +39,7 @@ in
       nur.repos.pn.dockd
       pndwmblocks
       pndwm
-      roboto-slab
+      todos
     ];
 
     xsession = {
