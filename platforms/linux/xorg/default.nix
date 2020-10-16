@@ -40,6 +40,7 @@ in
       pndwmblocks
       pndwm
       todos
+      playerctl
     ];
 
     xsession = {

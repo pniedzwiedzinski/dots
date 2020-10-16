@@ -4,7 +4,7 @@ let
   wywozik = pkgs.nur.repos.pn.wywozik-todo.override {
     configFile = ''
       CITY = "Poznań"
-      STREET = "${secrets.stree}"
+      STREET = "${secrets.street}"
       NUMBER = "${secrets.number}"
       HOUSING = "zamieszkana"
       TOKEN = "${secrets.todoist}"
