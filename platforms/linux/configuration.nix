@@ -75,8 +75,8 @@
 
   networking.hostName = "nixos"; # Define your hostname.
   networking.extraHosts = "${ pkgs.stdenv.lib.readFile "${pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/fakenews-gambling-porn/hosts";
-    sha256 = "0fw6p8m4k7r470rjz40fbr7drgpxmmyzp9l9a677g55nif2gnk2x";
+    url = "https://raw.githubusercontent.com/StevenBlack/hosts/5a5016ab5bf0166e004147cb49ccd0114ed29b72/alternates/fakenews-gambling-porn/hosts";
+    sha256 = "1c60fyzxz89bic6ymcvb8fcanyxpzr8v2z5vixxr79d8mj0vjswm";
   }}"}";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
@@ -116,9 +116,7 @@
     xorg.xorgserver xorg.xf86inputevdev xorg.xf86inputsynaptics xorg.xf86inputlibinput
     xorg.xf86videointel
     noto-fonts-extra dunst xclip
-    xwallpaper
-    nur.repos.pn.dmenu xdotool
-    # screenkey
+    xwallpaper xdotool
 
     # UI apps
     zathura ncmpcpp brave sxiv pulsemixer
@@ -139,6 +137,12 @@
     # Thinkpad utils
     nur.repos.pn.dockd
 
+    wineStaging
+
+  ];
+
+  fonts.fonts = with pkgs; [
+    roboto-slab
   ];
 
   # Pure conf
