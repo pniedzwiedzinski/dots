@@ -1,5 +1,16 @@
 { config, pkgs, ... }:
 let
+  secrets = import ./secrets.nix;
+  wywozik = pkgs.nur.repos.pn.wywozik-todo.override {
+    configFile = ''
+      CITY = "Poznań"
+      STREET = "${secrets.stree}"
+      NUMBER = "${secrets.number}"
+      HOUSING = "zamieszkana"
+      TOKEN = "${secrets.todoist}"
+    '';
+  };
+
   pnvim = import ./programs/nvim.nix pkgs;
   common_packages = import ./platforms/common-packages.nix pkgs;
   isDarwin = builtins.currentSystem == "x86_64-darwin";
