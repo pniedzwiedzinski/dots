@@ -121,7 +121,7 @@
     # UI apps
     zathura ncmpcpp brave sxiv pulsemixer
     lynx lf nur.repos.pn.st arandr wpa_supplicant_gui
-    system-config-printer libreoffice teams
+    system-config-printer libreoffice
     vscodium abook
 
     # Audio/Video

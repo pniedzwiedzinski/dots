@@ -11,13 +11,14 @@ personal "~## PERSONAL ##"
 #https://bridge.suumitsu.eu/?action=display&bridge=Facebook&context=Group&g=EarthshipPolska&limit=-1&format=Atom "~Earthship Polska (FB)" "personal"
 https://www.poznan.pl/mim/feeds/rss.xml "~Poznań"
 #https://tvn24.pl/najwazniejsze.xml "~Polska"
+https://portal.mozz.us/gemini/cetacean.club/journal/atom.xml "~Christine Dodrill journal"
 
 ## Tech
 tech "~## TECH ##"
 https://github.com/pniedzwiedzinski.private.atom?token=AESSVFF6BRN4OM6S2436XX5475TTA "~GitHub" "tech"
 https://weekly.nixos.org/feeds/all.rss.xml "~NixOS Weekly" "tech"
-https://christine.website/blog.rss "~Christine Dodrill"
-https://portal.mozz.us/gemini/makeworld.gq/gemlog/atom.xml?raw=1 "~makeworld"
+https://christine.website/blog.rss "~Christine Dodrill" "tech"
+https://portal.mozz.us/gemini/makeworld.gq/gemlog/atom.xml?raw=1 "~makeworld" "tech"
 
 ## Youtube
 yt "~## YOUTUBE ##"
@@ -29,6 +30,7 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCkPjHTuNd_ycm__29dXM3Nw "~G
 https://www.youtube.com/feeds/videos.xml?channel_id=UCpPndhUatYo4NLn3fleQ2Fw "~HRejterzy" "yt"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCMGoHTJH-ZjsKLfpWON8Q1g "~Earthship" "yt"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCFzGyNKXPAglNq28qWYTDFA "~Kai Hendry" "yt"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCTdPpKcVp03tjGhMWyKtIFQ "~Tin Can Bros" "yt"
 
 ## Luke Smith
 luke "~## LUKE SMITH ##"

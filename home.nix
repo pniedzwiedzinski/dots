@@ -41,6 +41,7 @@ in
     ./programs/zsh
     ./programs/newsboat
     ./programs/git.nix
+    ./programs/sent
   ] ++ platformSetup;
 
   home.packages = with pkgs; [
@@ -57,10 +58,11 @@ in
     minecraft
 
     # Misc
-    irssi
+    teams
+    zoom-us
+    weechat
     todoist
     browserpass
-    spotifyd
     spotify-tui
     # gimp
     slack-dark
