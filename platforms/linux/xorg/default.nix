@@ -10,7 +10,6 @@ let
     patches = [
       ./dwm-systray.diff
       ./dwm-center.diff
-      ./dwm-apps.diff
       ./dwm-autostart.diff
       # ./dwm-rounded.diff - Resize dont work
     ];
