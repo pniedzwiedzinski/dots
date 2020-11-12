@@ -66,11 +66,11 @@ in
       device = "/dev/disk/by-label/docker";
       fsType = "ext4";
     };
-    "/media" {
+    "/media" = {
       device = "/dev/disk/by-label/media";
       fsType = "ext4";
     };
-    "/backup" {
+    "/backup" = {
       device = "/dev/disk/by-label/backup";
       fsType = "ext4";
     };
