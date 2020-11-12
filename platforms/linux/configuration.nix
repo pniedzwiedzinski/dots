@@ -3,6 +3,17 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
+let
+  busybox_utils = pkgs.stdenv.mkDerivation {
+    name = "strings";
+    unpackPhase = "true";
+    installPhase = ''
+      mkdir -p $out/bin
+      cp ${pkgs.busybox}/bin/strings $out/bin/strings
+      cp ${pkgs.busybox}/bin/telnet $out/bin/telnet
+    '';
+  };
+in
 {
   nix.useSandbox = true;
 
@@ -55,6 +66,14 @@
       device = "/dev/disk/by-label/docker";
       fsType = "ext4";
     };
+    "/media" {
+      device = "/dev/disk/by-label/media";
+      fsType = "ext4";
+    };
+    "/backup" {
+      device = "/dev/disk/by-label/backup";
+      fsType = "ext4";
+    };
     "/mnt/qnap" = {
       device = "//192.168.1.119/Patryk";
       fsType = "cifs";
@@ -71,6 +90,11 @@
      enable = true;
      wifi.backend = "iwd";
     };
+
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ];
   };
 
   networking.hostName = "nixos"; # Define your hostname.
@@ -83,8 +107,8 @@
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
   networking.useDHCP = false;
-  networking.interfaces.enp0s25.useDHCP = true;
-  networking.interfaces.wlp3s0.useDHCP = true;
+  #networking.interfaces.enp0s25.useDHCP = true;
+  #networking.interfaces.wlp3s0.useDHCP = true;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -110,7 +134,7 @@
     # Basic tools
     stdenv wget vim curl htop dnsutils zip unzip
     zsh neovim ripgrep jq groff file pinentry_gnome
-    ssh-ident
+    ssh-ident busybox_utils
 
     # XORG perfs
     xorg.xorgserver xorg.xf86inputevdev xorg.xf86inputsynaptics xorg.xf86inputlibinput
@@ -119,7 +143,7 @@
     xwallpaper xdotool
 
     # UI apps
-    zathura ncmpcpp brave sxiv pulsemixer
+    zathura brave sxiv pulsemixer
     lynx lf nur.repos.pn.st arandr wpa_supplicant_gui
     system-config-printer libreoffice
     vscodium abook
@@ -129,7 +153,7 @@
 
     # CLIs
     lm_sensors
-    fzf gitAndTools.gh docker-compose xsel
+    gitAndTools.gh docker-compose xsel
     bc libnotify
     pamixer maim killall
     quickserve ueberzug chafa
@@ -208,7 +232,7 @@
   };
 
   services.cron.enable = true;
-  services.fcron.enable = true;
+  # services.fcron.enable = true;
 
   services.acpid.enable = true;
 

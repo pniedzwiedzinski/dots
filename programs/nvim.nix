@@ -137,6 +137,9 @@ pkgs.neovim.override {
       map <C-n> :NERDTreeToggle<CR>
 
       map <F9> gg=G
+
+      " Fuzzy finding
+      set path+=**
     '';
 
     packages.myVimPackage = with pkgs.vimPlugins; {
@@ -156,6 +159,7 @@ pkgs.neovim.override {
         YouCompleteMe
         Supertab
         fzf-vim
+        pkgs.nur.repos.pn.gemini-vim-syntax
 
       ];
       opt = [];
