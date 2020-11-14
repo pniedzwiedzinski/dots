@@ -6,9 +6,7 @@
 # to clean up.
 
 # Adds `~/.local/bin` to $PATH
-export PATH="$PATH:$(du "$HOME/.local/bin/" | cut -f2 | paste -sd ':')"
-# Adds /apps to $PATH
-export PATH=$PATH:/apps
+export PATH="$(du "$HOME/.local/bin/" | cut -f2 | paste -sd ':'):$PATH"
 # Adds gopath to $PATH
 export PATH=$PATH:~/.local/share/go/bin
 # Adds scripts to $PATH

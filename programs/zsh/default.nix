@@ -36,8 +36,6 @@ in
       VISUAL = EDITOR;
       GIT_EDITOR = EDITOR;
 
-      GOPATH = "$HOME";
-
       PATH = "$HOME/.emacs.d/bin:$HOME/bin:$PATH";
     };
     # envExtra

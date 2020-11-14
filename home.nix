@@ -29,6 +29,10 @@ in
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+  programs.obs-studio = {
+    enable = true;
+    plugins = with pkgs; [ obs-wlrobs obs-v4l2sink ];
+  };
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -41,6 +45,7 @@ in
     ./programs/zsh
     ./programs/newsboat
     ./programs/git.nix
+    ./programs/mpv.nix
     ./programs/sent
   ] ++ platformSetup;
 
@@ -66,6 +71,7 @@ in
     browserpass
     minecraft
     spotify-tui
+    spotifyd
     # gimp
     slack-dark
     signal-desktop
