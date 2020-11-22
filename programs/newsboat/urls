@@ -14,6 +14,7 @@ https://www.poznan.pl/mim/feeds/rss.xml "~Poznań"
 #https://tvn24.pl/najwazniejsze.xml "~Polska"
 https://portal.mozz.us/gemini/cetacean.club/journal/atom.xml "~Christine Dodrill journal"
 https://feeds.simplecast.com/cgGduVSh "~Wayward Guide"
+https://etno-love.blogspot.com/rss.xml "~Z.Margraf"
 
 ## Tech
 tech "~## TECH ##"
@@ -21,6 +22,7 @@ https://github.com/pniedzwiedzinski.private.atom?token=AESSVFF6BRN4OM6S2436XX547
 https://weekly.nixos.org/feeds/all.rss.xml "~NixOS Weekly" "tech"
 https://christine.website/blog.rss "~Christine Dodrill" "tech"
 https://portal.mozz.us/gemini/makeworld.gq/gemlog/atom.xml?raw=1 "~makeworld" "tech"
+https://portal.mozz.us/gemini/gemini.marmaladefoo.com/cgi-bin/atom-feed.cgi%3Flukee?raw=1 "~Luke Emmet"
 
 ## Youtube
 yt "~## YOUTUBE ##"

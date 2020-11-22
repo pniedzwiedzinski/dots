@@ -75,14 +75,14 @@ in
       device = "/dev/disk/by-label/docker";
       fsType = "ext4";
     };
-    "/media" = {
-      device = "/dev/disk/by-label/media";
-      fsType = "ext4";
-    };
-    "/backup" = {
-      device = "/dev/disk/by-label/backup";
-      fsType = "ext4";
-    };
+    # "/media" = {
+    #   device = "/dev/disk/by-label/media";
+    #   fsType = "ext4";
+    # };
+    # "/backup" = {
+    #   device = "/dev/disk/by-label/backup";
+    #   fsType = "ext4";
+    # };
     "/mnt/qnap" = {
       device = "//192.168.1.119/Patryk";
       fsType = "cifs";
@@ -143,7 +143,7 @@ in
     # Basic tools
     stdenv wget vim curl htop dnsutils zip unzip
     zsh neovim ripgrep jq groff file pinentry_gnome
-    ssh-ident busybox_utils
+    ssh-ident busybox_utils usbutils
 
     # XORG perfs
     xorg.xorgserver xorg.xf86inputevdev xorg.xf86inputsynaptics xorg.xf86inputlibinput
@@ -248,6 +248,7 @@ in
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
+  hardware.sane.enable = true;
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -301,7 +302,7 @@ in
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.pn = {
     isNormalUser = true;
-    extraGroups = [ "wheel" "video" "docker" "adbusers" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [ "wheel" "video" "docker" "adbusers" "scanner" "lp" ]; # Enable ‘sudo’ for the user.
   };
 
   users.defaultUserShell = "/run/current-system/sw/bin/zsh";

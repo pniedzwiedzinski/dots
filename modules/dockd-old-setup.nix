@@ -21,15 +21,15 @@ in
     environment.etc = {
       "dockd/docked.conf".text = ''
         [Screen]
-        height=1225
-        width=3840
-        mm_height=323
-        mm_width=1015
+        height=1920
+        width=3000
+        mm_height=506
+        mm_width=791
 
         [CRTC]
         crtc=63
         x=0
-        y=145
+        y=241
         rotation=1
         mode=1920x1080
         outputs_len=1
@@ -39,11 +39,12 @@ in
         crtc=64
         x=1920
         y=0
-        rotation=1
+        rotation=2
         mode=1920x1080
         outputs_len=1
         outputs_0=DP-2
       '';
+
       "dockd/undocked.conf".text = ''
         [Screen]
         height=768

@@ -54,9 +54,12 @@ in
     # Basic
     gnupg
     pnvim
-    nur.repos.pn.larbs-mail
-    nur.repos.pn.larbs-news
-    nur.repos.pn.larbs-music
+    (lowPrio nur.repos.pn.larbs-mail)
+    (lowPrio nur.repos.pn.larbs-news)
+    (lowPrio nur.repos.pn.larbs-music)
+    nur.repos.pn.larbs-scripts
+    slop
+    xlibs.xdpyinfo
     nur.repos.pn.dmenu
     amfora
     translate-shell

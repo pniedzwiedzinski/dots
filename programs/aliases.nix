@@ -18,4 +18,6 @@
   gc = "git commit";
   gl = "git lg";
   gd = "git diff";
+
+  calibre = "calibre --with-library=~/books";
 }
