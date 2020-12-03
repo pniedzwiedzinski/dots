@@ -39,6 +39,7 @@ in
     [ # Include the results of the hardware scan.
       # <home-manager>/nixos
       ../../modules/dockd.nix
+      ../../modules/trackpad.nix
       ../../hardware-configuration.nix
     ];
 
@@ -55,6 +56,7 @@ in
 
   boot.extraModulePackages = with pkgs.linuxPackages; [
     v4l2loopback
+    acpi_call
   ];
 
   boot.kernelModules = [ "v4l2loopback" ];
@@ -143,7 +145,7 @@ in
     # Basic tools
     stdenv wget vim curl htop dnsutils zip unzip
     zsh neovim ripgrep jq groff file pinentry_gnome
-    ssh-ident busybox_utils usbutils
+    ssh-ident busybox_utils
 
     # XORG perfs
     xorg.xorgserver xorg.xf86inputevdev xorg.xf86inputsynaptics xorg.xf86inputlibinput
@@ -168,7 +170,7 @@ in
     quickserve ueberzug chafa
 
     # Thinkpad utils
-    nur.repos.pn.dockd
+    nur.repos.pn.dockd acpi tpacpi-bat
 
     wineStaging
 
@@ -224,6 +226,9 @@ in
   # services.udev.packages = [
   #   pkgs.android-udev-rules
   # ];
+  services.udev.packages = [ pkgs.libu2f-host ];
+
+  services.pcscd.enable = true;
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
@@ -245,6 +250,9 @@ in
 
   services.acpid.enable = true;
 
+  # Battery
+  services.tlp.enable = true;
+
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = true;
@@ -257,7 +265,10 @@ in
   # services.xserver.xkbOptions = "eurosign:e";
 
   # Enable touchpad support.
-  services.xserver.libinput.enable = true;
+  services.xserver.libinput = {
+    enable = true;
+    accelSpeed = "0.8";
+  };
 
   # Enable the KDE Desktop Environment.
   #services.xserver.displayManager.sddm.enable = true;

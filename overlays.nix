@@ -13,12 +13,10 @@
       };
     });
 
-    brave-beta = super.brave.overrideAttrs (oldAttrs: rec {
-      version = "1.18.57";
-      src = super.fetchurl {
-        url = "https://github.com/brave/brave-browser/releases/download/v${version}/brave-browser-beta_${version}_amd64.deb";
-        sha256 = "11v7j13ids7dw1lpcjc5cw18vk6x9jc6ylsd2na7cgmygwx0f3ms";
-      };
-    });
+    brave17 = (import (builtins.fetchTarball {
+      url = "https://github.com/buckley310/nixpkgs/archive/brave.tar.gz";
+      sha256 = "08m6w0d2z8n0wlvffgfaglyrydxw895z0hk7x2b41x44zkrc3zx5";
+    }) { }).brave;
+
   })
 ]

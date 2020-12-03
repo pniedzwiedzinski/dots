@@ -23,6 +23,8 @@ https://weekly.nixos.org/feeds/all.rss.xml "~NixOS Weekly" "tech"
 https://christine.website/blog.rss "~Christine Dodrill" "tech"
 https://portal.mozz.us/gemini/makeworld.gq/gemlog/atom.xml?raw=1 "~makeworld" "tech"
 https://portal.mozz.us/gemini/gemini.marmaladefoo.com/cgi-bin/atom-feed.cgi%3Flukee?raw=1 "~Luke Emmet"
+https://proxy.vulpes.one/gemini/otrn.org/atom.xml
+
 
 ## Youtube
 yt "~## YOUTUBE ##"

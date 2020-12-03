@@ -21,6 +21,10 @@ let
       ./platforms/linux
       # ./programs/rclone.nix
     ];
+
+  music = pkgs.nur.repos.pn.larbs-music.override {
+    musicDir = "~/music";
+  };
 in
 {
   # Errors on linux
@@ -56,7 +60,7 @@ in
     pnvim
     (lowPrio nur.repos.pn.larbs-mail)
     (lowPrio nur.repos.pn.larbs-news)
-    (lowPrio nur.repos.pn.larbs-music)
+    (lowPrio music)
     nur.repos.pn.larbs-scripts
     slop
     xlibs.xdpyinfo
@@ -65,6 +69,10 @@ in
     translate-shell
     nix-index
     fzf
+
+    # Handy tools
+    skanlite
+    imagemagick
 
 
     # Misc

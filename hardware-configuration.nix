@@ -12,8 +12,8 @@
 
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-intel" "tp_smapi" ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ tp_smapi ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/e00c989b-b3fd-469e-b894-ea609fb4d7fa";
