@@ -40,6 +40,7 @@ in
       # <home-manager>/nixos
       ../../modules/dockd.nix
       ../../modules/trackpad.nix
+      ../../modules/agetty.nix
       ../../hardware-configuration.nix
     ];
 
@@ -229,6 +230,10 @@ in
   services.udev.packages = [ pkgs.libu2f-host ];
 
   services.pcscd.enable = true;
+
+  services.agetty = {
+    defaultUser = "pn";
+  };
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
