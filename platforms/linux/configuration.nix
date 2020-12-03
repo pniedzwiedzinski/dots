@@ -319,6 +319,10 @@ in
   users.defaultUserShell = "/run/current-system/sw/bin/zsh";
   security.sudo.wheelNeedsPassword = false;
 
+  security.pam.u2f = {
+    enable = true;
+    cue = true;
+  };
 
 
   # This value determines the NixOS release from which the default
