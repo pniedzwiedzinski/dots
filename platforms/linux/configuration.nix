@@ -41,6 +41,7 @@ in
       ../../modules/dockd.nix
       ../../modules/trackpad.nix
       ../../modules/agetty.nix
+      ../../modules/slock.nix
       ../../hardware-configuration.nix
     ];
 
@@ -214,7 +215,6 @@ in
   };
 
   programs.vim.defaultEditor = true;
-  programs.slock.enable = true;
   programs.browserpass.enable = true;
   programs.dockd.enable = true;
   programs.adb.enable = true;
@@ -233,6 +233,7 @@ in
 
   services.agetty = {
     defaultUser = "pn";
+    # autologinUser = "pn";
   };
 
   # Enable the OpenSSH daemon.
@@ -327,6 +328,9 @@ in
   security.pam.u2f = {
     enable = true;
     cue = true;
+    interactive = true;
+    #control = "required";
+    #control = "requisite";
   };
 
 
