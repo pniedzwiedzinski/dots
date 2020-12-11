@@ -8,36 +8,30 @@
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
     ];
 
-  boot.initrd.availableKernelModules = [ "uhci_hcd" "ehci_pci" "ata_piix" "usb_storage" "usbhid" "sd_mod" "sr_mod" ];
+  boot.initrd.availableKernelModules = [ "uhci_hcd" "ehci_pci" "ata_piix" "usbhid" "usb_storage" "floppy" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   boot.loader.grub.enable = true;
   boot.loader.grub.version = 2;
-  boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
+  boot.loader.grub.device = "/dev/sdc"; # or "nodev" for efi only
 
   networking.useDHCP = false;
-  networking.interfaces.enp2s0.useDHCP = true;
+  networking.interfaces.enp3s0.useDHCP = true;
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/ad2775d5-5890-493e-b709-60c1f7f3c63b";
+    { device = "/dev/disk/by-uuid/6b9e05c9-827e-4a34-bb35-f2a3da149f44";
       fsType = "ext4";
     };
 
-  fileSystems."/nix/store" =
-    { device = "/nix/store";
-      fsType = "none";
-      options = [ "bind" ];
-    };
-
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/C6DC-F51D";
+    { device = "/dev/disk/by-uuid/7F96-4F40";
       fsType = "vfat";
     };
 
   swapDevices =
-    [ { device = "/dev/disk/by-uuid/ad2b96eb-341c-40e2-bb86-1ed2f03a0713"; }
+    [ { device = "/dev/disk/by-uuid/cda58eb8-fc1e-4bea-9dca-b119a1da2267"; }
     ];
 
   nix.maxJobs = lib.mkDefault 2;

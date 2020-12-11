@@ -3,7 +3,7 @@
 {
   users.users.pn = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "audio" ];
   };
 
   ## Although it's less secure I tend not to have sensitive data on my machines

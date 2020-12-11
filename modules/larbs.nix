@@ -3,6 +3,10 @@ let
   pnvim = import ../pkgs/nvim.nix pkgs;
 in
 {
+  imports = [
+    ./audio.nix
+  ];
+
   environment.systemPackages = with pkgs.nur.repos.pn; [
     pnvim
     larbs-mail
@@ -16,6 +20,7 @@ in
   ];
 
   services.xserver = {
+    enable = true;
     displayManager.startx.enable = true;
     libinput.enable = true;
   };
