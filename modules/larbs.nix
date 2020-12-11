@@ -5,6 +5,7 @@ in
 {
   imports = [
     ./audio.nix
+    ./slock.nix
   ];
 
   environment.systemPackages = with pkgs.nur.repos.pn; [
