@@ -16,6 +16,12 @@
 
   console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v22n";
 
+  ## === XDG ===
+  environment.variables = {
+    XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_DATA_HOME = "$HOME/.local/share";
+  };
+
   ## === Vim configuration ===
   programs.vim.defaultEditor = true;
   environment.etc."vim/vimrc".text = ''
