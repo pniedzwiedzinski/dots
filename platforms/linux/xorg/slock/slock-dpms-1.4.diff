@@ -3,12 +3,12 @@ index 9855e21..d01bd38 100644
 --- a/config.def.h
 +++ b/config.def.h
 @@ -10,3 +10,6 @@ static const char *colorname[NUMCOLS] = {
- 
+
  /* treat a cleared input like a wrong password (color) */
  static const int failonclear = 1;
 +
 +/* time in seconds before the monitor shuts down */
-+static const int monitortime = 5;
++static const int monitortime = 20;
 diff --git a/slock.c b/slock.c
 index d2f0886..f65a43b 100644
 --- a/slock.c
@@ -26,13 +26,13 @@ index d2f0886..f65a43b 100644
  	Display *dpy;
  	int s, nlocks, nscreens;
 +	CARD16 standby, suspend, off;
- 
+
  	ARGBEGIN {
  	case 'v':
 @@ -366,6 +368,20 @@ main(int argc, char **argv) {
  	if (nlocks != nscreens)
  		return 1;
- 
+
 +	/* DPMS magic to disable the monitor */
 +	if (!DPMSCapable(dpy))
 +		die("slock: DPMSCapable failed\n");
@@ -53,7 +53,7 @@ index d2f0886..f65a43b 100644
 @@ -383,5 +399,9 @@ main(int argc, char **argv) {
  	/* everything is now blank. Wait for the correct password */
  	readpw(dpy, &rr, locks, nscreens, hash);
- 
+
 +	/* reset DPMS values to inital ones */
 +	DPMSSetTimeouts(dpy, standby, suspend, off);
 +	XSync(dpy, 0);

@@ -17,13 +17,17 @@ let
 in {
   environment.systemPackages = [ slock ];
   security.wrappers.slock.source = "${slock.out}/bin/slock";
-  services.xserver.xautolock = {
+  # services.xserver.xautolock = {
+  #   enable = true;
+  #   locker = "${config.security.wrapperDir}/slock";
+  #   enableNotifier = true;
+  #   notifier = "${pkgs.libnotify}/bin/notify-send \"Locking in 10 seconds\"";
+  #   killer = "/run/current-system/systemd/bin/systemctl suspend-then-hibernate";
+  #   killtime = 30;
+  #   extraOptions = [ "-detectsleep" ];
+  # };
+  programs.xss-lock = {
     enable = true;
-    locker = "${config.security.wrapperDir}/slock";
-    enableNotifier = true;
-    notifier = "${pkgs.libnotify}/bin/notify-send \"Locking in 10 seconds\"";
-    killer = "/run/current-system/systemd/bin/systemctl suspend-then-hibernate";
-    killtime = 30;
-    extraOptions = [ "-detectsleep" ];
+    lockerCommand = "${config.security.wrapperDir}/slock";
   };
 }
