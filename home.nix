@@ -87,7 +87,7 @@ in
     slack-dark
     signal-desktop
     pandoc
-    texlive.combined.scheme-basic
+    texlive.combined.scheme-medium
     zathura
   ]
   ++ common_packages;

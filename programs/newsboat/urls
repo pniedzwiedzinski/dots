@@ -23,7 +23,8 @@ https://weekly.nixos.org/feeds/all.rss.xml "~NixOS Weekly" "tech"
 https://christine.website/blog.rss "~Christine Dodrill" "tech"
 https://portal.mozz.us/gemini/makeworld.gq/gemlog/atom.xml?raw=1 "~makeworld" "tech"
 https://portal.mozz.us/gemini/gemini.marmaladefoo.com/cgi-bin/atom-feed.cgi%3Flukee?raw=1 "~Luke Emmet"
-https://proxy.vulpes.one/gemini/otrn.org/atom.xml
+https://proxy.vulpes.one/gemini/sunshinegardens.org/~abrahms/atom.xml
+https://justin.abrah.ms/feed.xml
 
 
 ## Youtube
@@ -37,6 +38,8 @@ https://www.youtube.com/feeds/videos.xml?channel_id=UCpPndhUatYo4NLn3fleQ2Fw "~H
 https://www.youtube.com/feeds/videos.xml?channel_id=UCMGoHTJH-ZjsKLfpWON8Q1g "~Earthship" "yt"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCFzGyNKXPAglNq28qWYTDFA "~Kai Hendry" "yt"
 https://www.youtube.com/feeds/videos.xml?channel_id=UCTdPpKcVp03tjGhMWyKtIFQ "~Tin Can Bros" "yt"
+https://www.youtube.com/feeds/videos.xml?channel_id=UCnZx--LpG2spgmlxOcC-DRA
+https://www.youtube.com/feeds/videos.xml?channel_id=UCYO_jab_esuFRV4b17AJtAw
 
 ## Luke Smith
 luke "~## LUKE SMITH ##"

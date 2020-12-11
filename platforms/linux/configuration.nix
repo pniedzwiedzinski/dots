@@ -66,6 +66,8 @@ in
     options v4l2loopback exclusive_caps=1 video_nr=9 card_label="obs"
   '';
 
+  boot.cleanTmpDir = true;
+
   fileSystems = {
     "/home" = {
       device = "/dev/disk/by-label/home";
@@ -269,6 +271,12 @@ in
   services.xserver.displayManager.startx.enable = true;
   services.xserver.layout = "pl";
   # services.xserver.xkbOptions = "eurosign:e";
+  services.xserver.deviceSection = ''
+    Option "TearFree" "true"
+  '';
+  services.xserver.wacom = {
+    enable = true;
+  };
 
   # Enable touchpad support.
   services.xserver.libinput = {

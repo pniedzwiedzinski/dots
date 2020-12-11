@@ -18,5 +18,13 @@
       sha256 = "08m6w0d2z8n0wlvffgfaglyrydxw895z0hk7x2b41x44zkrc3zx5";
     }) { }).brave;
 
+    discord = super.discord.overrideAttrs (_: rec {
+      version = "0.0.13";
+      src = super.fetchurl {
+        url = "https://dl.discordapp.net/apps/linux/${version}/discord-${version}.tar.gz";
+        sha256 = "0d5z6cbj9dg3hjw84pyg75f8dwdvi2mqxb9ic8dfqzk064ssiv7y";
+      };
+    });
+
   })
 ]
