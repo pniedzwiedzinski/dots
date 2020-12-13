@@ -8,6 +8,8 @@
     ../users/pn.nix
   ];
 
+  boot.cleanTmpDir = true;
+
   environment.systemPackages = with pkgs; [
     wget vim curl htop file
     stdenv git zip unzip

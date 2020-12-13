@@ -15,6 +15,14 @@
   boot.kernelModules = [ "kvm-intel" "tp_smapi" ];
   boot.extraModulePackages = with config.boot.kernelPackages; [ tp_smapi ];
 
+
+  boot.loader.grub.enable = true;
+  boot.loader.grub.version = 2;
+  boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
+
+  boot.plymouth.enable = true;
+
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/e00c989b-b3fd-469e-b894-ea609fb4d7fa";
       fsType = "ext4";

@@ -6,4 +6,8 @@
       inherit pkgs;
     };
   };
+  nix.binaryCaches = [
+    "https://cache.nixos.org"
+    "https://pn.cachix.org"
+  ];
 }
