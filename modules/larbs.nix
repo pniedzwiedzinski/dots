@@ -1,13 +1,16 @@
 { pkgs, ... }:
 let
   pnvim = import ../pkgs/nvim.nix pkgs;
+  pndwm = import ../pkgs/dwm pkgs;
+  # pndwmblocks = import ../pkgs/dwmblocks pkgs;
+  todos = import ../pkgs/dwmblocks/todos.nix pkgs;
   larbs-packages = with pkgs.nur.repos.pn; [
     pnvim
     larbs-mail
     larbs-news
     larbs-music
     dmenu
-    dwm
+    pndwm
     dwmblocks
     larbs-scripts
     st
@@ -15,12 +18,21 @@ let
 in
 {
   imports = [
+    ./personal.nix
     ./audio.nix
     ./slock.nix
   ];
 
   environment.systemPackages = with pkgs; [
+    ## Scripts utils
+    #TODO: move to larbs-scripts
+    maim
+    xclip
+    xdotool
+
+    todos
     brave
+    tdesktop
   ] ++ larbs-packages;
 
   environment.variables = {

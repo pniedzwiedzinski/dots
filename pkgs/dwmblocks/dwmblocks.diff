@@ -1,0 +1,15 @@
+diff --git a/config.h b/config.h
+index cc9281b..3df46fc 100644
+--- a/config.h
++++ b/config.h
+@@ -5,11 +5,11 @@ static const Block blocks[] = {
+ 	/* {"",	"price btc Bitcoin 💰",				0,	21}, */
+ 	/* {"",	"price lbc \"LBRY Token\" 📚",			0,	22}, */
+ 	{"",	"torrent",	20,	7},
+-	/* {"",	"memory",	10,	14}, */
+-	/* {"",	"cpu",		10,	18}, */
++	{"",	"memory",	10,	14},
++	{"",	"cpu",		10,	18},
+ 	/* {"",	"moonphase",	18000,	17}, */
+ 	{"",	"weather",	18000,	5},
+ 	{"",	"mailbox",	180,	12},
