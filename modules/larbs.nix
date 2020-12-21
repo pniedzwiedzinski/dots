@@ -2,7 +2,7 @@
 let
   pnvim = import ../pkgs/nvim.nix pkgs;
   pndwm = import ../pkgs/dwm pkgs;
-  # pndwmblocks = import ../pkgs/dwmblocks pkgs;
+  pndwmblocks = import ../pkgs/dwmblocks pkgs;
   todos = import ../pkgs/dwmblocks/todos.nix pkgs;
   larbs-packages = with pkgs.nur.repos.pn; [
     pnvim
@@ -11,7 +11,7 @@ let
     larbs-music
     dmenu
     pndwm
-    dwmblocks
+    pndwmblocks
     larbs-scripts
     st
   ];
@@ -29,6 +29,8 @@ in
     maim
     xclip
     xdotool
+    lm_sensors
+    mpc_cli
 
     todos
     brave

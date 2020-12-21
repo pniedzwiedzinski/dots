@@ -20,6 +20,7 @@
   console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v22n";
 
   environment.shellAliases = {
+    cf = "cd /etc/nixos/dots";
     gs = "git status";
     gc = "git commit";
     ga = "git add";
