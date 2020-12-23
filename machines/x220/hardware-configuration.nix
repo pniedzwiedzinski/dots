@@ -8,7 +8,7 @@
 {
   imports =
     [ <nixpkgs/nixos/modules/installer/scan/not-detected.nix>
-    ];
+  ];
 
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
@@ -23,19 +23,32 @@
   boot.plymouth.enable = true;
 
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/e00c989b-b3fd-469e-b894-ea609fb4d7fa";
+  fileSystems = {
+    "/" =
+      { device = "/dev/disk/by-uuid/e00c989b-b3fd-469e-b894-ea609fb4d7fa";
       fsType = "ext4";
     };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/2f0948cd-a0de-41c0-a341-e9fe01460fd3";
+    "/boot" =
+      { device = "/dev/disk/by-uuid/2f0948cd-a0de-41c0-a341-e9fe01460fd3";
       fsType = "ext3";
     };
+    "/home" = {
+      device = "/dev/disk/by-label/home";
+      fsType = "ext4";
+    };
+    "/nix" = {
+      device = "/dev/disk/by-label/nix";
+      fsType = "ext4";
+    };
+    "/var/lib/docker" = {
+      device = "/dev/disk/by-label/docker";
+      fsType = "ext4";
+    };
+  };
+  swapDevices = [ {
+    device = "/dev/sda2"; } ];
 
-    swapDevices = [ {
-      device = "/dev/sda2"; } ];
-
-  nix.maxJobs = lib.mkDefault 4;
-  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
-}
+    nix.maxJobs = lib.mkDefault 4;
+    powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+  }

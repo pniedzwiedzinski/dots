@@ -12,7 +12,7 @@ let
     dmenu
     pndwm
     pndwmblocks
-    larbs-scripts
+    # larbs-scripts
     st
   ];
 in
