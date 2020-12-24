@@ -83,6 +83,7 @@ in
   programs.dockd.enable = true;
 
   virtualisation.docker.enable = true;
+  systemd.services.docker.enable = false;
 
   services.udev.packages = [ pkgs.libu2f-host ];
 
