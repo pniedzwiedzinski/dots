@@ -26,6 +26,10 @@
     ga = "git add";
     gl = "git log";
     gd = "git diff";
+    ls = "ls --color=auto -hN --group-directories-first";
+    rm = "rm -vI";
+    cp = "cp -iv";
+    mv = "mv -iv";
   };
 
   ## === XDG ===

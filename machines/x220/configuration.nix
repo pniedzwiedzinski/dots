@@ -11,32 +11,32 @@ let
     '';
   };
 in
-{
-  imports = [
-    ../base.nix
-    ../pl.nix
-    ../../modules/larbs.nix
-    ../../modules/internet.nix
-    ../../modules/dockd.nix
-    ../../modules/trackpad.nix
-    ../../modules/agetty.nix
-  ];
+  {
+    imports = [
+      ../base.nix
+      ../pl.nix
+      ../../modules/larbs.nix
+      ../../modules/internet.nix
+      ../../modules/dockd.nix
+      ../../modules/trackpad.nix
+      ../../modules/agetty.nix
+    ];
 
-  boot.plymouth.enable = true;
+    boot.plymouth.enable = true;
 
-  networking = {
-    hostName = "x220";
+    networking = {
+      hostName = "x220";
 
-    networkmanager = {
-     enable = true;
-     wifi.backend = "iwd";
+      networkmanager = {
+        enable = true;
+        wifi.backend = "iwd";
+      };
     };
-  };
 
-  nixpkgs.config.allowUnfree = true;
+    nixpkgs.config.allowUnfree = true;
 
 
-  environment.systemPackages = with pkgs; [
+    environment.systemPackages = with pkgs; [
     # Basic tools
     groff file ssh-ident busybox_utils
 
@@ -106,6 +106,14 @@ in
 
   # Battery
   services.tlp.enable = true;
+
+  services.xserver = {
+    videoDrivers = [ "intel" ];
+    deviceSection = ''
+      Option "DIR" "2"
+      Option "TearFree" "true"
+    '';
+  };
 
   services.xserver.wacom = {
     enable = true;
