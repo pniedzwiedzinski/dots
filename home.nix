@@ -12,20 +12,12 @@ let
   # };
 
   common_packages = import ./platforms/common-packages.nix pkgs;
-  isDarwin = builtins.currentSystem == "x86_64-darwin";
-  platformSetup =
-    if isDarwin then [
-      ./platforms/darwin
-    ] else [
+  platformSetup = [
       # ./platforms/linux
       # ./programs/rclone.nix
     ];
 in
 {
-  # Errors on linux
-  manual.manpages.enable = if isDarwin then true else false;
-  dconf.enable = if isDarwin then true else false;
-
   programs.obs-studio = {
     enable = true;
     plugins = with pkgs; [ obs-wlrobs obs-v4l2sink ];
@@ -34,8 +26,7 @@ in
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "pn";
-  home.homeDirectory =
-    if isDarwin then "/Users/pn" else "/home/pn";
+  home.homeDirectory = "/home/pn";
 
   imports = [
     # Platform specific config
