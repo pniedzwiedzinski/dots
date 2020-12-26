@@ -15,6 +15,12 @@ https://www.poznan.pl/mim/feeds/rss.xml "~Poznań"
 https://portal.mozz.us/gemini/cetacean.club/journal/atom.xml "~Christine Dodrill journal"
 https://feeds.simplecast.com/cgGduVSh "~Wayward Guide"
 https://etno-love.blogspot.com/rss.xml "~Z.Margraf"
+gemini://palm93.com/atom.xml
+
+## Music
+
+music "~## MUSIC ##"
+https://sound.jklabs.net/rss
 
 ## Tech
 tech "~## TECH ##"
@@ -25,6 +31,7 @@ https://portal.mozz.us/gemini/makeworld.gq/gemlog/atom.xml?raw=1 "~makeworld" "t
 https://portal.mozz.us/gemini/gemini.marmaladefoo.com/cgi-bin/atom-feed.cgi%3Flukee?raw=1 "~Luke Emmet"
 https://proxy.vulpes.one/gemini/sunshinegardens.org/~abrahms/atom.xml
 https://justin.abrah.ms/feed.xml
+https://solar.lowtechmagazine.com/feeds/all-en.atom.xml
 
 
 ## Youtube
