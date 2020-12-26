@@ -8,7 +8,7 @@ let
     pnvim
     larbs-mail
     larbs-news
-    larbs-music
+    (larbs-music.override { musicDir = "~/music"; })
     dmenu
     pndwm
     pndwmblocks

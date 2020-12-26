@@ -1,38 +1,31 @@
 { config, pkgs, ... }:
 let
   secrets = import ./secrets.nix;
-  wywozik = pkgs.nur.repos.pn.wywozik-todo.override {
-    configFile = ''
-      CITY = "Poznań"
-      STREET = "${secrets.street}"
-      NUMBER = "${secrets.number}"
-      HOUSING = "zamieszkana"
-      TOKEN = "${secrets.todoist}"
-    '';
-  };
+  # wywozik = pkgs.nur.repos.pn.wywozik-todo.override {
+  #   configFile = ''
+  #     CITY = "Poznań"
+  #     STREET = "${secrets.street}"
+  #     NUMBER = "${secrets.number}"
+  #     HOUSING = "zamieszkana"
+  #     TOKEN = "${secrets.todoist}"
+  #   '';
+  # };
 
-  pnvim = import ./programs/nvim.nix pkgs;
   common_packages = import ./platforms/common-packages.nix pkgs;
   isDarwin = builtins.currentSystem == "x86_64-darwin";
   platformSetup =
     if isDarwin then [
       ./platforms/darwin
     ] else [
-      ./platforms/linux
+      # ./platforms/linux
       # ./programs/rclone.nix
     ];
-
-  music = pkgs.nur.repos.pn.larbs-music.override {
-    musicDir = "~/music";
-  };
 in
 {
   # Errors on linux
   manual.manpages.enable = if isDarwin then true else false;
   dconf.enable = if isDarwin then true else false;
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
   programs.obs-studio = {
     enable = true;
     plugins = with pkgs; [ obs-wlrobs obs-v4l2sink ];
@@ -46,7 +39,7 @@ in
 
   imports = [
     # Platform specific config
-    ./programs/zsh
+    # ./programs/zsh
     ./programs/newsboat
     ./programs/git.nix
     ./programs/mpv.nix
@@ -54,17 +47,10 @@ in
   ] ++ platformSetup;
 
   home.packages = with pkgs; [
-    wywozik
+    # wywozik
     # Basic
-    gnupg
-    pnvim
-    (lowPrio nur.repos.pn.larbs-mail)
-    (lowPrio nur.repos.pn.larbs-news)
-    (lowPrio music)
-    nur.repos.pn.larbs-scripts
     slop
     xlibs.xdpyinfo
-    nur.repos.pn.dmenu
     amfora
     translate-shell
     nix-index
@@ -76,16 +62,13 @@ in
 
 
     # Misc
-    zoom-us
     weechat
     todoist
     browserpass
-    minecraft
+    #minecraft
     spotify-tui
     spotifyd
     # gimp
-    slack-dark
-    signal-desktop
     pandoc
     texlive.combined.scheme-medium
     zathura
