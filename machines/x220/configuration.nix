@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 let
   busybox_utils = pkgs.stdenv.mkDerivation {
@@ -12,6 +12,7 @@ let
   };
 in
   {
+
     imports = [
       ../base.nix
       ../pl.nix
@@ -23,6 +24,7 @@ in
     ];
 
     boot.plymouth.enable = true;
+    boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
     networking = {
       hostName = "x220";
@@ -37,15 +39,15 @@ in
 
 
     environment.systemPackages = with pkgs; [
+      discord
     # Basic tools
     groff file ssh-ident busybox_utils
 
     # XORG perfs
-    dunst xclip
-    xwallpaper xdotool
+    dunst
 
     # UI apps
-    zathura brave sxiv pulsemixer
+    zathura sxiv pulsemixer
     lynx lf arandr wpa_supplicant_gui
     system-config-printer libreoffice
     vscodium abook
@@ -54,7 +56,6 @@ in
     mpd mpc_cli mpv ffmpeg youtube-dl
 
     # CLIs
-    lm_sensors
     gitAndTools.gh docker-compose xsel
     bc libnotify
     pamixer maim killall
@@ -83,7 +84,7 @@ in
   programs.dockd.enable = true;
 
   virtualisation.docker.enable = true;
-  systemd.services.docker.enable = false;
+  # systemd.services.docker.enable = false;
 
   services.udev.packages = [ pkgs.libu2f-host ];
 

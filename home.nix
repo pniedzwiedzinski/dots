@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  secrets = import ./secrets.nix;
+  # secrets = import ./secrets.nix;
   # wywozik = pkgs.nur.repos.pn.wywozik-todo.override {
   #   configFile = ''
   #     CITY = "Poznań"
@@ -11,13 +11,14 @@ let
   #   '';
   # };
 
-  common_packages = import ./platforms/common-packages.nix pkgs;
   platformSetup = [
       # ./platforms/linux
       # ./programs/rclone.nix
     ];
 in
 {
+  dconf.enable = true;
+
   programs.obs-studio = {
     enable = true;
     plugins = with pkgs; [ obs-wlrobs obs-v4l2sink ];
@@ -63,8 +64,7 @@ in
     pandoc
     texlive.combined.scheme-medium
     zathura
-  ]
-  ++ common_packages;
+  ];
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

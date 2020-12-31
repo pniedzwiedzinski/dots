@@ -26,6 +26,7 @@
     ga = "git add";
     gl = "git log";
     gd = "git diff";
+    clone = "cd ~/code && git clone";
     ls = "ls --color=auto -hN --group-directories-first";
     rm = "rm -vI";
     cp = "cp -iv";

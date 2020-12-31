@@ -3,8 +3,8 @@
 
 let
   home-manager = builtins.fetchTarball {
-    url = "https://github.com/nix-community/home-manager/archive/release-20.09.tar.gz";
-    sha256 = "0cxnh7g1nagmdkl40jsg5kvfq6mdpg21k7b9y0i713p6zsgd48jl";
+    url = "https://github.com/nix-community/home-manager/archive/63f299b3347aea183fc5088e4d6c4a193b334a41.tar.gz";
+    sha256 = "0iksjch94wfvyq0cgwv5wq52j0dc9cavm68wka3pahhdvjlxd3js";
   };
 in
   {
@@ -21,6 +21,8 @@ in
     home-manager.users.pn = {
       imports = [
         ../home.nix
+        ../platforms/linux/user-dirs.nix
+        # ../platforms/linux/gtk.nix
       ];
 
       xsession = {

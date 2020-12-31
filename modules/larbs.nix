@@ -1,5 +1,9 @@
 { pkgs, ... }:
 let
+  xwallpaper_fix = (import (pkgs.fetchTarball {
+    url = "https://github.com/IvarWithoutBones/nixpkgs/archive/xwallpaper-fix.tar.gz";
+    sha256 = "1jdlchn1x5gwdya9blqs85accr82f3y6j50av073d69mm7bfa1mn";
+  }) {}).xwallpaper;
   pnvim = import ../pkgs/nvim.nix pkgs;
   pndwm = import ../pkgs/dwm pkgs;
   pndwmblocks = import ../pkgs/dwmblocks pkgs;
@@ -31,6 +35,11 @@ in
     xdotool
     lm_sensors
     mpc_cli
+    python3Packages.pywal
+    xwallpaper
+    xcompmgr
+
+    playerctl
 
     todos
     brave
@@ -39,6 +48,7 @@ in
 
   environment.variables = {
     TERM = "st";
+    TERMINAL = "st";
     BROWSER = "brave";
   };
 
