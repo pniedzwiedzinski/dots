@@ -13,6 +13,8 @@ in
       (import "${home-manager}/nixos")
     ];
 
+    nix.trustedUsers = [ "pn" ];
+
     users.users.pn = {
       isNormalUser = true;
       extraGroups = [ "wheel" "audio" ];
