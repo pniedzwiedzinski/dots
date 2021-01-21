@@ -83,6 +83,9 @@ in
   programs.browserpass.enable = true;
   programs.dockd.enable = true;
 
+  virtualisation.anbox.enable = true;
+  programs.adb.enable = true;
+
   virtualisation.docker.enable = true;
   # systemd.services.docker.enable = false;
 
