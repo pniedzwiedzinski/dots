@@ -10,14 +10,31 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sdhci_acpi" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" "brcmfmac" ];
   boot.extraModulePackages = [ ];
 
-  boot.initrd.prepend = [ "${./acpi_override}" ];
+  boot.kernelParams = [ "intel_idle.max_cstate=1" ];
 
-  boot.loader.grub = {
-    efiSupport = true;
-    device = "nodev";
+  boot.initrd.prepend = [ "${./acpi_override}" ];
+  boot.kernelPatches = [
+    {
+      name = "acpi_upgrade";
+      patch = null;
+      extraConfig = ''
+        ACPI_TABLE_UPGRADE y
+      '';
+    }
+  ];
+
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot";
+    };
+    grub = {
+      efiSupport = true;
+      device = "nodev";
+    };
   };
 
   fileSystems."/" = lib.mkForce
