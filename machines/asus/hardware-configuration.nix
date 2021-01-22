@@ -9,8 +9,8 @@
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "usb_storage" "usbhid" "sd_mod" "sdhci_acpi" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" "brcmfmac" ];
+  boot.initrd.kernelModules = [ "brcmfmac" ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   boot.kernelParams = [ "intel_idle.max_cstate=1" ];
@@ -24,6 +24,12 @@
         ACPI_TABLE_UPGRADE y
       '';
     }
+  ];
+
+  hardware.enableRedistributableFirmware = true;
+  hardware.enableAllFirmware = true;
+  hardware.firmware = [
+    (pkgs.callPackage ./brcm.nix {})
   ];
 
   boot.loader = {
