@@ -5,7 +5,7 @@ stdenv.mkDerivation {
 
   src = fetchurl {
     url = "https://android.googlesource.com/platform/hardware/broadcom/wlan/+archive/master/bcmdhd/firmware/bcm43341.tar.gz";
-    sha256 = "0cd25rrmc0b74pxhhgv1jgjwfk6214pz1s7lffplsc4s354h1wd9";
+    sha256 = "1nkj8h2fwj83wsswi6p2jf3nxba0r70inanvjcf77cqyx6nvp2pv";
   };
 
   sourceRoot = ".";
