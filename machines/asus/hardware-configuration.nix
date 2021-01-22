@@ -26,6 +26,7 @@
     }
   ];
 
+  nixpkgs.config.allowUnfree = true;
   hardware.enableRedistributableFirmware = true;
   hardware.enableAllFirmware = true;
   hardware.firmware = [
