@@ -31,12 +31,18 @@ in
 
       networkmanager = {
         enable = true;
-        wifi.backend = "iwd";
+        wifi = {
+          backend = "iwd";
+          powersave = true;
+        };
       };
     };
 
     nixpkgs.config.allowUnfree = true;
 
+    nix.extraOptions = ''
+      show-trace = true
+    '';
 
     environment.systemPackages = with pkgs; [
       discord
@@ -87,7 +93,7 @@ in
   programs.adb.enable = true;
 
   virtualisation.docker.enable = true;
-  # systemd.services.docker.enable = false;
+  systemd.services.docker.wantedBy = lib.mkForce [];
 
   services.udev.packages = [ pkgs.libu2f-host ];
 
@@ -102,6 +108,9 @@ in
     drivers = [ pkgs.epson_201207w ];
   };
   hardware.sane.enable = true;
+  hardware.sane.extraBackends = [ pkgs.epkowa ];
+
+  hardware.bluetooth.powerOnBoot = false;
 
   services.cron.enable = true;
   # services.fcron.enable = true;
