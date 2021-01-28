@@ -19,9 +19,11 @@
   ];
 
   # File systems configuration for using the installer's partition layout
-  "/" = {
-    device = "/dev/disk/by-label/NIXOS_SD";
-    fsType = "ext4";
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-label/NIXOS_SD";
+      fsType = "ext4";
+    };
   };
 
   # Preserve space by sacrificing documentation and history
