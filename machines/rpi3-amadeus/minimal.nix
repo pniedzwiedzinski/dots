@@ -1,8 +1,5 @@
 { config, pkgs, lib, ... }:
 {
-  imports = [
-    ./hyperion.nix
-  ];
   # NixOS wants to enable GRUB by default
   boot.loader.grub.enable = false;
   # Enables the generation of /boot/extlinux/extlinux.conf
@@ -19,25 +16,17 @@
 
   # File systems configuration for using the installer's partition layout
   fileSystems = {
-    "/" = {
+      "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";
       fsType = "ext4";
     };
   };
 
+
   services.openssh.enable = true;
   services.openssh.permitRootLogin = "yes";
 
-  nix.gc.automatic = true;
-  nix.gc.options = "--delete-older-than 30d";
 
   # !!! Adding a swap file is optional, but strongly recommended!
   swapDevices = [ { device = "/swapfile"; size = 1024; } ];
-
-
-  users.users.pi = {
-    isNormalUser = true;
-    home = "/home/pi";
-    extraGroups = [ "wheel" "networkmanager" ];
-  };
 }
