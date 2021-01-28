@@ -22,6 +22,11 @@
     };
   };
 
+
+  services.openssh.enable = true;
+  services.openssh.permitRootLogin = "yes";
+
+
   # !!! Adding a swap file is optional, but strongly recommended!
   swapDevices = [ { device = "/swapfile"; size = 1024; } ];
 }
