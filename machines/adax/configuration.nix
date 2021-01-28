@@ -19,6 +19,9 @@
     enable = true;
     wheelNeedsPassword = false;
   };
+  environment.shellAliases = {
+    sudo = "doas";
+  };
 
   # https://sgt.hootr.club/molten-matter/nix-distributed-builds/
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
