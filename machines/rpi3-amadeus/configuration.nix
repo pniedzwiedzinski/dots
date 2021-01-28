@@ -2,48 +2,26 @@
 {
   # NixOS wants to enable GRUB by default
   boot.loader.grub.enable = false;
+  # Enables the generation of /boot/extlinux/extlinux.conf
+  boot.loader.generic-extlinux-compatible.enable = true;
 
-  # if you have a Raspberry Pi 2 or 3, pick this:
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  #  !!! If your board is a Raspberry Pi 3, select not latest (5.8 at the time)
+  #  !!! as it is currently broken (see https://github.com/NixOS/nixpkgs/issues/97064)
+  boot.kernelPackages = pkgs.linuxPackages;
 
-  # A bunch of boot parameters needed for optimal runtime on RPi 3b+
-  boot.kernelParams = ["cma=256M"];
-  boot.loader.raspberryPi.enable = true;
-  boot.loader.raspberryPi.version = 3;
-  boot.loader.raspberryPi.uboot.enable = true;
-  boot.loader.raspberryPi.firmwareConfig = ''
-    gpu_mem=256
-  '';
-  environment.systemPackages = with pkgs; [
-    raspberrypi-tools
-  ];
+  # !!! Needed for the virtual console to work on the RPi 3, as the default of 16M doesn't seem to be enough.
+  # If X.org behaves weirdly (I only saw the cursor) then try increasing this to 256M.
+  # On a Raspberry Pi 4 with 4 GB, you should either disable this parameter or increase to at least 64M if you want the USB ports to work.
+  boot.kernelParams = ["cma=32M"];
 
   # File systems configuration for using the installer's partition layout
   fileSystems = {
-    "/" = {
+      "/" = {
       device = "/dev/disk/by-label/NIXOS_SD";
       fsType = "ext4";
     };
   };
 
-  # Preserve space by sacrificing documentation and history
-  documentation.nixos.enable = false;
-  nix.gc.automatic = true;
-  nix.gc.options = "--delete-older-than 30d";
-  boot.cleanTmpDir = true;
-
-  # Configure basic SSH access
-  services.openssh.enable = true;
-  services.openssh.permitRootLogin = "yes";
-
-  # Use 1GB of additional swap memory in order to not run out of memory
-  # when installing lots of things while running other things at the same time.
+  # !!! Adding a swap file is optional, but strongly recommended!
   swapDevices = [ { device = "/swapfile"; size = 1024; } ];
-
-
-  users.users.pi = {
-    isNormalUser = true;
-    home = "/home/pi";
-    extraGroups = [ "wheel" "networkmanager" ];
-  };
 }
