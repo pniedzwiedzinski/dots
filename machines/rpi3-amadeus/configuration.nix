@@ -34,6 +34,9 @@
   # !!! Adding a swap file is optional, but strongly recommended!
   swapDevices = [ { device = "/swapfile"; size = 1024; } ];
 
+  environment.systemPackages = with pkgs; [
+    vim git curl wget
+  ];
 
   users.users.pi = {
     isNormalUser = true;
