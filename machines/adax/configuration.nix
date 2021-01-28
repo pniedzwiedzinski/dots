@@ -14,9 +14,16 @@
   environment.systemPackages = with pkgs; [
   ];
 
+  security.sudo.enable = false;
+  security.doas = {
+    enable = true;
+    wheelNeedsPassword = false;
+  };
+
   # https://sgt.hootr.club/molten-matter/nix-distributed-builds/
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
   services.openssh.enable = true;
+  nix.trustedUsers = [ "bob" ];
   users.users.bob = {
     description = "Bob the Builder";
     isNormalUser = true;
