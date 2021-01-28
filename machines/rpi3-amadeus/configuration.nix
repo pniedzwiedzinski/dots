@@ -1,58 +1,47 @@
 { config, pkgs, lib, ... }:
 {
-
-  imports = [
-    ./modules/hyperion.nix
-  ];
-
-
   # NixOS wants to enable GRUB by default
   boot.loader.grub.enable = false;
-  # Enables the generation of /boot/extlinux/extlinux.conf
-  boot.loader.generic-extlinux-compatible.enable = true;
 
-  # !!! Set to specific linux kernel version
-  boot.kernelPackages = pkgs.linuxPackages_5_4;
+  # if you have a Raspberry Pi 2 or 3, pick this:
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  # !!! Needed for the virtual console to work on the RPi 3, as the default of 16M doesn't seem to be enough.
-  # If X.org behaves weirdly (I only saw the cursor) then try increasing this to 256M.
-  # On a Raspberry Pi 4 with 4 GB, you should either disable this parameter or increase to at least 64M if you want the USB ports to work.
+  # A bunch of boot parameters needed for optimal runtime on RPi 3b+
   boot.kernelParams = ["cma=256M"];
-
-  # Settings above are the bare minimum
-  # All settings below are customized depending on your needs
-
-  # systemPackages
+  boot.loader.raspberryPi.enable = true;
+  boot.loader.raspberryPi.version = 3;
+  boot.loader.raspberryPi.uboot.enable = true;
+  boot.loader.raspberryPi.firmwareConfig = ''
+    gpu_mem=256
+  '';
   environment.systemPackages = with pkgs; [
-    vim curl wget
+    raspberrypi-tools
   ];
 
-  services.openssh = {
-      enable = true;
-      permitRootLogin = "yes";
+  # File systems configuration for using the installer's partition layout
+  "/" = {
+    device = "/dev/disk/by-label/NIXOS_SD";
+    fsType = "ext4";
   };
 
-  networking.firewall.enable = false;
+  # Preserve space by sacrificing documentation and history
+  documentation.nixos.enable = false;
+  nix.gc.automatic = true;
+  nix.gc.options = "--delete-older-than 30d";
+  boot.cleanTmpDir = true;
 
-  # put your own configuration here, for example ssh keys:
-  users.mutableUsers = true;
-  users.groups = {
-    nixos = {
-      gid = 1000;
-      name = "nixos";
-    };
+  # Configure basic SSH access
+  services.openssh.enable = true;
+  services.openssh.permitRootLogin = "yes";
+
+  # Use 1GB of additional swap memory in order to not run out of memory
+  # when installing lots of things while running other things at the same time.
+  swapDevices = [ { device = "/swapfile"; size = 1024; } ];
+
+
+  users.users.pi = {
+    isNormalUser = true;
+    home = "/home/pi";
+    extraGroups = [ "wheel" "networkmanager" ];
   };
-  users.users = {
-    nixos = {
-      uid = 1000;
-      home = "/home/nixos";
-      name = "nixos";
-      group = "nixos";
-      extraGroups = [ "wheel" ];
-    };
-  };
-  # users.extraUsers.root.openssh.authorizedKeys.keys = [
-  #     # Your ssh key
-  #     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDqlXJv/noNPmZMIfjJguRX3O+Z39xeoKhjoIBEyfeqgKGh9JOv7IDBWlNnd3rHVnVPzB9emiiEoAJpkJUnWNBidL6vPYn13r6Zrt/2WLT6TiUFU026ANdqMjIMEZrmlTsfzFT+OzpBqtByYOGGe19qD3x/29nbszPODVF2giwbZNIMo2x7Ww96U4agb2aSAwo/oQa4jQsnOpYRMyJQqCUhvX8LzvE9vFquLlrSyd8khUsEVV/CytmdKwUUSqmlo/Mn7ge/S12rqMwmLvWFMd08Rg9NHvRCeOjgKB4EI6bVwF8D6tNFnbsGVzTHl7Cosnn75U11CXfQ6+8MPq3cekYr lucernae@lombardia-N43SM"
-  # ];
 }
