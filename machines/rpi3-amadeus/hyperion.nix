@@ -15,6 +15,10 @@ in
     hyperion
   ];
 
+
+  # networking.firewall.allowedTCPPorts = [  ];
+  networking.firewall.enable = false; #TODO
+
   systemd.services.hyperion = {
     enable = true;
     wantedBy = ["multi-user.target"];
