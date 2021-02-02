@@ -45,6 +45,7 @@ in
     '';
 
     environment.systemPackages = with pkgs; [
+      usbutils
       discord
     # Basic tools
     groff file ssh-ident busybox_utils

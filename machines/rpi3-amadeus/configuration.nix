@@ -35,7 +35,7 @@
   swapDevices = [ { device = "/swapfile"; size = 1024; } ];
 
   environment.systemPackages = with pkgs; [
-    vim git curl wget
+    vim git curl wget usbutils
   ];
 
   users.users.pi = {
