@@ -7,7 +7,8 @@ in
 {
   imports =
     [
-      ./hardware-configuration.nix
+      #./hardware-configuration.nix
+      ./cgit.nix
     ];
 
   boot.loader.grub.enable = true;
@@ -81,10 +82,10 @@ in
   services.lighttpd = {
     enable = true;
     port = 8080;
-    cgit = {
+    pn-cgit = {
+      logo = "${./baby-yoda.png.comp}";
       enable = true;
       configText = ''
-        logo=${./baby-yoda.png.comp}
         # source-filter=${pkgs.cgit}/lib/cgit/filters/syntax-highlighting.sh
         about-filter=${pkgs.cgit}/lib/cgit/filters/about-formatting.sh
         cache-size=1000
@@ -92,6 +93,10 @@ in
 	root-desc=Personal git server, because I can
         scan-path=/srv/git/
 	virtual-root=/
+	readme=:README.md
+	readme=:README.rst
+	readme=:README.txt
+	readme=:README
 
       '';
     };
