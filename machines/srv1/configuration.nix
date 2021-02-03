@@ -84,6 +84,7 @@ in
     cgit = {
       enable = true;
       configText = ''
+        logo=${./baby-yoda.png.comp}
         # source-filter=${pkgs.cgit}/lib/cgit/filters/syntax-highlighting.sh
         about-filter=${pkgs.cgit}/lib/cgit/filters/about-formatting.sh
         cache-size=1000
@@ -123,4 +124,3 @@ in
   system.stateVersion = "20.09"; # Did you read the comment?
 
 }
-
