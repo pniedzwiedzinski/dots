@@ -77,10 +77,7 @@ in
     enableACME = true;
     forceSSL = true;
   };
-  security.acme.certs = {
-    "srv1.niedzwiedzinski.cyou".email = "pniedzwiedzinski19@gmail.com";
-    "git.niedzwiedzinski.cyou".email = "pniedzwiedzinski19@gmail.com";
-  };
+  security.acme.certs.email = "pniedzwiedzinski19@gmail.com";
   security.acme.acceptTerms = true;
 
   networking.firewall.allowedTCPPorts = [ 80 443 ];
