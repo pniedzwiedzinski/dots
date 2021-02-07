@@ -62,7 +62,6 @@ in
 
   services.nginx.enable = true;
   services.nginx.virtualHosts."srv1.niedzwiedzinski.cyou" = {
-    addSSL = true;
     enableACME = true;
     forceSSL = true;
     root = "/var/www/srv1.niedzwiedzinski.cyou";
@@ -70,7 +69,6 @@ in
   services.nginx.virtualHosts."git.niedzwiedzinski.cyou" = {
     locations."/".proxyPass = "http://localhost:8080/cgit/";
     locations."/cgit/".proxyPass = "http://localhost:8080";
-    addSSL = true;
     enableACME = true;
     forceSSL = true;
   };
