@@ -64,18 +64,23 @@ in
   services.nginx.virtualHosts."srv1.niedzwiedzinski.cyou" = {
     addSSL = true;
     enableACME = true;
+    forceSSL = true;
     root = "/var/www/srv1.niedzwiedzinski.cyou";
   };
   services.nginx.virtualHosts."git.niedzwiedzinski.cyou" = {
     locations."/".proxyPass = "http://localhost:8080/cgit/";
     locations."/cgit/".proxyPass = "http://localhost:8080";
+    addSSL = true;
+    enableACME = true;
+    forceSSL = true;
   };
   security.acme.certs = {
     "srv1.niedzwiedzinski.cyou".email = "pniedzwiedzinski19@gmail.com";
+    "git.niedzwiedzinski.cyou".email = "pniedzwiedzinski19@gmail.com";
   };
   security.acme.acceptTerms = true;
 
-  networking.firewall.allowedTCPPorts = [ 80 8080 443 ];
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
 
   services.molly-brown = {
