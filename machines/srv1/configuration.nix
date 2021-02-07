@@ -4,32 +4,32 @@ let
     vimAlias = true;
   };
 in
-{
-  imports =
-    [
+  {
+    imports =
+      [
       #./hardware-configuration.nix
       ./cgit.nix
     ];
 
-  boot.loader.grub.enable = true;
-  boot.loader.grub.version = 2;
-  boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
+    boot.loader.grub.enable = true;
+    boot.loader.grub.version = 2;
+    boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
 
-  networking.hostName = "srv1";
+    networking.hostName = "srv1";
 
-  time.timeZone = "Europe/Warsaw";
-  i18n.defaultLocale = "en_US.UTF-8"; # Less confusing locale than polish one
-  console.keyMap = "pl";
+    time.timeZone = "Europe/Warsaw";
+    i18n.defaultLocale = "en_US.UTF-8"; # Less confusing locale than polish one
+    console.keyMap = "pl";
 
-  nix.gc = {
-    automatic = true;
-    options = "--delete-older-than 30d";
-  };
-  nix.optimise.automatic = true;
-  system.autoUpgrade = {
-    enable = true;
-    allowReboot = true;
-  };
+    nix.gc = {
+      automatic = true;
+      options = "--delete-older-than 30d";
+    };
+    nix.optimise.automatic = true;
+    system.autoUpgrade = {
+      enable = true;
+      allowReboot = true;
+    };
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -58,9 +58,9 @@ in
 
   services.nginx.enable = true;
   services.nginx.virtualHosts."srv1.niedzwiedzinski.cyou" = {
-      addSSL = true;
-      enableACME = true;
-      root = "/var/www/srv1.niedzwiedzinski.cyou";
+    addSSL = true;
+    enableACME = true;
+    root = "/var/www/srv1.niedzwiedzinski.cyou";
   };
   services.nginx.virtualHosts."git.niedzwiedzinski.cyou" = {
     locations."/".proxyPass = "http://localhost:8080/cgit/";
@@ -79,6 +79,28 @@ in
     #enable = true;
   };
 
+  systemd = {
+    services.git-fetch = {
+      script = ''
+        cd /srv/git
+        for f in `ls -I git-shell-commands`; do
+          cd $f
+          git fetch
+          cd ..
+        done
+      '';
+      serviceConfig = {
+        Type = "oneshot";
+      };
+    };
+    timers.git-fetch = {
+      timerConfig = {
+        OnCalendar = "hourly";
+        Unit = "git-fetch.service";
+      };
+    };
+  };
+
   services.lighttpd = {
     enable = true;
     port = 8080;
@@ -89,14 +111,14 @@ in
         # source-filter=${pkgs.cgit}/lib/cgit/filters/syntax-highlighting.sh
         about-filter=${pkgs.cgit}/lib/cgit/filters/about-formatting.sh
         cache-size=1000
-	root-title=git.niedzwiedzinski.cyou
-	root-desc=Personal git server, because I can
+        root-title=git.niedzwiedzinski.cyou
+        root-desc=Personal git server, because I can
         scan-path=/srv/git/
-	virtual-root=/
-	readme=:README.md
-	readme=:README.rst
-	readme=:README.txt
-	readme=:README
+        virtual-root=/
+        readme=:README.md
+        readme=:README.rst
+        readme=:README.txt
+        readme=:README
 
       '';
     };
