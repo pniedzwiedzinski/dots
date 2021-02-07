@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 let
-  nvim = pkgs.neovim.override {
+  nvim = (import (pkgs.fetchzip {
+    url = "https://github.com/nixos/nixpkgs/archive/517c29935b6e4dec12571e7d101e2b0da220263d.zip";
+    sha256 = "1s85sz62iykvca90d3cgd981670rnkd5c171wda7wpwdj0d52sf3";
+  }) { }).neovim.override {
     vimAlias = true;
   };
 in
@@ -49,7 +52,8 @@ in
   # };
 
   environment.systemPackages = with pkgs; [
-    curl wget nvim htop git
+    curl wget htop git
+    nvim
   ];
 
   services.openssh.enable = true;
@@ -85,7 +89,7 @@ in
         cd /srv/git
         for f in `ls -I git-shell-commands`; do
           cd $f
-          git fetch
+          ${pkgs.git}/bin/git fetch
           cd ..
         done
       '';
@@ -94,6 +98,8 @@ in
       };
     };
     timers.git-fetch = {
+      partOf = [ "git-fetch.service" ];
+      wantedBy = ["timers.target" ];
       timerConfig = {
         OnCalendar = "hourly";
         Unit = "git-fetch.service";
