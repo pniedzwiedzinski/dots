@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
   security.sudo.enable = false;
   security.doas = {
@@ -15,4 +15,10 @@
   environment.shellAliases = {
     sudo = "doas";
   };
+  environment.systemPackages = [
+    (pkgs.linkFarm "sudo" [ {
+      name = "bin/sudo";
+      path = "${config.security.wrapperDir}/doas";
+    }])
+  ];
 }
