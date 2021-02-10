@@ -16,6 +16,7 @@
     wget vim curl htop file
     stdenv git zip unzip
     dnsutils ripgrep jq
+    any-nix-shell
   ];
 
   console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v22n";
@@ -70,6 +71,7 @@
     syntaxHighlighting.enable = true;
 
     promptInit = ''
+      any-nix-shell zsh --info-right | source /dev/stdin
       autoload -U colors && colors
       PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "
     '';
