@@ -54,7 +54,7 @@ in
 
   environment.systemPackages = with pkgs; [
     curl wget htop git
-    nvim
+    nvim lm_sensors
   ];
 
   services.openssh.enable = true;
