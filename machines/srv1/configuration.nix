@@ -29,6 +29,7 @@ in
       options = "--delete-older-than 30d";
     };
     nix.optimise.automatic = true;
+    nix.trustedUsers = [ "pn" ];
     system.autoUpgrade = {
       enable = true;
       allowReboot = true;
