@@ -5,6 +5,14 @@
   ];
   # NixOS wants to enable GRUB by default
   boot.loader.grub.enable = false;
+  boot.loader.raspberryPi = {
+    enable = true;
+    version = 3;
+    uboot.enable = true;
+    firmwareConfig = ''
+      gpu_mem=256
+    '';
+  };
   # Enables the generation of /boot/extlinux/extlinux.conf
   boot.loader.generic-extlinux-compatible.enable = true;
 
@@ -16,6 +24,9 @@
   # If X.org behaves weirdly (I only saw the cursor) then try increasing this to 256M.
   # On a Raspberry Pi 4 with 4 GB, you should either disable this parameter or increase to at least 64M if you want the USB ports to work.
   boot.kernelParams = ["cma=32M"];
+
+  hardware.enableRedistributableFirmware = true;
+  hardware.firmware = with pkgs; [ raspberrypifw ];
 
   # File systems configuration for using the installer's partition layout
   fileSystems = {
@@ -35,7 +46,8 @@
   swapDevices = [ { device = "/swapfile"; size = 1024; } ];
 
   environment.systemPackages = with pkgs; [
-    vim git curl wget usbutils
+    vim git curl wget
+    libraspberrypi
   ];
 
   users.users.pi = {
@@ -43,4 +55,10 @@
     home = "/home/pi";
     extraGroups = [ "wheel" "networkmanager" ];
   };
+  services.xserver = {
+    enable = true;
+    displayManager.startx.enable = true;
+    libinput.enable = true;
+  };
+
 }
