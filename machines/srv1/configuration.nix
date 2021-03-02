@@ -19,6 +19,17 @@ in
     boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
 
     networking.hostName = "srv1";
+    networking.extraHosts = ''
+      192.168.1.136 srv1.niedzwiedzinski.cyou git.niedzwiedzinski.cyou
+    '';
+
+    services.dnsmasq = {
+      enable = true;
+      servers = [ "1.1.1.1" "8.8.8.8" ];
+      extraConfig = ''
+        address=/.srv1.niedzwiedzinski.cyou/192.168.1.136
+      '';
+    };
 
     time.timeZone = "Europe/Warsaw";
     i18n.defaultLocale = "en_US.UTF-8"; # Less confusing locale than polish one
@@ -33,6 +44,19 @@ in
     system.autoUpgrade = {
       enable = true;
       allowReboot = true;
+    };
+
+    nixpkgs.config = {
+      packageOverrides = super: {
+        rss-bridge = super.rss-bridge.overrideDerivation (attrs: {
+	  src = pkgs.fetchFromGitHub {
+            owner = "RSS-Bridge";
+            repo = "rss-bridge";
+            rev = "ee5d190391afffd037e09c04418a240f7ac67ecd";
+            sha256 = "0sxdl6ycqmhd76hc5r8i1yv8vgl18ssmv1p9dzx8ikp5imvfgakc";
+          };
+        });
+      };
     };
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
@@ -62,27 +86,33 @@ in
   services.sshguard.enable = true;
 
   services.nginx.enable = true;
-  services.nginx.virtualHosts."srv1.niedzwiedzinski.cyou" = {
-    enableACME = true;
-    forceSSL = true;
-    root = "/var/www/srv1.niedzwiedzinski.cyou";
-  };
-  services.nginx.virtualHosts."pics.srv1.niedzwiedzinski.cyou" = {
-    enableACME = true;
-    forceSSL = true;
-    root = "/var/www/pics.srv1.niedzwiedzinski.cyou";
-  };
-  services.nginx.virtualHosts."git.niedzwiedzinski.cyou" = {
-    locations."/".proxyPass = "http://localhost:8080/cgit/";
-    locations."/cgit/".proxyPass = "http://localhost:8080";
-    enableACME = true;
-    forceSSL = true;
+  services.nginx.virtualHosts = {
+    "srv1.niedzwiedzinski.cyou" = {
+      enableACME = true;
+      forceSSL = true;
+      root = "/var/www/srv1.niedzwiedzinski.cyou";
+    };
+    "pics.srv1.niedzwiedzinski.cyou" = {
+      enableACME = true;
+      forceSSL = true;
+      root = "/var/www/pics.srv1.niedzwiedzinski.cyou";
+    };
+    "rss.srv1.niedzwiedzinski.cyou" = {
+      enableACME = true;
+      forceSSL = true;
+    };
+    "git.niedzwiedzinski.cyou" = {
+      locations."/".proxyPass = "http://0.0.0.0:8080/cgit/";
+      locations."/cgit/".proxyPass = "http://0.0.0.0:8080";
+      enableACME = true;
+      forceSSL = true;
+    };
   };
   security.acme.email = "pniedzwiedzinski19@gmail.com";
   security.acme.acceptTerms = true;
 
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [ 53 80 443 ];
+  networking.firewall.allowedUDPPorts = [ 53 ];
 
   services.molly-brown = {
     #hostName = "srv1.niedzwiedzinski.cyou";
@@ -109,6 +139,28 @@ in
       timerConfig = {
         OnCalendar = "hourly";
         Unit = "git-fetch.service";
+      };
+    };
+
+    services.shuffle = {
+      script = ''
+        cd /var/www/pics.srv1.niedzwiedzinski.cyou
+	curr=`ls *-badeny2021 -d`
+	[ -d $curr ] || exit 130
+	random=`cat /dev/urandom | tr -cd 'a-f0-9' | head -c 16`
+	mv $curr $random-badeny2021
+	echo "<a href='/$random-badeny2021'>https://pics.srv1.niedzwiedzinski.cyou/$random-badeny2021</a>" > krol_tedium.html
+      '';
+      serviceConfig = {
+        Type = "oneshot";
+      };
+    };
+    timers.shuffle = {
+      partOf = ["shuffle.service"];
+      wantedBy = ["timers.target"];
+      timerConfig = {
+        OnCalendar = "daily";
+	Unit = "shuffle.service";
       };
     };
   };
@@ -141,6 +193,16 @@ in
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqlCe4ovKa/Gwl5xmgu9nvVPmFXMgwdeLRYW7Gg7RWx pniedzwiedzinski19@gmail.com"
+    ];
+  };
+
+  services.rss-bridge = {
+    enable = true;
+    virtualHost = "rss.srv1.niedzwiedzinski.cyou";
+    whitelist = [
+      "Instagram"
+      "Soundcloud"
+      "Facebook"
     ];
   };
 
