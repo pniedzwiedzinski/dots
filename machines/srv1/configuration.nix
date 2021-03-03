@@ -20,7 +20,7 @@ in
 
     networking.hostName = "srv1";
     networking.extraHosts = ''
-      192.168.1.136 srv1.niedzwiedzinski.cyou git.niedzwiedzinski.cyou
+      192.168.1.136 srv1.niedzwiedzinski.cyou git.niedzwiedzinski.cyou tmp.niedzwiedzinski.cyou
     '';
 
     services.dnsmasq = {
@@ -106,6 +106,11 @@ in
       locations."/cgit/".proxyPass = "http://0.0.0.0:8080";
       enableACME = true;
       forceSSL = true;
+    };
+    "tmp.niedzwiedzinski.cyou" = {
+      enableACME = true;
+      addSSL = true;
+      root = "/var/www/tmp.niedzwiedzinski.cyou";
     };
   };
   security.acme.email = "pniedzwiedzinski19@gmail.com";
