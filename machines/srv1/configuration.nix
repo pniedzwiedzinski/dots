@@ -21,9 +21,7 @@ in
     networking.hostName = "srv1";
     networking.extraHosts = ''
       192.168.1.136 srv1.niedzwiedzinski.cyou git.niedzwiedzinski.cyou tmp.niedzwiedzinski.cyou
-    '';
-
-    networking.extraHosts = pkgs.stdenv.lib.readFile ( pkgs.fetchurl {
+    '' + pkgs.stdenv.lib.readFile ( pkgs.fetchurl {
       url = "https://raw.githubusercontent.com/StevenBlack/hosts/d2be343994aacdec74865ff8d159cf6e46359adf/alternates/fakenews-gambling-porn/hosts";
       sha256 = "1la5rd0znc25q8yd1iwbx22zzqi6941vyzmgar32jx568j856s8j";
     } );
@@ -91,10 +89,19 @@ in
   services.sshguard.enable = true;
 
   services.nginx.enable = true;
+  services.nginx.appendHttpConfig = ''
+    charset utf-8;
+    source_charset utf-8;
+  '';
   services.nginx.virtualHosts = {
     "srv1.niedzwiedzinski.cyou" = {
       enableACME = true;
       forceSSL = true;
+      extraConfig = ''
+        location ~ /*.md {
+	  types { } default_type "text/markdown; charset=utf-8";
+        }
+      '';
       root = "/var/www/srv1.niedzwiedzinski.cyou";
     };
     "pics.srv1.niedzwiedzinski.cyou" = {
@@ -141,6 +148,7 @@ in
       '';
       serviceConfig = {
         Type = "oneshot";
+        User = "pn";
       };
     };
     timers.git-fetch = {
