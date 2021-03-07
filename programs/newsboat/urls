@@ -1,9 +1,10 @@
 ## ZHR
 zhr "~## ZHR ##"
 https://azymut.zhr.pl/feed/ "~Azymut ZHR" "zhr"
-https://rssbridge.co.uk/?action=display&bridge=Facebook&context=User&u=7pdhbinduga&media_type=all&limit=-1&format=Atom "~7PDH Binduga (FB)" "zhr"
-https://rssbridge.co.uk/?action=display&bridge=Facebook&context=User&u=watra7pdh&media_type=all&limit=-1&format=Atom "~7PDH Watra (FB)" "zhr"
-https://rssbridge.co.uk/?action=display&bridge=Facebook&context=User&u=19pdhpuszcza&media_type=all&limit=-1&format=Atom "~19PDH Puszcza (FB)" "zhr"
+https://feed.eugenemolotov.ru/?action=display&bridge=Facebook&context=User&u=7pdhbinduga&media_type=all&limit=-1&format=Atom "~7PDH Binduga (FB)" "zhr"
+https://feed.eugenemolotov.ru/?action=display&bridge=Facebook&context=User&u=watra7pdh&media_type=all&limit=-1&format=Atom "~7PDH Watra (FB)" "zhr"
+https://feed.eugenemolotov.ru/?action=display&bridge=Facebook&context=User&u=pikada19pdh&media_type=all&limit=-1&format=Atom "~19PDH Pikada" "zhr"
+https://feed.eugenemolotov.ru/?action=display&bridge=Facebook&context=User&u=19pdhpuszcza&media_type=all&limit=-1&format=Atom "~19PDH Puszcza (FB)" "zhr"
 https://puszcza.netlify.app/rss.xml "~19PDH Puszcza (www)"
 
 ## Personal

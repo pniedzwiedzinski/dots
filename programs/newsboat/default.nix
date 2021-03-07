@@ -1,3 +1,3 @@
 {
-  xdg.configFile."newsboat/urls".source = ./urls;
+  #xdg.configFile."newsboat/urls".source = ./urls;
 }
