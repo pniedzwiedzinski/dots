@@ -1,15 +1,23 @@
 ## Basic rules for interacting with the internet
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
-  networking.nameservers = [
-    "1.1.1.1"
-    "8.8.8.8"
-  ];
+  # networking.nameservers = lib.mkForce [
+  #   "192.168.1.136"
+  #   "1.1.1.1"
+  #   "8.8.8.8"
+  # ];
+
+  environment.etc."resolv.conf".text = ''
+    nameserver 192.168.1.136
+    nameserver 1.1.1.1
+    nameserver 8.8.8.8
+    options edns0
+  '';
 
 
   networking.extraHosts = pkgs.stdenv.lib.readFile ( pkgs.fetchurl {
-    url = "https://raw.githubusercontent.com/StevenBlack/hosts/5a5016ab5bf0166e004147cb49ccd0114ed29b72/alternates/fakenews-gambling-porn/hosts";
-    sha256 = "1c60fyzxz89bic6ymcvb8fcanyxpzr8v2z5vixxr79d8mj0vjswm";
+    url = "https://raw.githubusercontent.com/StevenBlack/hosts/d2be343994aacdec74865ff8d159cf6e46359adf/alternates/fakenews-gambling-porn/hosts";
+    sha256 = "1la5rd0znc25q8yd1iwbx22zzqi6941vyzmgar32jx568j856s8j";
   } );
 
 }

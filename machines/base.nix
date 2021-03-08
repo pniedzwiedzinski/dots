@@ -36,9 +36,17 @@
   };
 
   ## === XDG ===
-  environment.variables = {
+  environment.variables = rec {
     XDG_CONFIG_HOME = "$HOME/.config";
+    XDG_CACHE_HOME = "$HOME/.cache";
     XDG_DATA_HOME = "$HOME/.local/share";
+    XDG_RUNTIME_DIR = "/run/user/$UID";
+
+    # == XDG overrides ==
+    ICEAUTHORITY = "${XDG_CACHE_HOME}/ICEauthority";
+    XAUTHORITY = "$XDG_RUNTIME_DIR/Xauthority";
+    LESSHISTFILE = "${XDG_CACHE_HOME}/lesshist";
+    MPLAYER_HOME = "$XDG_CONFIG_HOME/mplayer";
   };
 
   ## === Vim configuration ===

@@ -21,15 +21,15 @@ in
     environment.etc = {
       "dockd/docked.conf".text = ''
 [Screen]
-height=1180
-width=3940
+height=1080
+width=3840
 mm_height=311
 mm_width=1041
 
 [CRTC]
 crtc=63
 x=0
-y=100
+y=0
 rotation=1
 mode=1920x1080
 outputs_len=1
@@ -37,7 +37,7 @@ outputs_0=HDMI3
 
 [CRTC]
 crtc=64
-x=2020
+x=1920
 y=0
 rotation=1
 mode=1920x1080
