@@ -6,6 +6,15 @@ let
   }) { }).neovim.override {
     vimAlias = true;
   };
+
+  mirror = pkgs.writeScriptBin "mirror" ''
+  #!/bin/sh
+
+  name=`echo "$1" | rev | cut -d'/' -f1 | rev`
+
+  cd /srv/git
+  ${pkgs.git}/bin/git clone --mirror $1 $name
+  '';
 in
   {
     imports =
@@ -82,6 +91,7 @@ in
   environment.systemPackages = with pkgs; [
     curl wget htop git
     nvim lm_sensors
+    mirror
   ];
 
   services.openssh.enable = true;
@@ -195,13 +205,14 @@ in
         cache-size=1000
         root-title=git.niedzwiedzinski.cyou
         root-desc=Personal git server, because I can
-        scan-path=/srv/git/
-        virtual-root=/
         readme=:README.md
         readme=:README.rst
         readme=:README.txt
         readme=:README
+        snapshots=tar.gz
+        clone-prefix=https://git.niedzwiedzinski.cyou
 
+        scan-path=/srv/git/
       '';
     };
   };
