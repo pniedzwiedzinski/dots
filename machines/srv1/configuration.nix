@@ -199,18 +199,46 @@ in
     pn-cgit = {
       logo = "${./baby-yoda.png.comp}";
       enable = true;
-      configText = ''
+      configText = let
+        md2html = pkgs.stdenv.mkDerivation {
+          name = "md2html";
+          src = pkgs.fetchFromGitHub {
+            repo = "md2html";
+            owner = "pniedzwiedzinski";
+            rev = "0d8f15f11d4a4f9f3bb6ada0cbe7d2b8bf7c04aa";
+            sha256 = "1yry88bym9n43rnn3k6bgqa6ik4hc44ir7hpg5namdjznhxcimmy";
+          };
+          installPhase = ''
+            mkdir -p $out/bin
+            mv md2html $out/bin
+          '';
+        };
+        aboutFilter = pkgs.writeScriptBin "about-format.sh" ''
+          #!/bin/sh
+          ${pkgs.coreutils}/bin/cat << EOF
+          <style>
+          .md blockquote {
+            background: #eee;
+            font-style: italic;
+            padding: 0 1em;
+          }
+          </style>
+          <div class="md">
+          EOF
+          #${pkgs.coreutils}/bin/cat /dev/stdin | ${pkgs.discount}/bin/markdown
+          ${pkgs.coreutils}/bin/cat /dev/stdin | ${md2html}/bin/md2html
+          echo '</div>'
+  '';
+      in ''
         # source-filter=${pkgs.cgit}/lib/cgit/filters/syntax-highlighting.sh
-        about-filter=${pkgs.cgit}/lib/cgit/filters/about-formatting.sh
+        about-filter=${aboutFilter}/bin/about-format.sh
+        #about-filter=${pkgs.discount}/bin/markdown
         cache-size=1000
         root-title=git.niedzwiedzinski.cyou
         root-desc=Personal git server, because I can
         readme=:README.md
-        readme=:README.rst
-        readme=:README.txt
-        readme=:README
-        snapshots=tar.gz
-        clone-prefix=https://git.niedzwiedzinski.cyou
+  snapshots=tar.gz
+  clone-prefix=https://git.niedzwiedzinski.cyou
 
         scan-path=/srv/git/
       '';
