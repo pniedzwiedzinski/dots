@@ -225,7 +225,7 @@ in
           </style>
           <div class="md">
           EOF
-          ${pkgs.coreutils}/bin/cat /dev/stdin | ${pkgs.cmark}/bin/markdown
+          ${pkgs.coreutils}/bin/cat /dev/stdin | ${pkgs.cmark}/bin/cmark
           #${pkgs.coreutils}/bin/cat /dev/stdin | ${md2html}/bin/md2html
           echo '</div>'
   '';
