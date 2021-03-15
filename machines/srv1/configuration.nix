@@ -29,7 +29,7 @@ in
 
     networking.hostName = "srv1";
     networking.extraHosts = ''
-      192.168.1.136 srv1.niedzwiedzinski.cyou git.niedzwiedzinski.cyou tmp.niedzwiedzinski.cyou
+      192.168.1.136 srv1.niedzwiedzinski.cyou git.niedzwiedzinski.cyou tmp.niedzwiedzinski.cyou zhr.niedzwiedzinski.cyou niedzwiedzinski.cyou
     '' + pkgs.stdenv.lib.readFile ( pkgs.fetchurl {
       url = "https://raw.githubusercontent.com/StevenBlack/hosts/d2be343994aacdec74865ff8d159cf6e46359adf/alternates/fakenews-gambling-porn/hosts";
       sha256 = "1la5rd0znc25q8yd1iwbx22zzqi6941vyzmgar32jx568j856s8j";
@@ -61,7 +61,7 @@ in
     nixpkgs.config = {
       packageOverrides = super: {
         rss-bridge = super.rss-bridge.overrideDerivation (attrs: {
-	  src = pkgs.fetchFromGitHub {
+    src = pkgs.fetchFromGitHub {
             owner = "RSS-Bridge";
             repo = "rss-bridge";
             rev = "ee5d190391afffd037e09c04418a240f7ac67ecd";
@@ -125,7 +125,9 @@ in
     };
     "git.niedzwiedzinski.cyou" = {
       locations."/".proxyPass = "http://0.0.0.0:8080/cgit/";
-      locations."/cgit/".proxyPass = "http://0.0.0.0:8080";
+      locations."/cgit/".extraConfig = ''
+        rewrite ^/cgit/(.*) https://git.niedzwiedzinski.cyou/$1;
+      '';
       enableACME = true;
       forceSSL = true;
     };
@@ -133,6 +135,16 @@ in
       enableACME = true;
       addSSL = true;
       root = "/var/www/tmp.niedzwiedzinski.cyou";
+    };
+    "niedzwiedzinski.cyou" = {
+      enableACME = true;
+      forceSSL = true;
+      root = "/var/www/niedzwiedzinski.cyou";
+    };
+    "zhr.niedzwiedzinski.cyou" = {
+      enableACME = true;
+      forceSSL = true;
+      root = "/var/www/zhr.niedzwiedzinski.cyou";
     };
   };
   security.acme.email = "pniedzwiedzinski19@gmail.com";
@@ -149,11 +161,12 @@ in
   systemd = {
     services.git-fetch = {
       script = ''
+        #!/bin/sh
         cd /srv/git
-        for f in `ls -I git-shell-commands`; do
-          cd $f
+        for f in `find . -name HEAD`; do
+          cd ''${f%HEAD}
           ${pkgs.git}/bin/git fetch
-          cd ..
+          cd /srv/git
         done
       '';
       serviceConfig = {
@@ -173,11 +186,11 @@ in
     services.shuffle = {
       script = ''
         cd /var/www/pics.srv1.niedzwiedzinski.cyou
-	curr=`ls *-badeny2021 -d`
-	[ -d $curr ] || exit 130
-	random=`cat /dev/urandom | tr -cd 'a-f0-9' | head -c 16`
-	mv $curr $random-badeny2021
-	echo "<a href='/$random-badeny2021'>https://pics.srv1.niedzwiedzinski.cyou/$random-badeny2021</a>" > krol_tedium.html
+        curr=`ls *-badeny2021 -d`
+        [ -d $curr ] || exit 130
+        random=`cat /dev/urandom | tr -cd 'a-f0-9' | head -c 16`
+        mv $curr $random-badeny2021
+        echo "<a href='/$random-badeny2021'>https://pics.srv1.niedzwiedzinski.cyou/$random-badeny2021</a>" > krol_tedium.html
       '';
       serviceConfig = {
         Type = "oneshot";
@@ -188,7 +201,7 @@ in
       wantedBy = ["timers.target"];
       timerConfig = {
         OnCalendar = "daily";
-	Unit = "shuffle.service";
+        Unit = "shuffle.service";
       };
     };
   };
@@ -200,19 +213,6 @@ in
       logo = "${./baby-yoda.png.comp}";
       enable = true;
       configText = let
-        md2html = pkgs.stdenv.mkDerivation {
-          name = "md2html";
-          src = pkgs.fetchFromGitHub {
-            repo = "md2html";
-            owner = "pniedzwiedzinski";
-            rev = "0d8f15f11d4a4f9f3bb6ada0cbe7d2b8bf7c04aa";
-            sha256 = "1yry88bym9n43rnn3k6bgqa6ik4hc44ir7hpg5namdjznhxcimmy";
-          };
-          installPhase = ''
-            mkdir -p $out/bin
-            mv md2html $out/bin
-          '';
-        };
         aboutFilter = pkgs.writeScriptBin "about-format.sh" ''
           #!/bin/sh
           ${pkgs.coreutils}/bin/cat << EOF
@@ -225,8 +225,7 @@ in
           </style>
           <div class="md">
           EOF
-          ${pkgs.coreutils}/bin/cat /dev/stdin | ${pkgs.cmark}/bin/cmark
-          #${pkgs.coreutils}/bin/cat /dev/stdin | ${md2html}/bin/md2html
+          ${pkgs.coreutils}/bin/cat /dev/stdin | ${pkgs.lowdown}/bin/lowdown
           echo '</div>'
   '';
       in ''
@@ -237,9 +236,9 @@ in
         root-title=git.niedzwiedzinski.cyou
         root-desc=Personal git server, because I can
         readme=:README.md
-  snapshots=tar.gz
-  clone-prefix=https://git.niedzwiedzinski.cyou
-
+        snapshots=tar.gz
+        clone-prefix=https://git.niedzwiedzinski.cyou
+        section-from-path=1
         scan-path=/srv/git/
       '';
     };
