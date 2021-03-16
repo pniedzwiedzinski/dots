@@ -183,27 +183,6 @@ in
       };
     };
 
-    services.shuffle = {
-      script = ''
-        cd /var/www/pics.srv1.niedzwiedzinski.cyou
-        curr=`ls *-badeny2021 -d`
-        [ -d $curr ] || exit 130
-        random=`cat /dev/urandom | tr -cd 'a-f0-9' | head -c 16`
-        mv $curr $random-badeny2021
-        echo "<a href='/$random-badeny2021'>https://pics.srv1.niedzwiedzinski.cyou/$random-badeny2021</a>" > krol_tedium.html
-      '';
-      serviceConfig = {
-        Type = "oneshot";
-      };
-    };
-    timers.shuffle = {
-      partOf = ["shuffle.service"];
-      wantedBy = ["timers.target"];
-      timerConfig = {
-        OnCalendar = "daily";
-        Unit = "shuffle.service";
-      };
-    };
   };
 
   services.lighttpd = {
