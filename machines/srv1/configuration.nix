@@ -1,5 +1,7 @@
 { config, pkgs, ... }:
 let
+  ModSecurity-nginx = pkgs.callPackage ./modsecurity.nix { };
+  crs = pkgs.callPackage ./coreruleset.nix { };
   nvim = (import (pkgs.fetchzip {
     url = "https://github.com/nixos/nixpkgs/archive/517c29935b6e4dec12571e7d101e2b0da220263d.zip";
     sha256 = "1s85sz62iykvca90d3cgd981670rnkd5c171wda7wpwdj0d52sf3";
@@ -99,18 +101,31 @@ in
   services.sshguard.enable = true;
 
   services.nginx.enable = true;
+  services.nginx.package = (pkgs.nginx.override { modules = [ ModSecurity-nginx ]; });
   services.nginx.appendHttpConfig = ''
+    modsecurity on;
+    # modsecurity_rules '
+    #   SecRuleEngine On
+    #   Include ${crs}/crs-setup.conf;
+    #   Include ${crs}/rules/*.conf;
+    # ';
     charset utf-8;
     source_charset utf-8;
   '';
   services.nginx.virtualHosts = {
-    "srv1.niedzwiedzinski.cyou" = {
+    "srv1.niedzwiedzinski.cyou" = let
+      modsec_config = builtins.toFile "modsecurity_rules.conf" ''
+        SecRuleEngine On
+        SecRule ARGS:testparam "@contains test" "id:1234,deny,status:403"
+      '';
+    in {
       enableACME = true;
       forceSSL = true;
       extraConfig = ''
         location ~ /*.md {
 	  types { } default_type "text/markdown; charset=utf-8";
         }
+        modsecurity_rules_file ${modsec_config};
       '';
       root = "/var/www/srv1.niedzwiedzinski.cyou";
     };
@@ -122,6 +137,12 @@ in
     "rss.srv1.niedzwiedzinski.cyou" = {
       enableACME = true;
       forceSSL = true;
+      extraConfig = ''
+        modsecurity_rules '
+          SecRuleEngine On
+          SecRule ARGS:u "@rx life[-_]*hack(s)?" "id:1234,deny,status:403"
+        ';
+      '';
     };
     "git.niedzwiedzinski.cyou" = {
       locations."/".proxyPass = "http://0.0.0.0:8080/cgit/";
@@ -135,6 +156,14 @@ in
       enableACME = true;
       addSSL = true;
       root = "/var/www/tmp.niedzwiedzinski.cyou";
+      extraConfig = ''
+        modsecurity_rules '
+          SecRuleEngine On
+          SecRule ARGS:testparam "@contains test" "id:1234,deny,status:403"
+          Include ${crs}/crs-setup.conf
+          Include ${crs}/all-rules.conf
+        ';
+      '';
     };
     "niedzwiedzinski.cyou" = {
       enableACME = true;
