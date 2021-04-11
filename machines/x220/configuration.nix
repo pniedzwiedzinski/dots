@@ -1,6 +1,7 @@
 { pkgs, lib, ... }:
 
 let
+  signal = pkgs.callPackage ../../pkgs/signal.nix { };
   busybox_utils = pkgs.stdenv.mkDerivation {
     name = "strings";
     unpackPhase = "true";
