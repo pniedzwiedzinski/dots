@@ -25,7 +25,7 @@ in
     ];
 
     boot.plymouth.enable = true;
-    boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+    # boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
     networking = {
       hostName = "x220";
@@ -45,11 +45,19 @@ in
       show-trace = true
     '';
 
+    environment.variables = {
+      ELECTRUMDIR="$\{XDG_DATA_HOME:-$HOME/.local/share}/electrum";
+    };
+
+    environment.binsh = "${pkgs.dash}/bin/dash";
+
     environment.systemPackages = with pkgs; [
+      guvcview
+      signal
       usbutils
       discord
     # Basic tools
-    groff file ssh-ident busybox_utils
+    file ssh-ident busybox_utils
 
     # XORG perfs
     dunst
@@ -58,7 +66,7 @@ in
     zathura sxiv pulsemixer
     lynx lf arandr wpa_supplicant_gui
     system-config-printer libreoffice
-    vscodium abook
+    abook
 
     # Audio/Video
     mpd mpc_cli mpv ffmpeg youtube-dl
@@ -67,13 +75,10 @@ in
     gitAndTools.gh docker-compose xsel
     bc libnotify
     pamixer maim killall
-    quickserve ueberzug chafa
+    ueberzug chafa
 
     # Thinkpad utils
-    nur.repos.pn.dockd acpi tpacpi-bat
-
-    wineStaging
-
+    acpi tpacpi-bat
   ];
 
   fonts.fonts = with pkgs; [
@@ -91,8 +96,6 @@ in
   programs.browserpass.enable = true;
   programs.dockd.enable = true;
 
-  virtualisation.anbox.enable = true;
-  programs.adb.enable = true;
 
   virtualisation.docker.enable = true;
   systemd.services.docker.wantedBy = lib.mkForce [];
