@@ -46,7 +46,7 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "1", "🌐₂", "💻₃", "🖨₄", "5", "6"," ▶₇", "🎵₈", "💬₉" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -56,6 +56,10 @@ static const Rule rules[] = {
 	/* class    instance      title       	 tags mask    iscentered	isfloating   isterminal  noswallow  monitor */
 	/* { "Gimp",     NULL,       NULL,       	    1 << 8,       0,  		  0,           0,         0,        -1 }, */
 	{ "Pidgin",     NULL,       NULL,       	    1 << 8,       0,  		  0,           0,         0,        -1 },
+	{ "Brave-browser",     NULL,       NULL,       	    1 << 1,       0,  		  0,           0,         0,        -1 },
+	{ "Spotify",     NULL,       NULL,       	    1 << 7,       0,  		  0,           0,         0,        -1 },
+	{ "mpv",     NULL,       NULL,       	    1 << 6,       0,  		  0,           0,         0,        -1 },
+	{ NULL,     NULL,       "ncmpcpp 0.8.2",       	    1 << 7,       0,  		  0,           0,         0,        -1 },
 	{ TERMCLASS,   NULL,       NULL,       	    0,            0,  		  0,           1,         0,        -1 },
 	{ NULL,       NULL,       "Event Tester",   0,            0,  		  0,           0,         1,        -1 },
 	{ NULL,      "spterm",    NULL,       	    SPTAG(0),     0,  		  1,           1,         0,        -1 },
@@ -167,6 +171,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_bracketright,	spawn,		SHCMD("mpc seek +10") },
 	{ MODKEY|ShiftMask,		XK_bracketright,	spawn,		SHCMD("mpc seek +60") },
 	{ MODKEY,			XK_backslash,		spawn,		SHCMD("telegram-desktop") },
+	{ MODKEY|ControlMask,			XK_backslash,		spawn,		SHCMD("signal-desktop") },
 	{ MODKEY|ShiftMask,		XK_backslash,		spawn,		SHCMD("passmenu") },
 
 	{ MODKEY,			XK_a,		spawn,	SHCMD(TERMINAL " -e amfora") },
