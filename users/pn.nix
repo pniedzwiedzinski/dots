@@ -27,6 +27,8 @@ in
         # ../platforms/linux/gtk.nix
       ];
 
+      gtk.enable = true;
+
       xsession = {
         enable = true;
         windowManager.command = "dbus-run-session -- dwm";

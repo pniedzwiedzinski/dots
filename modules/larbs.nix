@@ -27,6 +27,12 @@ in
     ./slock.nix
   ];
 
+  gtk.iconCache.enable = true;
+
+  environment.shellAliases = {
+    cmus = "screen -q -r -D cmus || screen -S cmus /run/current-system/sw/bin/cmus";
+  };
+
   environment.systemPackages = with pkgs; [
     ## Scripts utils
     #TODO: move to larbs-scripts
@@ -38,8 +44,14 @@ in
     python3Packages.pywal
     xwallpaper
     xcompmgr
+    screen
+
+    cmus
 
     nur.repos.pn.groff
+
+    hicolor-icon-theme
+    gnome3.adwaita-icon-theme
 
     playerctl
 
