@@ -17,7 +17,7 @@ let
     pndwm
     pndwmblocks
     larbs-scripts
-    st
+    (st.override { conf = ../pkgs/st.config.h; } )
   ];
 in
 {
