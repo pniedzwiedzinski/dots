@@ -23,6 +23,7 @@ in
       [
       #./hardware-configuration.nix
       ./cgit.nix
+      ./yggdrasil.nix
     ];
 
     boot.loader.grub.enable = true;
