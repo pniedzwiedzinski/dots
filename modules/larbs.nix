@@ -1,9 +1,9 @@
 { pkgs, ... }:
 let
-  xwallpaper_fix = (import (pkgs.fetchTarball {
-    url = "https://github.com/IvarWithoutBones/nixpkgs/archive/xwallpaper-fix.tar.gz";
-    sha256 = "1jdlchn1x5gwdya9blqs85accr82f3y6j50av073d69mm7bfa1mn";
-  }) {}).xwallpaper;
+  xwallpaper = (import (pkgs.fetchzip {
+    url = "https://github.com/nixos/nixpkgs/archive/7138a338b58713e0dea22ddab6a6785abec7376a.zip";
+    sha256 = "sha256:1asgl1hxj2bgrxdixp3yigp7xn25m37azwkf3ppb248vcfc5kil3";
+  }) { }).xwallpaper;
   pnvim = import ../pkgs/nvim.nix pkgs;
   pndwm = import ../pkgs/dwm pkgs;
   pndwmblocks = import ../pkgs/dwmblocks pkgs;
@@ -38,6 +38,8 @@ in
     python3Packages.pywal
     xwallpaper
     xcompmgr
+
+    nur.repos.pn.groff
 
     playerctl
 

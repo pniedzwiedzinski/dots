@@ -16,7 +16,7 @@
     wget vim curl htop file
     stdenv git zip unzip
     dnsutils ripgrep jq
-    any-nix-shell
+    any-nix-shell fd
   ];
 
   console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v22n";
@@ -37,6 +37,8 @@
 
   ## === XDG ===
   environment.variables = rec {
+    PATH = "$HOME/scripts:$PATH";
+
     XDG_CONFIG_HOME = "$HOME/.config";
     XDG_CACHE_HOME = "$HOME/.cache";
     XDG_DATA_HOME = "$HOME/.local/share";
@@ -79,6 +81,7 @@
     syntaxHighlighting.enable = true;
 
     promptInit = ''
+      [ "$(tty)" = "/dev/tty1" ] && startx
       any-nix-shell zsh --info-right | source /dev/stdin
       autoload -U colors && colors
       PS1="%B%{$fg[red]%}[%{$fg[yellow]%}%n%{$fg[green]%}@%{$fg[blue]%}%M %{$fg[magenta]%}%~%{$fg[red]%}]%{$reset_color%}$%b "

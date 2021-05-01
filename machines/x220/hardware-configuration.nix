@@ -12,8 +12,8 @@
 
   boot.initrd.availableKernelModules = [ "ehci_pci" "ahci" "usb_storage" "sd_mod" "sdhci_pci" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" "tp_smapi" "v4l2loopback" ];
-  boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback tp_smapi ];
+  boot.kernelModules = [ "kvm-intel" "tp_smapi" "v4l2loopback" "acpi_call" ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [ v4l2loopback tp_smapi acpi_call ];
 
 
   boot.loader.grub.enable = true;

@@ -18,26 +18,26 @@ in
   };
 
   config = lib.mkIf (cfg.enable) {
+    environment.systemPackages = [ pkgs.nur.repos.pn.dockd ];
     environment.etc = {
       "dockd/docked.conf".text = ''
 [Screen]
 height=1080
-width=3840
-mm_height=311
-mm_width=1041
+width=1920
+mm_height=282
+mm_width=502
 
 [CRTC]
 crtc=63
 x=0
 y=0
 rotation=1
-mode=1920x1080
-outputs_len=1
-outputs_0=HDMI3
+mode=None
+outputs_len=0
 
 [CRTC]
 crtc=64
-x=1920
+x=0
 y=0
 rotation=1
 mode=1920x1080
@@ -51,6 +51,7 @@ y=0
 rotation=1
 mode=None
 outputs_len=0
+
      '';
       "dockd/undocked.conf".text = ''
 [Screen]

@@ -19,8 +19,8 @@ static const int swallowfloating    = 0;        /* 1 means swallow floating wind
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=10", "JoyPixels:pixelsize=10:antialias=true:autohint=true"  };
-static char dmenufont[]             = "monospace:size=10";
+static const char *fonts[]          = { "monospace:size=11", "JoyPixels:pixelsize=11:antialias=true:autohint=true"  };
+static char dmenufont[]             = "monospace:size=11";
 static char normbgcolor[]           = "#222222";
 static char normbordercolor[]       = "#444444";
 static char normfgcolor[]           = "#bbbbbb";
@@ -46,7 +46,7 @@ static Sp scratchpads[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "1", "🌐₂", "💻₃", "🖨₄", "5", "6"," ▶₇", "🎵₈", "💬₉" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -54,12 +54,18 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	*/
 	/* class    instance      title       	 tags mask    iscentered	isfloating   isterminal  noswallow  monitor */
-	{ "Gimp",     NULL,       NULL,       	    1 << 8,       0,  		  0,           0,         0,        -1 },
+	/* { "Gimp",     NULL,       NULL,       	    1 << 8,       0,  		  0,           0,         0,        -1 }, */
+	{ "Pidgin",     NULL,       NULL,       	    1 << 8,       0,  		  0,           0,         0,        -1 },
+	{ "Brave-browser",     NULL,       NULL,       	    1 << 1,       0,  		  0,           0,         0,        -1 },
+	{ "Spotify",     NULL,       NULL,       	    1 << 7,       0,  		  0,           0,         0,        -1 },
+	{ "mpv",     NULL,       NULL,       	    1 << 6,       0,  		  0,           0,         0,        -1 },
+	{ NULL,     NULL,       "ncmpcpp 0.8.2",       	    1 << 7,       0,  		  0,           0,         0,        -1 },
 	{ TERMCLASS,   NULL,       NULL,       	    0,            0,  		  0,           1,         0,        -1 },
 	{ NULL,       NULL,       "Event Tester",   0,            0,  		  0,           0,         1,        -1 },
 	{ NULL,      "spterm",    NULL,       	    SPTAG(0),     0,  		  1,           1,         0,        -1 },
 	{ NULL,      "spcalc",    NULL,       	    SPTAG(1),     0,  		  1,           1,         0,        -1 },
   { NULL,      "telegram-desktop",  NULL,     0,            1,        1,           0,         0,        -1 },
+  { NULL,      "signal",  NULL,     0,            1,        1,           0,         0,        -1 },
 };
 
 /* layout(s) */
@@ -165,6 +171,7 @@ static Key keys[] = {
 	{ MODKEY,			XK_bracketright,	spawn,		SHCMD("mpc seek +10") },
 	{ MODKEY|ShiftMask,		XK_bracketright,	spawn,		SHCMD("mpc seek +60") },
 	{ MODKEY,			XK_backslash,		spawn,		SHCMD("telegram-desktop") },
+	{ MODKEY|ControlMask,			XK_backslash,		spawn,		SHCMD("signal-desktop") },
 	{ MODKEY|ShiftMask,		XK_backslash,		spawn,		SHCMD("passmenu") },
 
 	{ MODKEY,			XK_a,		spawn,	SHCMD(TERMINAL " -e amfora") },
@@ -226,7 +233,8 @@ static Key keys[] = {
 	{ MODKEY,			XK_F8,		spawn,		SHCMD("mw -Y") },
 	{ MODKEY,			XK_F9,		spawn,		SHCMD("dmenumount") },
 	{ MODKEY,			XK_F10,		spawn,		SHCMD("dmenuumount") },
-	{ MODKEY,			XK_F11,		spawn,		SHCMD("mpv --no-cache --no-osc --no-input-default-bindings --input-conf=/dev/null --title=webcam $(ls /dev/video[0,2,4,6,8] | tail -n 1)") },
+	/* { MODKEY,			XK_F11,		spawn,		SHCMD("mpv --no-cache --no-osc --no-input-default-bindings --input-conf=/dev/null --title=webcam $(ls /dev/video[1,4,6,8] | tail -n 1)") }, */
+	{ MODKEY,			XK_F11,		spawn,		SHCMD("guvcview -d /dev/video1 -g none") },
 	{ MODKEY,			XK_F12,		xrdb,		{.v = NULL } },
 	{ MODKEY,			XK_space,	zoom,		{0} },
 	{ MODKEY|ShiftMask,		XK_space,	togglefloating,	{0} },

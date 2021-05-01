@@ -17,7 +17,7 @@ in
 
     users.users.pn = {
       isNormalUser = true;
-      extraGroups = [ "wheel" "audio" ];
+      extraGroups = [ "wheel" "video" "audio" ];
     };
 
     home-manager.users.pn = {
