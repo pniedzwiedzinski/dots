@@ -171,6 +171,11 @@ in
       forceSSL = true;
       root = "/var/www/niedzwiedzinski.cyou";
     };
+    "y.niedzwiedzinski.cyou" = {
+      enableACME = true;
+      forceSSL = true;
+      root = "/var/www/niedzwiedzinski.cyou";
+    };
     "zhr.niedzwiedzinski.cyou" = {
       enableACME = true;
       forceSSL = true;
