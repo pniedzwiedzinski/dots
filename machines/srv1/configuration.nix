@@ -15,7 +15,7 @@ let
   name=`echo "$1" | rev | cut -d'/' -f1 | rev`
 
   cd /srv/git
-  ${pkgs.git}/bin/git clone --mirror $1 $name
+  sudo -u git ${pkgs.git}/bin/git clone --mirror $1 $name
   '';
 in
   {
@@ -201,7 +201,7 @@ in
       '';
       serviceConfig = {
         Type = "oneshot";
-        User = "pn";
+        User = "git";
       };
     };
     timers.git-fetch = {
