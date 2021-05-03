@@ -20,6 +20,8 @@ in
       extraGroups = [ "wheel" "video" "audio" ];
     };
 
+    environment.systemPackages = [ pkgs.picom ];
+
     home-manager.users.pn = {
       imports = [
         ../home.nix
@@ -41,8 +43,8 @@ in
           remaps &		# run the remaps script, switching caps/esc and more; check it for more info
           setbg &			# set the background with the `setbg` script
       #xrdb $\{XDG_CONFIG_HOME:-$HOME/.config}/Xresources &	# Uncomment to use Xresources colors/settings on startup
-          xcompmgr &
-      # picom &
+          #xcompmgr &
+          picom &
           dunst &			# dunst for notifications
           xset r rate 300 50 &	# Speed xrate up
       # unclutter &		# Remove mouse when idle
