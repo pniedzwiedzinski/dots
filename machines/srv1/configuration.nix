@@ -172,10 +172,12 @@ in
       root = "/var/www/niedzwiedzinski.cyou";
     };
     "y.niedzwiedzinski.cyou" = {
+      enableACME = true;
+      forceSSL = true;
       root = "/var/www/niedzwiedzinski.cyou";
-      locations."/omick.net".proxyPass = "http://omick.net";
-      locations."/suckless.org".proxyPass = "http://suckless.org";
-      locations."/based.cooking".proxyPass = "http://based.cooking";
+      locations."/omick.net".proxyPass = "http://omick.net/";
+      locations."/suckless.org".proxyPass = "http://suckless.org/";
+      locations."/based.cooking".proxyPass = "http://based.cooking/";
 
     };
     "zhr.niedzwiedzinski.cyou" = {
