@@ -16,6 +16,7 @@ in
 
     services.yggdrasil = {
       enable = true;
+      persistentKeys = true;
       config = {
         Peers = [
           "tcp://51.75.44.73:50001"

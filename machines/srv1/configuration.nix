@@ -99,7 +99,13 @@ in
 
   services.openssh.enable = true;
   services.openssh.passwordAuthentication = false;
-  services.sshguard.enable = true;
+  services.sshguard = {
+    enable = true;
+    whitelist = [
+      "192.168.0.0/18"
+      "201:da2c:2873:5ee3:cc87:79ce:5a12:fff9"
+    ];
+  };
 
   services.nginx.enable = true;
   services.nginx.package = (pkgs.nginx.override { modules = [ ModSecurity-nginx ]; });
