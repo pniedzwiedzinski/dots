@@ -16,6 +16,7 @@ let
 
   cd /srv/git
   sudo -u git ${pkgs.git}/bin/git clone --mirror $1 $name
+  sudo -u git /run/current-system/sw/bin/chmod -R g+w $name
   '';
 in
   {
