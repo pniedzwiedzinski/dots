@@ -273,14 +273,6 @@ in
     };
   };
 
-  users.users.pn = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqlCe4ovKa/Gwl5xmgu9nvVPmFXMgwdeLRYW7Gg7RWx pniedzwiedzinski19@gmail.com"
-    ];
-  };
-
   services.rss-bridge = {
     enable = true;
     virtualHost = "rss.srv1.niedzwiedzinski.cyou";
@@ -291,14 +283,30 @@ in
     ];
   };
 
-  users.users.git = {
-    isSystemUser = true;
-    description = "git user";
-    home = "/srv/git";
-    shell = "${pkgs.git}/bin/git-shell";
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqlCe4ovKa/Gwl5xmgu9nvVPmFXMgwdeLRYW7Gg7RWx pniedzwiedzinski19@gmail.com"
-    ];
+  users = {
+    groups = {
+      git = {};
+    };
+    users = {
+      pn = {
+        isNormalUser = true;
+        extraGroups = [ "wheel" "git" ]; # Enable ‘sudo’ for the user.
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqlCe4ovKa/Gwl5xmgu9nvVPmFXMgwdeLRYW7Gg7RWx pniedzwiedzinski19@gmail.com"
+        ];
+      };
+
+      git = {
+        isSystemUser = true;
+        extraGroups = [ "git" ];
+        description = "git user";
+        home = "/srv/git";
+        shell = "${pkgs.git}/bin/git-shell";
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqlCe4ovKa/Gwl5xmgu9nvVPmFXMgwdeLRYW7Gg7RWx pniedzwiedzinski19@gmail.com"
+        ];
+      };
+    };
   };
 
   # This value determines the NixOS release from which the default
