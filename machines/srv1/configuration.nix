@@ -298,7 +298,7 @@ in
 
       git = {
         isSystemUser = true;
-        extraGroups = [ "git" ];
+        group = "git";
         description = "git user";
         home = "/srv/git";
         shell = "${pkgs.git}/bin/git-shell";
