@@ -18,6 +18,16 @@ let
   sudo -u git ${pkgs.git}/bin/git clone --mirror $1 $name
   sudo -u git /run/current-system/sw/bin/chmod -R g+w $name
   '';
+
+  newrepo = pkgs.writeScriptBin "newrepo" ''
+  #!/bin/sh
+
+  [ -z $1 ] && echo "Pass repo name" && exit 1
+
+  sudo -u git git init --bare /srv/git/$1
+  sudo -u git /run/current-system/sw/bin/chmod -R g+w /srv/git/$1
+  '';
+
 in
   {
     imports =
@@ -96,6 +106,7 @@ in
     curl wget htop git
     nvim lm_sensors
     mirror
+    newrepo
   ];
 
   services.openssh.enable = true;
@@ -191,6 +202,11 @@ in
       enableACME = true;
       forceSSL = true;
       root = "/var/www/zhr.niedzwiedzinski.cyou";
+      extraConfig = ''
+        location /rozkazy/ {
+          autoindex on;
+        }
+      '';
     };
     "help.niedzwiedzinski.cyou" = {
       enableACME = true;
