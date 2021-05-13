@@ -273,14 +273,6 @@ in
     };
   };
 
-  users.users.pn = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqlCe4ovKa/Gwl5xmgu9nvVPmFXMgwdeLRYW7Gg7RWx pniedzwiedzinski19@gmail.com"
-    ];
-  };
-
   services.rss-bridge = {
     enable = true;
     virtualHost = "rss.srv1.niedzwiedzinski.cyou";
