@@ -8,7 +8,7 @@
 
   gtk = {
     enable = true;
-    theme.name = "gruvbox-dark-hard";
+    theme.name = "Adwaita:dark";
     iconTheme.name = "Papirus";
     font.name = "Noto Sans 10";
     gtk3.extraConfig = {

@@ -64,6 +64,7 @@ in
     TERM = "st";
     TERMINAL = "st";
     BROWSER = "brave";
+    GTK_THEME = "Adwaita:dark";
   };
 
   services.xserver = {

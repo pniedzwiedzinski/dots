@@ -40,6 +40,9 @@ in
 
     networking = {
       hostName = "x220";
+      firewall.allowedTCPPorts = [
+        6969 # qrcp
+      ];
 
       networkmanager = {
         enable = true;

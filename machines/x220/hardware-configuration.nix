@@ -45,6 +45,15 @@
       device = "/dev/disk/by-label/docker";
       fsType = "ext4";
     };
+    "/mnt/qnap" = {
+      device = "//192.168.1.119/Patryk";
+      fsType = "cifs";
+      options = let
+        # this line prevents hanging on network split
+        automount_opts = "x-systemd.automount,noauto,x-systemd.idle-timeout=60,x-systemd.device-timeout=5s,x-systemd.mount-timeout=5s,vers=1.0";
+
+      in ["${automount_opts},credentials=/etc/nixos/smb-secrets"];
+    };
   };
   swapDevices = [ {
     device = "/dev/sda2"; } ];

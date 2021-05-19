@@ -122,7 +122,7 @@ pkgs.neovim.override {
       set expandtab
       set linebreak
       set colorcolumn=80
-      highlight ColorColumn ctermbg=235
+      highlight ColorColumn ctermbg=8
 
 
       let g:ycm_key_list_select_completion = ['<tab>', '<Down>']
