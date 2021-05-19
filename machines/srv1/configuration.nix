@@ -282,7 +282,7 @@ in
         root-title=git.niedzwiedzinski.cyou
         root-desc=Personal git server, because I can
         readme=:README.md
-        snapshots=tar.gz
+        snapshots=tar.gz zip
         clone-prefix=https://git.niedzwiedzinski.cyou
         section-from-path=1
         scan-path=/srv/git/
