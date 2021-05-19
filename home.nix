@@ -17,7 +17,7 @@ let
     ];
 in
 {
-  dconf.enable = true;
+  dconf.enable = false;
 
   programs.obs-studio = {
     enable = true;
@@ -36,6 +36,7 @@ in
     ./programs/git.nix
     ./programs/mpv.nix
     ./programs/sent
+    ./programs/qutebrowser.nix
   ] ++ platformSetup;
 
   home.packages = with pkgs; [

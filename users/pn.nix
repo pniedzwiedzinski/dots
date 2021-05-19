@@ -26,7 +26,7 @@ in
       imports = [
         ../home.nix
         ../platforms/linux/user-dirs.nix
-        # ../platforms/linux/gtk.nix
+        ../platforms/linux/gtk.nix
       ];
 
       gtk.enable = true;
@@ -42,7 +42,7 @@ in
           mpd &			# music player daemon-you might prefer it as a service though
           remaps &		# run the remaps script, switching caps/esc and more; check it for more info
           setbg &			# set the background with the `setbg` script
-      #xrdb $\{XDG_CONFIG_HOME:-$HOME/.config}/Xresources &	# Uncomment to use Xresources colors/settings on startup
+          xrdb $HOME/.config/Xresources &	# Uncomment to use Xresources colors/settings on startup
           #xcompmgr &
           picom &
           dunst &			# dunst for notifications
