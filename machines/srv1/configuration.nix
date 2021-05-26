@@ -227,6 +227,8 @@ in
     keyPath = "/var/lib/acme/niedzwiedzinski.cyou/key.pem";
     docBase = "/var/www/niedzwiedzinski.cyou";
   };
+  security.acme.certs."niedzwiedzinski.cyou".allowKeysForGroup = true;
+  systemd.services.molly-brown.serviceConfig.SupplementaryGroups = [ config.security.acme.certs."niedzwiedzinski.cyou".group ];
 
   systemd = {
     services.git-fetch = {
