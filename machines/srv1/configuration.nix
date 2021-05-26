@@ -217,12 +217,15 @@ in
   security.acme.email = "pniedzwiedzinski19@gmail.com";
   security.acme.acceptTerms = true;
 
-  networking.firewall.allowedTCPPorts = [ 53 80 443 ];
+  networking.firewall.allowedTCPPorts = [ 53 80 443 config.services.molly-brown.settings.Port ];
   networking.firewall.allowedUDPPorts = [ 53 ];
 
   services.molly-brown = {
-    #hostName = "srv1.niedzwiedzinski.cyou";
-    #enable = true;
+    hostName = "niedzwiedzinski.cyou";
+    enable = true;
+    certPath = "/var/lib/acme/niedzwiedzinski.cyou/cert.pem";
+    keyPath = "/var/lib/acme/niedzwiedzinski.cyou/key.pem";
+    docBase = "/var/www/niedzwiedzinski.cyou";
   };
 
   systemd = {
