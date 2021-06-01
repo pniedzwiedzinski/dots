@@ -9,6 +9,8 @@ let
     vimAlias = true;
   };
 
+  www = "/srv/www";
+
   mirror = pkgs.writeScriptBin "mirror" ''
   #!/bin/sh
 
@@ -34,7 +36,7 @@ in
       [
       #./hardware-configuration.nix
       ./cgit.nix
-      ./yggdrasil.nix
+      # ./yggdrasil.nix
     ];
 
     boot.loader.grub.enable = true;
@@ -146,12 +148,12 @@ in
         }
         modsecurity_rules_file ${modsec_config};
       '';
-      root = "/var/www/srv1.niedzwiedzinski.cyou";
+      root = "${www}/srv1.niedzwiedzinski.cyou";
     };
     "pics.srv1.niedzwiedzinski.cyou" = {
       enableACME = true;
       forceSSL = true;
-      root = "/var/www/pics.srv1.niedzwiedzinski.cyou";
+      root = "${www}/pics.srv1.niedzwiedzinski.cyou";
     };
     "rss.srv1.niedzwiedzinski.cyou" = {
       enableACME = true;
@@ -174,7 +176,7 @@ in
     "tmp.niedzwiedzinski.cyou" = {
       enableACME = true;
       addSSL = true;
-      root = "/var/www/tmp.niedzwiedzinski.cyou";
+      root = "${www}/tmp.niedzwiedzinski.cyou";
       extraConfig = ''
         modsecurity_rules '
           SecRuleEngine On
@@ -187,12 +189,12 @@ in
     "niedzwiedzinski.cyou" = {
       enableACME = true;
       forceSSL = true;
-      root = "/var/www/niedzwiedzinski.cyou";
+      root = "${www}/niedzwiedzinski.cyou";
     };
     "y.niedzwiedzinski.cyou" = {
       enableACME = true;
       forceSSL = true;
-      root = "/var/www/niedzwiedzinski.cyou";
+      root = "${www}/niedzwiedzinski.cyou";
       locations."/omick.net".proxyPass = "http://omick.net/";
       locations."/suckless.org".proxyPass = "http://suckless.org/";
       locations."/based.cooking".proxyPass = "http://based.cooking/";
@@ -201,7 +203,7 @@ in
     "zhr.niedzwiedzinski.cyou" = {
       enableACME = true;
       forceSSL = true;
-      root = "/var/www/zhr.niedzwiedzinski.cyou";
+      root = "${www}/zhr.niedzwiedzinski.cyou";
       extraConfig = ''
         location /rozkazy/ {
           autoindex on;
@@ -211,7 +213,7 @@ in
     "help.niedzwiedzinski.cyou" = {
       enableACME = true;
       forceSSL = true;
-      root = "/var/www/niedzwiedzinski.cyou/help";
+      root = "${www}/niedzwiedzinski.cyou/help";
     };
   };
   security.acme.email = "pniedzwiedzinski19@gmail.com";
@@ -225,7 +227,7 @@ in
     enable = true;
     certPath = "/var/lib/acme/niedzwiedzinski.cyou/cert.pem";
     keyPath = "/var/lib/acme/niedzwiedzinski.cyou/key.pem";
-    docBase = "/var/www/niedzwiedzinski.cyou";
+    docBase = "${www}/niedzwiedzinski.cyou";
   };
   security.acme.certs."niedzwiedzinski.cyou".allowKeysForGroup = true;
   systemd.services.molly-brown.serviceConfig.SupplementaryGroups = [ config.security.acme.certs."niedzwiedzinski.cyou".group ];
