@@ -54,6 +54,7 @@ in
           $(grep '^Exec' $app | sed 's/^Exec=//') &
           done
           sleep .5 && screen-orient &
+          duckling-proxy --serverCert $HOME/.config/duckling-proxy/ca.crt --serverKey $HOME/.config/duckling-proxy/ca.key &
         '';
         scriptPath = ".xinitrc";
       };

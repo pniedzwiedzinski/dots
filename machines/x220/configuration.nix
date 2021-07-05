@@ -14,8 +14,11 @@ let
 in
   {
 
+    virtualisation.virtualbox.host.enable = true;
+    users.extraGroups.vboxusers.members = [ "pn" ];
+
     services.yggdrasil = {
-      enable = true;
+      enable = false;
       persistentKeys = true;
       config = {
         Peers = [
@@ -96,6 +99,7 @@ in
   ];
 
   fonts.fonts = with pkgs; [
+    liberation_ttf
     roboto-slab
   ];
 

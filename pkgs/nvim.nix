@@ -144,7 +144,6 @@ pkgs.neovim.override {
       start = [
         vim-surround
         vim-fugitive
-        nerdtree
         goyo-vim
         # vimagit
         vimwiki

@@ -4,8 +4,8 @@ let
   blocklist = pkgs.writeText "hosts" ''
     0.0.0.0 netflix.com
     0.0.0.0 hbogo.com
-    0.0.0.0 www.facebook.com
   '';
+    # 0.0.0.0 www.facebook.com
 in
 {
   # networking.nameservers = lib.mkForce [

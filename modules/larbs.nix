@@ -11,7 +11,7 @@ let
   larbs-packages = with pkgs.nur.repos.pn; [
     pnvim
     larbs-mail
-    larbs-news
+    # larbs-news
     (larbs-music.override { musicDir = "~/music"; })
     dmenu
     pndwm
@@ -19,6 +19,14 @@ let
     larbs-scripts
     (st.override { conf = ../pkgs/st.config.h; } )
   ];
+
+  grap = pkgs.symlinkJoin {
+    name = "grap";
+    paths = [ pkgs.plan9port ];
+    postBuild = ''
+      ln -s ${pkgs.plan9port}/plan9/bin/grap $out/bin/grap
+    '';
+  };
 in
 {
   imports = [
@@ -36,6 +44,7 @@ in
   environment.systemPackages = with pkgs; [
     ## Scripts utils
     #TODO: move to larbs-scripts
+    newsboat
     maim
     xclip
     xdotool
@@ -48,6 +57,7 @@ in
 
     cmus
 
+    grap
     nur.repos.pn.groff
 
     hicolor-icon-theme

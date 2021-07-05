@@ -36,7 +36,7 @@ in
     ./programs/git.nix
     ./programs/mpv.nix
     ./programs/sent
-    ./programs/qutebrowser.nix
+    # ./programs/qutebrowser.nix
   ] ++ platformSetup;
 
   home.packages = with pkgs; [

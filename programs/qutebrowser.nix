@@ -11,7 +11,7 @@
       c.statusbar.show = "in-mode"
       c.downloads.location.directory = "~/down"
       c.content.pdfjs = True
-      c.content.javascript.enabled = False
+      c.content.javascript.enabled = True
       config.load_autoconfig()
 
       import subprocess
