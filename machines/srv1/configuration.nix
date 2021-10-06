@@ -109,7 +109,6 @@ in
     nvim lm_sensors
     mirror
     newrepo
-    noip
   ];
 
   services.openssh.enable = true;
@@ -238,6 +237,16 @@ in
 
   systemd = {
     services.molly-brown.serviceConfig.SupplementaryGroups = [ config.security.acme.certs."niedzwiedzinski.cyou".group ];
+    services.noip = {
+      script = ''
+        #!/bin/sh
+	${pkgs.noip}/bin/noip2 -c /etc/noip2.conf
+      '';
+      serviceConfig = {
+        User = "root";
+	Restart = "always";
+      };
+    };
     services.git-fetch = {
       script = ''
         #!/bin/sh
