@@ -238,13 +238,13 @@ in
   systemd = {
     services.molly-brown.serviceConfig.SupplementaryGroups = [ config.security.acme.certs."niedzwiedzinski.cyou".group ];
     services.noip = {
-      script = ''
-        #!/bin/sh
-	${pkgs.noip}/bin/noip2 -c /etc/noip2.conf
-      '';
+      enable = true;
+      after = [ "network.target" "syslog.target" ];
       serviceConfig = {
         User = "root";
+	ExecStart = "${pkgs.noip}/bin/noip2 -c /etc/noip2.conf";
 	Restart = "always";
+	Type = "forking";
       };
     };
     services.git-fetch = {
