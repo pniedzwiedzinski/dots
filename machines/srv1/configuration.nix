@@ -178,6 +178,11 @@ in
       enableACME = true;
       forceSSL = true;
     };
+    "bug.niedzwiedzinski.cyou" = {
+      locations."/".proxyPass = "http://0.0.0.0:8000/";
+      enableACME = true;
+      forceSSL = true;
+    };
     "tmp.niedzwiedzinski.cyou" = {
       enableACME = true;
       addSSL = true;
@@ -309,6 +314,10 @@ in
         scan-path=/srv/git/
       '';
     };
+  };
+
+  services.trac = {
+    enable = true;
   };
 
   services.rss-bridge = {
