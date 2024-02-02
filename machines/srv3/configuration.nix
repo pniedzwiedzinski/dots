@@ -1,0 +1,200 @@
+{ config, lib, pkgs, ... }:
+let
+  crs = pkgs.callPackage ./coreruleset.nix { };
+  
+  www = "/srv/www";
+
+in
+  {
+    imports =
+      [
+      ./hardware-configuration.nix
+      ./cgit.nix
+      ./noip.nix
+    ];
+
+    boot.loader.grub.enable = true;
+    boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
+
+
+
+    networking = {
+      useDHCP = false;
+      interfaces.enp1s0 = {
+        useDHCP = true;
+        ipv4.addresses = [{
+          address = "192.168.1.136";
+          prefixLength = 24;
+        }];
+      };
+      hostName = "srv3";
+      extraHosts = ''
+      192.168.1.136 srv3.niedzwiedzinski.cyou git.niedzwiedzinski.cyou tmp.niedzwiedzinski.cyou zhr.niedzwiedzinski.cyou help.niedzwiedzinski.cyou niedzwiedzinski.cyou pics.niedzwiedzinski.cyou
+      192.168.1.144 srv2.niedzwiedzinski.cyou
+    '' + lib.readFile ( pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/StevenBlack/hosts/d2be343994aacdec74865ff8d159cf6e46359adf/alternates/fakenews-gambling-porn/hosts";
+      sha256 = "1la5rd0znc25q8yd1iwbx22zzqi6941vyzmgar32jx568j856s8j";
+      } );
+    };
+
+    services.dnsmasq = {
+      enable = true;
+      settings = {
+        server = [ "1.1.1.1" "8.8.8.8" ];
+        #address=/.srv1.niedzwiedzinski.cyou/192.168.1.136
+        address="/.srv2.niedzwiedzinski.cyou/192.168.1.144";
+      };
+    };
+
+    time.timeZone = "Europe/Warsaw";
+    i18n.defaultLocale = "en_US.UTF-8"; # Less confusing locale than polish one
+    console.keyMap = "pl";
+
+    nix.gc = {
+      automatic = true;
+      options = "--delete-older-than 30d";
+    };
+    nix.optimise.automatic = true;
+    system.autoUpgrade = {
+      enable = true;
+      allowReboot = true;
+    };
+
+  environment.systemPackages = with pkgs; [
+    curl wget htop git
+    vim lm_sensors
+  ];
+
+  services.openssh.enable = true;
+  services.openssh.settings.PasswordAuthentication = false;
+  services.sshguard = {
+    enable = true;
+    whitelist = [
+      "192.168.0.0/18"
+    ];
+  };
+
+  services.nginx.enable = true;
+  services.nginx.additionalModules = with pkgs.nginxModules; [ modsecurity ];
+  services.nginx.appendHttpConfig = ''
+    modsecurity on;
+    # modsecurity_rules '
+    #   SecRuleEngine On
+    #   Include ${crs}/crs-setup.conf;
+    #   Include ${crs}/rules/*.conf;
+    # ';
+    charset utf-8;
+    source_charset utf-8;
+  '';
+  services.nginx.virtualHosts = {
+    "srv3.niedzwiedzinski.cyou" = let
+      modsec_config = builtins.toFile "modsecurity_rules.conf" ''
+        SecRuleEngine On
+        SecRule ARGS:testparam "@contains test" "id:1234,deny,status:403"
+      '';
+    in {
+      enableACME = true;
+      forceSSL = true;
+      extraConfig = ''
+        location ~ /*.md {
+	  types { } default_type "text/markdown; charset=utf-8";
+        }
+        modsecurity_rules_file ${modsec_config};
+      '';
+      root = "${www}/srv3.niedzwiedzinski.cyou";
+    };
+    "pics.srv3.niedzwiedzinski.cyou" = {
+      enableACME = true;
+      forceSSL = true;
+      root = "${www}/pics.niedzwiedzinski.cyou";
+    };
+    "pics.niedzwiedzinski.cyou" = {
+      enableACME = true;
+      forceSSL = true;
+      root = "${www}/pics.niedzwiedzinski.cyou";
+    };
+    "rss.srv3.niedzwiedzinski.cyou" = {
+      enableACME = true;
+      forceSSL = true;
+      extraConfig = ''
+        modsecurity_rules '
+          SecRuleEngine On
+          SecRule ARGS:u "@rx life[-_]*hack(s)?" "id:1234,deny,status:403"
+        ';
+      '';
+    };
+    "tmp.niedzwiedzinski.cyou" = {
+      enableACME = true;
+      addSSL = true;
+      root = "${www}/tmp.niedzwiedzinski.cyou";
+      extraConfig = ''
+        modsecurity_rules '
+          SecRuleEngine On
+          SecRule ARGS:testparam "@contains test" "id:1234,deny,status:403"
+          Include ${crs}/crs-setup.conf
+          Include ${crs}/all-rules.conf
+        ';
+      '';
+    };
+    "niedzwiedzinski.cyou" = {
+      enableACME = true;
+      forceSSL = true;
+      root = "${www}/niedzwiedzinski.cyou";
+    };
+    "zhr.niedzwiedzinski.cyou" = {
+      enableACME = true;
+      forceSSL = true;
+      root = "${www}/zhr.niedzwiedzinski.cyou";
+      extraConfig = ''
+        location /rozkazy/ {
+          autoindex on;
+        }
+      '';
+    };
+    "help.niedzwiedzinski.cyou" = {
+      enableACME = true;
+      forceSSL = true;
+      root = "${www}/niedzwiedzinski.cyou/help";
+    };
+  };
+  security.acme.defaults.email = "pniedzwiedzinski19@gmail.com";
+  security.acme.acceptTerms = true;
+
+  networking.firewall.allowedTCPPorts = [ 53 80 443 config.services.molly-brown.settings.Port ];
+  networking.firewall.allowedUDPPorts = [ 53 ];
+
+  services.molly-brown = {
+    hostName = "niedzwiedzinski.cyou";
+    enable = true;
+    certPath = "/var/lib/acme/niedzwiedzinski.cyou/cert.pem";
+    keyPath = "/var/lib/acme/niedzwiedzinski.cyou/key.pem";
+    docBase = "${www}/niedzwiedzinski.cyou";
+  };
+
+  systemd = {
+    services.molly-brown.serviceConfig.SupplementaryGroups = [ config.security.acme.certs."niedzwiedzinski.cyou".group ];
+  };
+
+  services.rss-bridge = {
+    enable = true;
+    virtualHost = "rss.srv3.niedzwiedzinski.cyou";
+    whitelist = [
+      "Instagram"
+      "Soundcloud"
+      "Facebook"
+    ];
+  };
+
+  users = {
+    users = {
+      pn = {
+	description = "patryk";
+        isNormalUser = true;
+        extraGroups = [ "wheel" "git" ]; # Enable ‘sudo’ for the user.
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqlCe4ovKa/Gwl5xmgu9nvVPmFXMgwdeLRYW7Gg7RWx pniedzwiedzinski19@gmail.com"
+        ];
+      };
+    };
+  };
+}
