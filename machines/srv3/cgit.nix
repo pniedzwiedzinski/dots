@@ -47,9 +47,13 @@ in
       Unit = "git-fetch.service";
     };
   };
-  services.nginx.virtualHosts."${cgitHostname}".locations."=/mylogo.png" = {
-     alias = "${./baby-yoda.png.comp}";
-   };
+  services.nginx.virtualHosts."${cgitHostname}" = {
+    locations."=/mylogo.png" = {
+      alias = "${./baby-yoda.png.comp}";
+    };
+    forceSSL = true;
+    enableACME = true;
+  };
   services.cgit.gitN = {
     enable = true;
     package = pkgs.cgit-pink;
