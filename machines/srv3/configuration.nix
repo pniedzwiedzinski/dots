@@ -70,7 +70,7 @@ in
   services.sshguard = {
     enable = true;
     whitelist = [
-      "192.168.0.0/18"
+      "192.168.1.0/24"
     ];
   };
 
@@ -113,16 +113,6 @@ in
       forceSSL = true;
       root = "${www}/pics.niedzwiedzinski.cyou";
     };
-    "rss.srv3.niedzwiedzinski.cyou" = {
-      enableACME = true;
-      forceSSL = true;
-      extraConfig = ''
-        modsecurity_rules '
-          SecRuleEngine On
-          SecRule ARGS:u "@rx life[-_]*hack(s)?" "id:1234,deny,status:403"
-        ';
-      '';
-    };
     "tmp.niedzwiedzinski.cyou" = {
       enableACME = true;
       addSSL = true;
@@ -160,30 +150,8 @@ in
   security.acme.defaults.email = "pniedzwiedzinski19@gmail.com";
   security.acme.acceptTerms = true;
 
-  networking.firewall.allowedTCPPorts = [ 53 80 443 config.services.molly-brown.settings.Port ];
+  networking.firewall.allowedTCPPorts = [ 53 80 443 ];
   networking.firewall.allowedUDPPorts = [ 53 ];
-
-  services.molly-brown = {
-    hostName = "niedzwiedzinski.cyou";
-    enable = true;
-    certPath = "/var/lib/acme/niedzwiedzinski.cyou/cert.pem";
-    keyPath = "/var/lib/acme/niedzwiedzinski.cyou/key.pem";
-    docBase = "${www}/niedzwiedzinski.cyou";
-  };
-
-  systemd = {
-    services.molly-brown.serviceConfig.SupplementaryGroups = [ config.security.acme.certs."niedzwiedzinski.cyou".group ];
-  };
-
-  services.rss-bridge = {
-    enable = true;
-    virtualHost = "rss.srv3.niedzwiedzinski.cyou";
-    whitelist = [
-      "Instagram"
-      "Soundcloud"
-      "Facebook"
-    ];
-  };
 
   users = {
     users = {
