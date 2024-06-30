@@ -17,7 +17,7 @@
 
 	services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
 		[org.gnome.shell]
-		favorite-apps = [ "brave.desktop", "org.gnome.Nautilus.desktop" ]
+		favorite-apps = [ "brave-browser.desktop", "org.gnome.Geary.desktop", "org.gnome.Nautilus.desktop" ]
 
 		[org.gnome.desktop.wm.keybindings]
 		close = ["<Super>q"]
