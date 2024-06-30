@@ -55,5 +55,9 @@
 #media-session.enable = true;
 	};
 
+	environment.systemPackages = with pkgs; [
+		libnotify
+	];
+
 	documentation.nixos.enable = false;
 }
