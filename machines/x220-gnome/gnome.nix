@@ -10,11 +10,15 @@
 	services.xserver.excludePackages = [ pkgs.xterm ];
 
 	environment.gnome.excludePackages = with pkgs.gnome; [
+		pkgs.epiphany
 		baobab totem yelp file-roller seahorse gnome-clocks pkgs.gnome-connections
 			pkgs.gnome-tour
 	];
 
 	services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
+		[org.gnome.shell]
+		favorite-apps = [ "brave.desktop", "org.gnome.Nautilus.desktop" ]
+
 		[org.gnome.desktop.wm.keybindings]
 		close = ["<Super>q"]
 
@@ -57,6 +61,7 @@
 
 	environment.systemPackages = with pkgs; [
 		libnotify
+		brave
 	];
 
 	documentation.nixos.enable = false;
