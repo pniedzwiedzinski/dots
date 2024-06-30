@@ -16,6 +16,7 @@
       modules = [
         ./machines/x220-gnome/configuration.nix
         # inputs.home-manager.nixosModules.default
+
       ];
     };
   };
