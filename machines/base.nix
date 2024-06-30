@@ -4,7 +4,7 @@
 {
 
   imports = [
-  #  ../modules/nur.nix
+     ../modules/nur.nix
   #  ../users/pn.nix
     ../modules/doas.nix
   #  ../modules/internet.nix
