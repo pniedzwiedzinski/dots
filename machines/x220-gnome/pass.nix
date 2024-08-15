@@ -5,6 +5,6 @@
 	];
 
 	environment.variables = {
-		PASSWORD_STORE_DIR = "'$HOME/.local/share/password-store'";
+		PASSWORD_STORE_DIR = "$HOME/.local/share/password-store";
 	};
 }
