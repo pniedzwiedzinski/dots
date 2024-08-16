@@ -17,12 +17,12 @@ let
     ];
 in
 {
-  dconf.enable = false;
+  #dconf.enable = false;
 
-  programs.obs-studio = {
-    enable = true;
-    plugins = with pkgs; [ obs-wlrobs obs-v4l2sink ];
-  };
+  #programs.obs-studio = {
+    #enable = true;
+    #plugins = with pkgs; [ obs-wlrobs obs-v4l2sink ];
+  #};
 
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -32,39 +32,39 @@ in
   imports = [
     # Platform specific config
     # ./programs/zsh
-    ./programs/newsboat
+    #./programs/newsboat
     ./programs/git.nix
-    ./programs/mpv.nix
-    ./programs/sent
+    #./programs/mpv.nix
+    #./programs/sent
     # ./programs/qutebrowser.nix
   ] ++ platformSetup;
 
   home.packages = with pkgs; [
     # wywozik
     # Basic
-    slop
-    xlibs.xdpyinfo
-    amfora
-    translate-shell
-    nix-index
-    fzf
+    #slop
+    #xlibs.xdpyinfo
+    #amfora
+    #translate-shell
+    #nix-index
+    #fzf
 
     # Handy tools
-    skanlite
-    imagemagick
+    #skanlite
+    #imagemagick
 
 
     # Misc
-    weechat
-    todoist
-    browserpass
-    #minecraft
-    spotify-tui
-    spotifyd
-    # gimp
-    pandoc
-    texlive.combined.scheme-medium
-    zathura
+    #weechat
+    #todoist
+    #browserpass
+    ##minecraft
+    #spotify-tui
+    #spotifyd
+    ## gimp
+    #pandoc
+    #texlive.combined.scheme-medium
+    #zathura
   ];
 
   # This value determines the Home Manager release that your
@@ -75,5 +75,5 @@ in
   # You can update Home Manager without changing this value. See
   # the Home Manager release notes for a list of state version
   # changes in each release.
-  home.stateVersion = "20.09";
+  home.stateVersion = "24.05";
 }

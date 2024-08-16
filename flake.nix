@@ -1,23 +1,28 @@
 {
-  description = "Nixos config flake";
+	description = "Nixos config flake";
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+	inputs = {
+		nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
 
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-  };
+		home-manager = {
+			url = "github:nix-community/home-manager";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+	};
 
-  outputs = { self, nixpkgs, ... }@inputs: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      specialArgs = {inherit inputs;};
-      modules = [
-        ./machines/x220-gnome/configuration.nix
-        inputs.home-manager.nixosModules.default
+	outputs = { self, nixpkgs, ... }@inputs: {
+		nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+			specialArgs = {inherit inputs;};
+			modules = [
+				./machines/x220-gnome/configuration.nix
+					inputs.home-manager.nixosModules.default
+					{
+						home-manager.useGlobalPkgs = true;
+						home-manager.useUserPackages = true;
+						home-manager.users.pn = import ./home.nix;
+					}
 
-      ];
-    };
-  };
+			];
+		};
+	};
 }

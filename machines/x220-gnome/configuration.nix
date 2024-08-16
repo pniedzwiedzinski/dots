@@ -7,6 +7,7 @@
 		./gnome.nix
 		./pass.nix
 		./hardware-configuration.nix
+		./pn.nix
 		];
 
 # Enable networking
@@ -29,15 +30,6 @@
 		LC_PAPER = "en_US.UTF-8";
 		LC_TELEPHONE = "en_US.UTF-8";
 		LC_TIME = "en_US.UTF-8";
-	};
-# Define a user account. Don't forget to set a password with ‘passwd’.
-	users.users.pn = {
-		isNormalUser = true;
-		description = "Patryk Niedzwiedzinski";
-		extraGroups = [ "networkmanager" "wheel" ];
-		packages = with pkgs; [
-			gnomeExtensions.gsconnect
-		];
 	};
 
 	programs.vim.defaultEditor = true;
