@@ -61,6 +61,7 @@
 
 	environment.systemPackages = with pkgs; [
 		libnotify
+		gnome.gnome-boxes
 		brave
 	];
 
