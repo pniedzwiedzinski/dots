@@ -29,7 +29,7 @@ in
       };
       hostName = "srv3";
       extraHosts = ''
-      192.168.1.136 srv3.niedzwiedzinski.cyou git.niedzwiedzinski.cyou tmp.niedzwiedzinski.cyou zhr.niedzwiedzinski.cyou help.niedzwiedzinski.cyou niedzwiedzinski.cyou pics.niedzwiedzinski.cyou
+      192.168.1.136 srv3.niedzwiedzinski.cyou git.niedzwiedzinski.cyou tmp.niedzwiedzinski.cyou zhr.niedzwiedzinski.cyou help.niedzwiedzinski.cyou niedzwiedzinski.cyou pics.niedzwiedzinski.cyou fresh.niedzwiedzinski.cyou
       192.168.1.144 srv2.niedzwiedzinski.cyou
     '' + lib.readFile ( pkgs.fetchurl {
       url = "https://raw.githubusercontent.com/StevenBlack/hosts/d2be343994aacdec74865ff8d159cf6e46359adf/alternates/fakenews-gambling-porn/hosts";
@@ -79,6 +79,15 @@ in
     whitelist = [
       "192.168.1.0/24"
     ];
+  };
+
+  services.freshrss = {
+    enable = true;
+    virtualHost = "fresh.niedzwiedzinski.cyou";
+    baseUrl = "https://fresh.niedzwiedzinski.cyou";
+    authType = "form";
+    defaultUser = "admin";
+    passwordFile = "/fresh/passwd";
   };
 
   services.nginx.enable = true;
@@ -152,6 +161,10 @@ in
       enableACME = true;
       forceSSL = true;
       root = "${www}/niedzwiedzinski.cyou/help";
+    };
+   "fresh.niedzwiedzinski.cyou" = {
+      enableACME = true;
+      forceSSL = true;
     };
   };
   security.acme.defaults.email = "pniedzwiedzinski19@gmail.com";
