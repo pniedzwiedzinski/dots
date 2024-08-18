@@ -4,10 +4,10 @@
 {
 
   imports = [
-    ../modules/nur.nix
-    ../users/pn.nix
+     ../modules/nur.nix
+  #  ../users/pn.nix
     ../modules/doas.nix
-    ../modules/internet.nix
+  #  ../modules/internet.nix
   ];
 
   boot.cleanTmpDir = true;
