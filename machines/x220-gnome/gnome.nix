@@ -64,7 +64,10 @@
 		gnome.gnome-boxes
 		brave
 		newsflash
+		spotify
 	];
+
+	nixpkgs.config.allowUnfree = true;
 
 	documentation.nixos.enable = false;
 }
