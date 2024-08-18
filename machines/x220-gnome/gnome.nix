@@ -63,6 +63,7 @@
 		libnotify
 		gnome.gnome-boxes
 		brave
+		newsflash
 	];
 
 	documentation.nixos.enable = false;
