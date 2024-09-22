@@ -65,6 +65,7 @@
 		brave
 		newsflash
 		spotify
+		fragments
 	];
 
 # Wallpaper
