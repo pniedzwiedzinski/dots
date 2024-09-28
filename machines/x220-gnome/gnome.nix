@@ -62,6 +62,7 @@
 	environment.systemPackages = with pkgs; [
 		libnotify
 		gnome.gnome-boxes
+		gnome.file-roller
 		brave
 		newsflash
 		spotify
