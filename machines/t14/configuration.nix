@@ -5,7 +5,6 @@ in {
 	imports =
 		[ # Include the results of the hardware scan.
 		../base.nix
-		../x220-gnome/gnome.nix
 		../x220-gnome/pass.nix
 		./hardware-configuration.nix
 		../x220-gnome/pn.nix

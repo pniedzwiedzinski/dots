@@ -4,7 +4,7 @@
 	imports =
 		[ # Include the results of the hardware scan.
 		../base.nix
-		./gnome.nix
+		../../modules/gnome.nix
 		./pass.nix
 		./hardware-configuration.nix
 		./pn.nix

@@ -31,6 +31,7 @@
 				specialArgs = {inherit inputs;};
 				modules = [
 					./machines/t14/configuration.nix
+					./modules/gnome.nix
 					inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
 					inputs.home-manager.nixosModules.default
 						{
