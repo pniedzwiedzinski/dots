@@ -12,6 +12,7 @@
 
 # Enable networking
 	networking.networkmanager.enable = true;
+	networking.hostName = "t14";
 
 # Set your time zone.
 	time.timeZone = "Europe/Warsaw";
