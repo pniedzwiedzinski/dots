@@ -105,34 +105,6 @@
 		fragments
 	];
 
-# Wallpaper
-
-	nixpkgs.overlays = [
-      (self: super: {
-        gnome = super.gnome.overrideScope' (selfg: superg: {
-          gnome-shell = superg.gnome-shell.overrideAttrs (old: {
-            patches = (old.patches or []) ++ [
-              (let
-                bg = pkgs.fetchurl {
-		  url = "https://unsplash.com/photos/fzYFRJREmnQ/download?ixid=M3wxMjA3fDB8MXxzZWFyY2h8MTV8fHBvbGlzaCUyMG1vdW50YWluc3xlbnwwfHx8fDE3MjY0MjkwOTd8MA&force=true&h=1080";
-		  sha256 = "sha256-4vK8x7bSm2DogBqb494MondL1q0Q549zc0EgNc33XmQ=";
-                };
-              in pkgs.writeText "bg.patch" ''
-                --- a/data/theme/gnome-shell-sass/widgets/_login-lock.scss
-                +++ b/data/theme/gnome-shell-sass/widgets/_login-lock.scss
-                @@ -15,4 +15,5 @@ $_gdm_dialog_width: 23em;
-                 /* Login Dialog */
-                 .login-dialog {
-                   background-color: $_gdm_bg;
-                +  background-image: url('file://${bg}');
-                 }
-              '')
-            ];
-          });
-        });
-      })
-    ];
-
 	nixpkgs.config.allowUnfree = true;
 
 	documentation.nixos.enable = false;
