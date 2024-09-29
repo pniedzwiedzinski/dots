@@ -51,22 +51,6 @@
 		];
 	};
 
-	##services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
-		##[org.gnome.shell]
-		##favorite-apps = [ "brave-browser.desktop", "org.gnome.Geary.desktop", "org.gnome.Nautilus.desktop" ]
-##
-		##[org.gnome.desktop.wm.keybindings]
-		##close = ["<Super>q"]
-##
-		##[org.gnome.settings-daemon.plugins.media-keys]
-		##custom-keybindings = ["org/gnome/settings-daemon/plugins/media-keys/custom0/"]
-##
-		##[org.gnome.settings-daemon.plugins.media-keys.custom0]
-		##binding = ["<Super><Enter>"]
-		##command = ["kgx"]
-		##name = ["GNOME Console"]
-	##'';
-
 # Configure keymap in X11
 	services.xserver = {
 		xkb.layout = "pl";
@@ -90,10 +74,13 @@
 # If you want to use JACK applications, uncomment this
 #jack.enable = true;
 
+
 # use the example session manager (no others are packaged yet so this is enabled by default,
 # no need to redefine it in your config for now)
 #media-session.enable = true;
 	};
+
+	boot.plymouth.enable = true;
 
 	environment.systemPackages = with pkgs; [
 		libnotify

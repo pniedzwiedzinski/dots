@@ -1,8 +1,7 @@
 ## Usage
-## pneovim = import ./programs/nvim.nix pkgs;
 
 
-pkgs:
+{ pkgs, ... }: 
 pkgs.neovim.override {
   configure = {
     customRC = ''
@@ -166,3 +165,4 @@ pkgs.neovim.override {
   vimAlias = true;
   viAlias = true;
  }
+
