@@ -10,6 +10,7 @@
 		extraGroups = [ "networkmanager" "wheel" ];
 		packages = with pkgs; [
 			gnomeExtensions.gsconnect
+			gnomeExtensions.hibernate-status-button
 		];
 	};
 	
