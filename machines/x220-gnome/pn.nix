@@ -6,7 +6,7 @@
 
 	users.users.pn = {
 		isNormalUser = true;
-		description = "Patryk Niedzwiedzinski";
+		description = "Patryk Niedźwiedziński";
 		extraGroups = [ "networkmanager" "wheel" ];
 		packages = with pkgs; [
 			gnomeExtensions.gsconnect
