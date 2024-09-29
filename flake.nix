@@ -31,7 +31,7 @@
 				specialArgs = {inherit inputs;};
 				modules = [
 					./machines/t14/configuration.nix
-					inputs.nixos-hardware.lenovo-thinkpad-t14-amd-gen2
+					inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
 					inputs.home-manager.nixosModules.default
 						{
 							home-manager.useGlobalPkgs = true;
