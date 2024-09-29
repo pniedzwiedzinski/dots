@@ -56,6 +56,7 @@ in
   };
   services.cgit.gitN = {
     enable = true;
+    user = "cgit";
     package = pkgs.cgit-pink;
     scanPath = "/srv/git";
     nginx.virtualHost = cgitHostname;
