@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-	rebuild = pkgs.writeShellScriptBin "rebuild" (builtins.readFile ../../rebuild/rebuild.sh);
+	rebuild = pkgs.writeShellScriptBin "rebuild" (builtins.readFile ../../rebuild.sh);
 in {
 	imports =
 		[ # Include the results of the hardware scan.
