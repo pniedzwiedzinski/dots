@@ -25,6 +25,10 @@
 						favorite-apps = [ "brave-browser.desktop" "org.gnome.Geary.desktop" "org.gnome.Nautilus.desktop" ];
 					};
 
+					"org/gnome/desktop/interface" = {
+						enable-hot-corners = false;
+					};
+
 					"org/gnome/desktop/wm/keybindings" = {
 						close = ["<Super>q"];
 					};
