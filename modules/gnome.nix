@@ -97,6 +97,7 @@ in
 		libnotify
 		gnome.gnome-boxes
 		gnome.file-roller
+		gnomeExtensions.hibernate-status-button
 		brave
 		newsflash
 		spotify
