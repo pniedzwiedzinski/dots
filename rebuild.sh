@@ -13,7 +13,7 @@ DIR=$HOME/nixos
 
 
 # A rebuild script that commits on a successful build
-set -e
+set -e pipefail
 
 # cd to your config dir
 pushd $DIR
@@ -35,7 +35,7 @@ git diff -U0 '*'
 echo "NixOS Rebuilding..."
 
 # Rebuild, output simplified errors, log trackebacks
-(sudo nixos-rebuild switch --flake $DIR 2>&1 | tee nixos-switch.log) || exit 2 
+sudo nixos-rebuild switch --flake $DIR 2>&1 | tee nixos-switch.log
 
 # Get current generation metadata
 current=$(nixos-rebuild list-generations | grep current)
