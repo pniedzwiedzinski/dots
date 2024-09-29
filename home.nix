@@ -29,6 +29,15 @@ in
   home.username = "pn";
   home.homeDirectory = "/home/pn";
 
+  xdg.userDirs = {
+    documents = "${config.home.homeDirectory}/docs";
+    download = "${config.home.homeDirectory}/dwn";
+    music = "${config.home.homeDirectory}/music";
+    pictures = "${config.home.homeDirectory}/pics";
+    videos = "${config.home.homeDirectory}/vids";
+    templates = "${config.home.homeDirectory}/templates";
+  };
+
   imports = [
     # Platform specific config
     # ./programs/zsh
