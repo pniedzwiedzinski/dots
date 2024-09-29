@@ -1,4 +1,7 @@
 { pkgs, ... }:
+let
+	switch-theme = pkgs.writeShellScriptBin "switch-theme" (builtins.readFile ./switch-theme.sh);
+in
 {
 # Enable the X11 windowing system.
 	services.xserver.enable = true;
@@ -43,7 +46,12 @@
               					binding = "<Super>Return";
               					command = "kgx";
               					name = "GNOME Console";
+            				};
 
+					"org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
+              					binding = "<TaskPane>";
+              					command = "switch-theme";
+              					name = "Switch Theme";
             				};
 
 				};
@@ -83,6 +91,7 @@
 	boot.plymouth.enable = true;
 
 	environment.systemPackages = with pkgs; [
+		switch-theme
 		libnotify
 		gnome.gnome-boxes
 		gnome.file-roller
