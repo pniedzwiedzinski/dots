@@ -36,7 +36,7 @@
 					};
 
             				"org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-              					binding = "<Super><Enter>";
+              					binding = "<Super>Return";
               					command = "kgx";
               					name = "GNOME Console";
 
