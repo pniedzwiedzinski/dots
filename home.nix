@@ -30,6 +30,7 @@ in
   home.homeDirectory = "/home/pn";
 
   xdg.userDirs = {
+    enable = true;
     documents = "${config.home.homeDirectory}/docs";
     download = "${config.home.homeDirectory}/dwn";
     music = "${config.home.homeDirectory}/music";
