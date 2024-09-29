@@ -22,6 +22,7 @@ in
 		enable = true;
 		profiles.user.databases = [
 			{
+				lockAll = true;
 				settings = {
 					"org/gnome/shell" = {
 						favorite-apps = [ "brave-browser.desktop" "org.gnome.Geary.desktop" "org.gnome.Nautilus.desktop" ];
