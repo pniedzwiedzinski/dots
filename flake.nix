@@ -14,7 +14,7 @@
 		nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
 			specialArgs = {inherit inputs;};
 			modules = [
-				./machines/x220-gnome/configuration.nix
+				./machines/t14/configuration.nix
 					inputs.home-manager.nixosModules.default
 					{
 						home-manager.useGlobalPkgs = true;
