@@ -11,37 +11,43 @@
 		nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 	};
 
-	outputs = { self, nixpkgs, ... }@inputs: {
+	outputs = { self, nixpkgs, ... }@inputs: 
+
+let
+		nixosSystem = system: name: nixosModules: nixpkgs.lib.nixosSystem {
+			inherit system;
+			specialArgs = {inherit inputs;};
+			modules = nixosModules ++ [
+				({ config, ... }:
+				 {
+				 	networking.hostName = name;
+				 	nix = {
+				 		extraOptions = "extra-experimental-features = nix-command flakes";
+				 	};
+				 })
+				./machines/${name}
+			];
+		};
+	in {
 		nixosConfigurations = {
-			nixos = nixpkgs.lib.nixosSystem {
-				specialArgs = {inherit inputs;};
-				modules = [
-					./machines/x220-gnome/configuration.nix
-	
-						inputs.home-manager.nixosModules.default
-						{
-							home-manager.useGlobalPkgs = true;
-							home-manager.useUserPackages = true;
-							home-manager.users.pn = import ./home.nix;
-						}
-	
-				];
-			};
-			t14 = nixpkgs.lib.nixosSystem {
-				specialArgs = {inherit inputs;};
-				modules = [
-					./machines/t14
-					./modules/gnome.nix
-					inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
-					inputs.home-manager.nixosModules.default
-						{
-							home-manager.useGlobalPkgs = true;
-							home-manager.useUserPackages = true;
-							home-manager.users.pn = import ./home.nix;
-						}
-	
-				];
-			};
+			x220-gnome = nixosSystem "x86_64-linux" "x220-gnome" [
+				inputs.home-manager.nixosModules.default
+				{
+					home-manager.useGlobalPkgs = true;
+					home-manager.useUserPackages = true;
+					home-manager.users.pn = import ./home.nix;
+				}
+			];
+			t14 = nixosSystem "x86_64-linux" "t14" [
+				./modules/gnome.nix
+				inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
+				inputs.home-manager.nixosModules.default
+				{
+					home-manager.useGlobalPkgs = true;
+					home-manager.useUserPackages = true;
+					home-manager.users.pn = import ./home.nix;
+				}
+			];
 		};
 	};
 }
