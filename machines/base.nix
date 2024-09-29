@@ -10,7 +10,7 @@
   #  ../modules/internet.nix
   ];
 
-  boot.cleanTmpDir = true;
+  boot.tmp.cleanOnBoot = true;
 
   environment.systemPackages = with pkgs; [
     wget vim curl htop file

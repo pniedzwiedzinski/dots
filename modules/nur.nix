@@ -6,7 +6,7 @@
       inherit pkgs;
     };
   };
-  nix.binaryCaches = [
+  nix.settings.substituters = [
     "https://cache.nixos.org"
     "https://pn.cachix.org"
   ];
