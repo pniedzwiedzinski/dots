@@ -11,19 +11,35 @@
 	};
 
 	outputs = { self, nixpkgs, ... }@inputs: {
-		nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-			specialArgs = {inherit inputs;};
-			modules = [
-				./machines/t14/configuration.nix
-
-					inputs.home-manager.nixosModules.default
-					{
-						home-manager.useGlobalPkgs = true;
-						home-manager.useUserPackages = true;
-						home-manager.users.pn = import ./home.nix;
-					}
-
-			];
+		nixosConfigurations = {
+			nixos = nixpkgs.lib.nixosSystem {
+				specialArgs = {inherit inputs;};
+				modules = [
+					./machines/x220-gnome/configuration.nix
+	
+						inputs.home-manager.nixosModules.default
+						{
+							home-manager.useGlobalPkgs = true;
+							home-manager.useUserPackages = true;
+							home-manager.users.pn = import ./home.nix;
+						}
+	
+				];
+			};
+			t14 = nixpkgs.lib.nixosSystem {
+				specialArgs = {inherit inputs;};
+				modules = [
+					./machines/t14/configuration.nix
+	
+						inputs.home-manager.nixosModules.default
+						{
+							home-manager.useGlobalPkgs = true;
+							home-manager.useUserPackages = true;
+							home-manager.users.pn = import ./home.nix;
+						}
+	
+				];
+			};
 		};
 	};
 }
