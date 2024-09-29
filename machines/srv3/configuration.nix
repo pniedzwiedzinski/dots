@@ -29,7 +29,7 @@ in
       };
       hostName = "srv3";
       extraHosts = ''
-      192.168.1.136 srv3.niedzwiedzinski.cyou git.niedzwiedzinski.cyou tmp.niedzwiedzinski.cyou zhr.niedzwiedzinski.cyou help.niedzwiedzinski.cyou niedzwiedzinski.cyou pics.niedzwiedzinski.cyou
+      192.168.1.136 srv3.niedzwiedzinski.cyou git.niedzwiedzinski.cyou tmp.niedzwiedzinski.cyou zhr.niedzwiedzinski.cyou help.niedzwiedzinski.cyou niedzwiedzinski.cyou pics.niedzwiedzinski.cyou fresh.niedzwiedzinski.cyou
       192.168.1.144 srv2.niedzwiedzinski.cyou
     '' + lib.readFile ( pkgs.fetchurl {
       url = "https://raw.githubusercontent.com/StevenBlack/hosts/d2be343994aacdec74865ff8d159cf6e46359adf/alternates/fakenews-gambling-porn/hosts";
@@ -65,13 +65,29 @@ in
     vim lm_sensors
   ];
 
-  services.openssh.enable = true;
-  services.openssh.settings.PasswordAuthentication = false;
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+      #AllowGroups = ["using-ssh"];
+      AllowUsers = [ "pn-ssh" "pn@192.168.1.*" ];
+    };
+  };
   services.sshguard = {
     enable = true;
     whitelist = [
       "192.168.1.0/24"
     ];
+  };
+
+  services.freshrss = {
+    enable = true;
+    virtualHost = "fresh.niedzwiedzinski.cyou";
+    baseUrl = "https://fresh.niedzwiedzinski.cyou";
+    authType = "form";
+    defaultUser = "admin";
+    passwordFile = "/fresh/passwd";
   };
 
   services.nginx.enable = true;
@@ -146,6 +162,10 @@ in
       forceSSL = true;
       root = "${www}/niedzwiedzinski.cyou/help";
     };
+   "fresh.niedzwiedzinski.cyou" = {
+      enableACME = true;
+      forceSSL = true;
+    };
   };
   security.acme.defaults.email = "pniedzwiedzinski19@gmail.com";
   security.acme.acceptTerms = true;
@@ -153,12 +173,23 @@ in
   networking.firewall.allowedTCPPorts = [ 53 80 443 ];
   networking.firewall.allowedUDPPorts = [ 53 ];
 
+  virtualisation.docker.enable = true;
+
   users = {
+    groups."using-ssh" = { name = "using-ssh"; };
     users = {
+      pn-ssh = {
+        description = "patryk-zdalny";
+        isNormalUser = true;
+        extraGroups = [ "pn" "git" "using-ssh"];
+        openssh.authorizedKeys.keys = [
+          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqlCe4ovKa/Gwl5xmgu9nvVPmFXMgwdeLRYW7Gg7RWx pniedzwiedzinski19@gmail.com"
+        ];
+      };
       pn = {
 	description = "patryk";
         isNormalUser = true;
-        extraGroups = [ "wheel" "git" ]; # Enable ‘sudo’ for the user.
+        extraGroups = [ "wheel" "git" "using-ssh" "docker" ]; # Enable ‘sudo’ for the user.
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqlCe4ovKa/Gwl5xmgu9nvVPmFXMgwdeLRYW7Gg7RWx pniedzwiedzinski19@gmail.com"
         ];
