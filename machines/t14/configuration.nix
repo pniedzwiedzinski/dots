@@ -40,6 +40,7 @@
 # Allow unfree packages
 	nixpkgs.config.allowUnfree = true;
 	nix.settings.experimental-features = [ "flakes" "nix-command" ];
+	nix.optimise.automatic = true;
 
 # List packages installed in system profile. To search, run:
 # $ nix search wget
