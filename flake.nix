@@ -30,7 +30,7 @@
 			t14 = nixpkgs.lib.nixosSystem {
 				specialArgs = {inherit inputs;};
 				modules = [
-					./machines/t14/configuration.nix
+					./machines/t14
 					./modules/gnome.nix
 					inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
 					inputs.home-manager.nixosModules.default
