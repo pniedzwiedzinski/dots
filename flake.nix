@@ -30,8 +30,7 @@
 				specialArgs = {inherit inputs;};
 				modules = [
 					./machines/t14/configuration.nix
-	
-						inputs.home-manager.nixosModules.default
+					inputs.home-manager.nixosModules.default
 						{
 							home-manager.useGlobalPkgs = true;
 							home-manager.useUserPackages = true;
