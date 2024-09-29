@@ -15,21 +15,52 @@
 			pkgs.gnome-tour
 	];
 
-	services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
-		[org.gnome.shell]
-		favorite-apps = [ "brave-browser.desktop", "org.gnome.Geary.desktop", "org.gnome.Nautilus.desktop" ]
+	programs.dconf = {
+		enable = true;
+		profiles.user.databases = [
+			{
+				lockAll = true;
+				settings = {
+					"org/gnome/shell" = {
+						favorite-apps = [ "brave-browser.desktop" "org.gnome.Geary.desktop" "org.gnome.Nautilus.desktop" ];
+					};
 
-		[org.gnome.desktop.wm.keybindings]
-		close = ["<Super>q"]
+					"org/gnome/desktop/wm/keybindings" = {
+						close = ["<Super>q"];
+					};
+					
+            				"org/gnome/settings-daemon/plugins/media-keys" = {
+              					custom-keybindings = [
+                					"/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+             					 ];
+					};
 
-		[org.gnome.settings-daemon.plugins.media-keys]
-		custom-keybindings = ["org/gnome/settings-daemon/plugins/media-keys/custom0/"]
+            				"org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
+              					binding = "<Super><Enter>";
+              					command = "kgx";
+              					name = "GNOME Console";
+            				};
 
-		[org.gnome.settings-daemon.plugins.media-keys.custom0]
-		binding = ["<Super><Enter>"]
-		command = ["kgx"]
-		name = ["GNOME Console"]
-	'';
+				};
+			}
+		];
+	};
+
+	##services.xserver.desktopManager.gnome.extraGSettingsOverrides = ''
+		##[org.gnome.shell]
+		##favorite-apps = [ "brave-browser.desktop", "org.gnome.Geary.desktop", "org.gnome.Nautilus.desktop" ]
+##
+		##[org.gnome.desktop.wm.keybindings]
+		##close = ["<Super>q"]
+##
+		##[org.gnome.settings-daemon.plugins.media-keys]
+		##custom-keybindings = ["org/gnome/settings-daemon/plugins/media-keys/custom0/"]
+##
+		##[org.gnome.settings-daemon.plugins.media-keys.custom0]
+		##binding = ["<Super><Enter>"]
+		##command = ["kgx"]
+		##name = ["GNOME Console"]
+	##'';
 
 # Configure keymap in X11
 	services.xserver = {
