@@ -8,6 +8,7 @@
 			url = "github:nix-community/home-manager/release-24.05";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+		nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 	};
 
 	outputs = { self, nixpkgs, ... }@inputs: {
@@ -30,6 +31,7 @@
 				specialArgs = {inherit inputs;};
 				modules = [
 					./machines/t14/configuration.nix
+					inputs.nixos-hardware.lenovo-thinkpad-t14-amd-gen2
 					inputs.home-manager.nixosModules.default
 						{
 							home-manager.useGlobalPkgs = true;
