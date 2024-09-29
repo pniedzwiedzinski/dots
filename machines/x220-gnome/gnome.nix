@@ -39,6 +39,7 @@
               					binding = "<Super><Enter>";
               					command = "kgx";
               					name = "GNOME Console";
+
             				};
 
 				};
