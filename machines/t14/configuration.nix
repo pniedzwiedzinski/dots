@@ -38,6 +38,8 @@ in {
 	programs.nano.enable = false;
 	programs.git.enable = true;
 
+	boot.plymouth.enable = true;
+
 # Allow unfree packages
 	nixpkgs.config.allowUnfree = true;
 	nix.settings.experimental-features = [ "flakes" "nix-command" ];
