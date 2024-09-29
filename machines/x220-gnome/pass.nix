@@ -5,6 +5,9 @@
 	];
 	
 	programs.browserpass.enable = true;
+	programs.chromium.extensions = [
+		"naepdomgkenhinolocfifgehidddafch"
+	];
 
 	programs.gnupg.agent = {
 		enable = true;
