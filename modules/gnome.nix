@@ -50,7 +50,7 @@ in
             				};
 
 					"org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-              					binding = "<TaskPane>";
+              					binding = "TaskPane";
               					command = "switch-theme";
               					name = "Switch Theme";
             				};
