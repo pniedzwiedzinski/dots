@@ -10,7 +10,9 @@
 # As I hope was clear from the video, I am new to nixos, and there may be other, better, options, in which case I'd love to know them! (I'll update the gist if so)
 
 DIR=$HOME/nixos
+OPT=$1
 
+FORCE=[ $1 = "-f" ]
 
 # A rebuild script that commits on a successful build
 set -e pipefail
@@ -20,9 +22,11 @@ pushd $DIR
 
 # Early return if no changes were detected (thanks @singiamtel!)
 if git diff --quiet '*'; then
-    echo "No changes detected, exiting."
-    popd
-    exit 0
+    if ! $FORCE; then
+        echo "No changes detected, exiting."
+        popd
+        exit 0
+    fi
 fi
 
 # Autoformat your nix files
@@ -42,7 +46,9 @@ cat nixos-switch.log | grep --color error && exit 1
 current=$(nixos-rebuild list-generations | grep current)
 
 # Commit all changes witih the generation metadata
-git commit -am "$(hostname): $current"
+if ! $FORCE; then
+    git commit -am "$(hostname): $current"
+fi
 
 # Back to where you were
 popd
