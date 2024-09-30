@@ -12,7 +12,8 @@
 DIR=$HOME/nixos
 OPT=$1
 
-FORCE=[ $1 = "-f" ]
+FORCE=false
+[ "$1" = "-f" ] && FORCE=true
 
 # A rebuild script that commits on a successful build
 set -e pipefail
@@ -21,8 +22,10 @@ set -e pipefail
 pushd $DIR
 
 # Early return if no changes were detected (thanks @singiamtel!)
-if git diff --quiet '*'; then
-    if ! $FORCE; then
+if $FORCE; then
+	echo Forcing rebuild
+else
+    if git diff --quiet '*'; then
         echo "No changes detected, exiting."
         popd
         exit 0
@@ -46,9 +49,8 @@ cat nixos-switch.log | grep --color error && exit 1
 current=$(nixos-rebuild list-generations | grep current)
 
 # Commit all changes witih the generation metadata
-if ! $FORCE; then
-    git commit -am "$(hostname): $current"
-fi
+$FORCE
+git commit -am "$(hostname): $current"
 
 # Back to where you were
 popd
