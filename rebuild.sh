@@ -49,7 +49,9 @@ cat nixos-switch.log | grep --color error && exit 1
 current=$(nixos-rebuild list-generations | grep current)
 
 # Commit all changes witih the generation metadata
-$FORCE
+if $FORCE; then
+    exit 0
+fi
 git commit -am "$(hostname): $current"
 
 # Back to where you were

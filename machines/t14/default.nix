@@ -47,6 +47,8 @@
 #   enableSSHSupport = true;
 # };
 
+  services.printing.drivers = with pkgs; [ cnijfilter2 ];
+
 
 # Open ports in the firewall.
 # networking.firewall.allowedTCPPorts = [ ... ];
