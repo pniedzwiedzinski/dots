@@ -38,6 +38,7 @@
 # Allow unfree packages
 	nixpkgs.config.allowUnfree = true;
 	nix.optimise.automatic = true;
+	nix.settings.trusted-users = [ "@wheel" ];
 
 # Some programs need SUID wrappers, can be configured further or are
 # started in user sessions.
