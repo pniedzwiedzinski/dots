@@ -49,7 +49,7 @@
 						home-manager.useGlobalPkgs = true;
 						home-manager.useUserPackages = true;
 						home-manager.users.pn = import ./home.nix;
-						environment.systemPackages = [ inputs.ronvim ];
+						environment.systemPackages = [ inputs.ronvim.packages.x86_64-linux.default ];
 					}
 			];
 		};
