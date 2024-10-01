@@ -114,6 +114,7 @@ in
 		newsflash
 		spotify
 		fragments
+		libreoffice
 	];
 
 	nixpkgs.config.allowUnfree = true;
