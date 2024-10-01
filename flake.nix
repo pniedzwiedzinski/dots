@@ -9,6 +9,7 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 		nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+		ronvim.url = "git+https://codeberg.org/veeronniecaw/ronvim.git?ref=main";
 	};
 
 	outputs = { self, nixpkgs, ... }@inputs: 
@@ -48,6 +49,7 @@
 						home-manager.useGlobalPkgs = true;
 						home-manager.useUserPackages = true;
 						home-manager.users.pn = import ./home.nix;
+						environment.systemPackages = [ inputs.ronvim ];
 					}
 			];
 		};
