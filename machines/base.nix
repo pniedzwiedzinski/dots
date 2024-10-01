@@ -15,7 +15,7 @@
     wget vim curl htop file
     stdenv git zip unzip
     dnsutils ripgrep jq
-    any-nix-shell fd
+    any-nix-shell fd fzf
   ];
 
   console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v22n";
