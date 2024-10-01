@@ -117,6 +117,10 @@ in
 		libreoffice
 	];
 
+	fonts.packages = with pkgs; [
+		nerdfonts
+	];
+
 	nixpkgs.config.allowUnfree = true;
 
 	documentation.nixos.enable = false;
