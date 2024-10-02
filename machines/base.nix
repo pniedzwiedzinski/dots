@@ -15,7 +15,7 @@
     wget vim curl htop file
     stdenv git zip unzip
     dnsutils ripgrep jq
-    fd fzf
+    any-nix-shell fd fzf
     translate-shell
   ];
 
