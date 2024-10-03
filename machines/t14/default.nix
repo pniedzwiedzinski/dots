@@ -59,6 +59,7 @@
 		enable = true;
 		libraries = with pkgs; [
 			fuse3
+			fuse
 		];
 	};
 
