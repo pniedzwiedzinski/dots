@@ -63,6 +63,7 @@
 			harfbuzz
 			fontconfig
 			freetype
+			xorg.libX11
 		];
 	};
 
