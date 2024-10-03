@@ -27,6 +27,13 @@
       options = [ "subvol=@" ];
     };
 
+  #fileSystems."/newroot/persist" = {
+    #device = "/dev/disk/by-uuid/a8ba9580-b089-4cbb-98e3-52faa0a2dca8";
+    ##neededForBoot = true;
+    #fsType = "btrfs";
+    #options = [ "subvol=persist" ];
+  #};
+#
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/05C1-F939";
       fsType = "vfat";
