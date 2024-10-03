@@ -58,12 +58,13 @@
 	programs.nix-ld = {
 		enable = true;
 		libraries = with pkgs; [
-			fuse3
-			fuse
-			harfbuzz
-			fontconfig
-			freetype
-			xorg.libX11
+			#fuse3
+			#fuse
+			#harfbuzz
+			#fontconfig
+			#freetype
+			#xorg.libX11
+			appimage-run
 		];
 	};
 

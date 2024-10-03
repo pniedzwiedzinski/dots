@@ -8,6 +8,8 @@
 			url = "github:nix-community/home-manager/release-24.05";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+		nix-index-database.url = "github:nix-community/nix-index-database";
+    		nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 		nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 		ronvim.url = "git+https://codeberg.org/veeronniecaw/ronvim.git?ref=main";
 	};
@@ -45,6 +47,7 @@
 				./modules/gnome.nix
 					inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
 					inputs.home-manager.nixosModules.default
+					inputs.nix-index-database.nixosModules.nix-index
 					{
 						home-manager.useGlobalPkgs = true;
 						home-manager.useUserPackages = true;
