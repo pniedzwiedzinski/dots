@@ -62,6 +62,7 @@
 			fuse
 			harfbuzz
 			fontconfig
+			freetype
 		];
 	};
 
