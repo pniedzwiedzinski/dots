@@ -61,6 +61,7 @@
 			fuse3
 			fuse
 			harfbuzz
+			fontconfig
 		];
 	};
 
