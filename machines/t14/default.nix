@@ -55,6 +55,14 @@
   services.printing.drivers = with pkgs; [ cnijfilter2 ];
 
 
+	programs.nix-ld = {
+		enable = true;
+		libraries = with pkgs; [
+
+		];
+	};
+
+
 # Open ports in the firewall.
 # networking.firewall.allowedTCPPorts = [ ... ];
 # networking.firewall.allowedUDPPorts = [ ... ];
