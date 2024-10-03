@@ -55,17 +55,9 @@
   services.printing.drivers = with pkgs; [ cnijfilter2 ];
 
 
-	programs.nix-ld = {
+	programs.appimage = {
 		enable = true;
-		libraries = with pkgs; [
-			#fuse3
-			#fuse
-			#harfbuzz
-			#fontconfig
-			#freetype
-			#xorg.libX11
-			appimage-run
-		];
+		binfmt = true;
 	};
 
 
