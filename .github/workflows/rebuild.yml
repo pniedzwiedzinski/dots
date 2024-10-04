@@ -19,6 +19,7 @@ jobs:
         uses: cachix/cachix-action@v15
         with:
           name: pn
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
 
       - name: "Build"
         id: fetcher
