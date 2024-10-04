@@ -1,6 +1,7 @@
 name: "Rebuild system"
 
 on:
+  push:
   workflow_dispatch:
   schedule:
   - cron: "0 8 * * 0"
@@ -13,11 +14,7 @@ jobs:
 
       - name: "Install Nix ❄️"
         uses: cachix/install-nix-action@v18
-        with:
-          extra_nix_config: |
-            substituters = https://pn.cachix.org/ https://cache.nixos.org/
-            trusted-public-keys = pn.cachix.org-1:KC0hqPVkcs7WUSv8xCkUNzrpDVKYh8TwZIqvhASvbJM= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
-
+ 
       - name: Cachix
         uses: cachix/cachix-action@v15
         with:
