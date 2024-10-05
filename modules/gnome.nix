@@ -118,7 +118,7 @@ in
 	];
 
 	fonts.packages = with pkgs; [
-		nerdfonts
+		#nerdfonts
 	];
 
 	nixpkgs.config.allowUnfree = true;

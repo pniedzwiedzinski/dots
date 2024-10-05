@@ -39,7 +39,9 @@
 	in {
 		nixosConfigurations = {
 			x220-gnome = nixosSystem "x86_64-linux" "x220-gnome" [
+				inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x220
 				inputs.home-manager.nixosModules.default
+				inputs.disko.nixosModules.disko
 				{
 					home-manager.useGlobalPkgs = true;
 					home-manager.useUserPackages = true;
