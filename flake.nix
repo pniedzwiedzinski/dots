@@ -11,6 +11,7 @@
 		nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 		disko.url = "github:nix-community/disko";
   		disko.inputs.nixpkgs.follows = "nixpkgs";
+		impermanence.url = "github:nix-community/impermanence";
 	};
 
 	outputs = { self, nixpkgs, ... }@inputs: 
@@ -55,6 +56,7 @@
 			x220 = nixosSystem "x86_64-linux" "x220" [
 				inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x220
 				inputs.disko.nixosModules.disko
+				inputs.impermanence.nixosModules.impermanence
 				inputs.home-manager.nixosModules.default
 				{
 					home-manager.useGlobalPkgs = true;

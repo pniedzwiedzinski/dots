@@ -6,7 +6,7 @@
 {
   imports =
     [ (modulesPath + "/installer/scan/not-detected.nix")
-	./disko-config.nix
+      (import ./disko.nix { device = "/dev/sda"; })
     ];
 
   boot.loader.systemd-boot.enable = true;
