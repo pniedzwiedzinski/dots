@@ -9,6 +9,8 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 		nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+		disko.url = "github:nix-community/disko";
+  		disko.inputs.nixpkgs.follows = "nixpkgs";
 	};
 
 	outputs = { self, nixpkgs, ... }@inputs: 
@@ -49,6 +51,17 @@
 						home-manager.useUserPackages = true;
 						home-manager.users.pn = import ./home.nix;
 					}
+			];
+			x220 = nixosSystem "x86_64-linux" "x220" [
+				inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x220
+				inputs.disko.nixosModules.disko
+				inputs.home-manager.nixosModules.default
+				{
+					home-manager.useGlobalPkgs = true;
+					home-manager.useUserPackages = true;
+					home-manager.users.pn = import ./home.nix;
+				}
+
 			];
 		};
 	};
