@@ -6,7 +6,7 @@ in
 {
 	fileSystems."/media" = {
 		device = "/dev/disk/by-id/wwn-0x50014ee25fca2cb8-part1";
-		options = [ "nosuid" "nodev" "nofail" "noauto" "x-gvfs-show" "x-gvfs-name=Media" ];
+		options = [ "nosuid" "nodev" "nofail" "x-gvfs-show" "x-gvfs-name=Media" ];
 	};
 
 	environment.systemPackages = [ mediasync ];
