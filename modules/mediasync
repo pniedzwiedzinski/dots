@@ -1,0 +1,24 @@
+#!/bin/sh
+
+## Sync media files with my external drive at `/media`
+## Only cp from home: vids, music, pics, books
+## If you delete file from home it won't be deleted from `/media`
+
+tosync=`ls -d $HOME/{vids,music,pics}` #,books}`
+dest="/media"
+
+#if [ -L "/dev/disk/by-label/media" ]; then
+#  sudo mount /dev/disk/by-label/media $dest
+#else
+#  echo "Could not mount media drive"
+#  exit 1
+#fi
+
+if [ -z "$(ls -A /media)" ]; then
+   echo "Is disk on?"
+   exit 1
+fi
+
+for folder in $tosync; do
+  rsync -aP $folder $dest
+done

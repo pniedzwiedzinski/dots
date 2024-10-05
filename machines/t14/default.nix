@@ -3,6 +3,7 @@
 	imports =
 		[ # Include the results of the hardware scan.
 		../base.nix
+		../../modules/media-drive.nix
 		../x220-gnome/pass.nix
 		./hardware-configuration.nix
 		../x220-gnome/pn.nix
