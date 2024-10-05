@@ -1,0 +1,26 @@
+name: "Rebuild system"
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+  - cron: "0 8 * * 0"
+
+jobs:
+  fetcher:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Install Nix ❄️"
+        uses: cachix/install-nix-action@v30
+ 
+      - name: Cachix
+        uses: cachix/cachix-action@v15
+        with:
+          name: pn
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
+      - name: "Build"
+        id: fetcher
+        run: nix build .#nixosConfigurations.t14.config.system.build.toplevel
