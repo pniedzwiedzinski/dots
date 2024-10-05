@@ -12,6 +12,9 @@
     		nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 		nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 		ronvim.url = "git+https://codeberg.org/veeronniecaw/ronvim.git?ref=main";
+		disko.url = "github:nix-community/disko";
+  		disko.inputs.nixpkgs.follows = "nixpkgs";
+		impermanence.url = "github:nix-community/impermanence";
 	};
 
 	outputs = { self, nixpkgs, ... }@inputs: 
@@ -54,6 +57,18 @@
 						home-manager.users.pn = import ./home.nix;
 						environment.systemPackages = [ inputs.ronvim.packages.x86_64-linux.default ];
 					}
+			];
+			x220 = nixosSystem "x86_64-linux" "x220" [
+				inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x220
+				inputs.disko.nixosModules.disko
+				inputs.impermanence.nixosModules.impermanence
+				inputs.home-manager.nixosModules.default
+				{
+					home-manager.useGlobalPkgs = true;
+					home-manager.useUserPackages = true;
+					home-manager.users.pn = import ./home.nix;
+				}
+
 			];
 		};
 	};
