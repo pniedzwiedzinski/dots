@@ -115,6 +115,7 @@ in
 		spotify
 		fragments
 		libreoffice
+		signal-desktop
 	];
 
 	fonts.packages = with pkgs; [
