@@ -116,6 +116,7 @@ in
 		fragments
 		libreoffice
 		signal-desktop
+		vlc
 	];
 
 	fonts.packages = with pkgs; [
