@@ -3,6 +3,11 @@ let
 	switch-theme = pkgs.writeShellScriptBin "switch-theme" (builtins.readFile ./switch-theme.sh);
 in
 {
+
+	imports = [
+		./gnome-cast.nix
+	];
+
 # Enable the X11 windowing system.
 	services.xserver.enable = true;
 
