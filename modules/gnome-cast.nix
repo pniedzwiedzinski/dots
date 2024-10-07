@@ -5,4 +5,5 @@
 	];
 
 	networking.firewall.allowedTCPPorts = [ 7236 ];
+	networking.firewall.logRefusedConnections = true;
 }
