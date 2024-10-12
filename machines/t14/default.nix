@@ -58,6 +58,9 @@
   services.avahi.enable = true;
   services.avahi.nssmdns = true;
   hardware.sane.enable = true;
+  hardware.sane.extraBackends = [ pkgs.sane-airscan ];
+  services.udev.packages = [ pkgs.sane-airscan ];
+  hardware.sane.disabledDefaultBackends = [ "escl" ];
 
 
 	programs.appimage = {
