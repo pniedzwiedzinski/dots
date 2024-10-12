@@ -57,6 +57,7 @@
   services.printing.logLevel = "debug";
   services.avahi.enable = true;
   services.avahi.nssmdns = true;
+  hardware.sane.enable = true;
 
 
 	programs.appimage = {
