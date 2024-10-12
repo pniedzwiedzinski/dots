@@ -54,6 +54,7 @@
 # };
 
   services.printing.drivers = with pkgs; [ cnijfilter2 ];
+  services.printing.logLevel = "debug";
 
 
 	programs.appimage = {
