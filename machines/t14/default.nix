@@ -55,6 +55,8 @@
 
   services.printing.drivers = with pkgs; [ cnijfilter2 ];
   services.printing.logLevel = "debug";
+  services.avahi.enable = true;
+  services.avahi.nssmdns = true;
 
 
 	programs.appimage = {
