@@ -50,6 +50,7 @@
 			];
 			t14 = nixosSystem "x86_64-linux" "t14" [
 				./modules/gnome.nix
+				./modules/work-gp.nix
 					inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
 					inputs.home-manager.nixosModules.default
 					inputs.nix-index-database.nixosModules.nix-index
