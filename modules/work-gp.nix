@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 {
 	environment.systemPackages = with pkgs; [
 		vesktop
@@ -12,4 +12,9 @@
 			enable = true;
 		};
 	};
+
+	virtualisation.libvirtd.enable = true;
+	programs.virt-manager.enable = true;
+
+	users.users.pn.extraGroups = [ "libvirtd" ];
 }
