@@ -29,6 +29,10 @@ in
   home.username = "pn";
   home.homeDirectory = "/home/pn";
 
+  programs.chromium.extensions = [
+    { id = "fjcldmjmjhkklehbacihaiopjklihlgg"; }
+  ];
+
   xdg.userDirs = {
     enable = true;
     documents = "${config.home.homeDirectory}/docs";
