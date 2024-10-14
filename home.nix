@@ -29,6 +29,7 @@ in
   home.username = "pn";
   home.homeDirectory = "/home/pn";
 
+  programs.chromium.enable = true;
   programs.chromium.extensions = [
     { id = "fjcldmjmjhkklehbacihaiopjklihlgg"; }
   ];
