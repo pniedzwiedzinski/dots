@@ -68,6 +68,11 @@
 		binfmt = true;
 	};
 
+	environment.systemPackages = with pkgs; [
+		obsidian
+	];
+
+
 
 # Open ports in the firewall.
 # networking.firewall.allowedTCPPorts = [ ... ];
