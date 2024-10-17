@@ -1,4 +1,4 @@
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
 	cfg = config.services.obsidian-livesync;
 	couchdb-port = config.services.couchdb.port or 5984;
@@ -13,10 +13,13 @@ in
 			    description = "This option is required and must be set by the user.";
 			};
 
-			couchdb.adminPass = lib.mkOption {
-				description = "Couchdb password.";
-				default = "";
-				type = lib.types.str;
+			adminsFile = lib.mkOption {
+				type = lib.types.path;
+				description = "File with authentication data";
+				example = ''
+				[admins]
+				admin = strongPassword
+				'';
 			};
 
 			couchdb.databaseDir = lib.mkOption {
@@ -30,17 +33,24 @@ in
 	config = lib.mkIf cfg.enable {
 		services.couchdb = {
 			enable = true;
-			adminPass = cfg.couchdb.adminPass;
-			databaseDir = cfg.couchdb.databaseDir;
+			configFile = cfg.adminsFile;
 			extraConfig = ''
 				[couchdb]
+				database_dir = ${cfg.couchdb.databaseDir}
 				single_node=true
 				max_document_size = 50000000
+				uri_file = ${config.services.couchdb.uriFile}
+				view_index_dir = ${config.services.couchdb.viewIndexDir}
 				
+				[log]
+				file = ${config.services.couchdb.logFile}
+
 				[chttpd]
 				require_valid_user = true
 				max_http_request_size = 4294967296
 				enable_cors = true
+				port = ${toString config.services.couchdb.port}
+				bind_address = ${config.services.couchdb.bindAddress}
 				
 				[chttpd_auth]
 				require_valid_user = true
@@ -76,6 +86,14 @@ in
 						add_header Access-Control-Allow-Headers "Content-Type, Authorization";
 						add_header Access-Control-Allow-Credentials "true";
 						add_header Access-Control-Max-Age 86400;
+
+						if ($request_method = OPTIONS) {
+							add_header Access-Control-Allow-Origin "app://obsidian.md";
+							add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS";
+							add_header Access-Control-Allow-Headers "Content-Type, Authorization";
+							add_header Access-Control-Allow-Credentials "true";
+							return 204;
+						}
 					'';
 				};
 			};
