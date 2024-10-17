@@ -4,6 +4,7 @@
 		[ # Include the results of the hardware scan.
 		../base.nix
 		../../modules/media-drive.nix
+		../../modules/obsidian-livesync.nix
 		../x220-gnome/pass.nix
 		./hardware-configuration.nix
 		../x220-gnome/pn.nix
@@ -12,6 +13,12 @@
 # Enable networking
 	networking.networkmanager.enable = true;
 	networking.hostName = "t14";
+
+	services.obsidian-livesync = {
+		enable = true;
+		domain = "test.localhost";
+		couchdb.adminPass = "123";
+	};
 
 # Set your time zone.
 	time.timeZone = "Europe/Warsaw";

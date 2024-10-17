@@ -8,10 +8,17 @@ in
   {
     imports =
       [
+      ../../modules/obsidian-livesync.nix
       ./hardware-configuration.nix
       ./cgit.nix
       ./noip.nix
     ];
+
+    services.obsidian-livesync = {
+    	enable = true;
+	domain = "obsidian.niedzwiedzinski.cyou";
+	couchdb.adminPass = "123";
+    };
 
     boot.loader.grub.enable = true;
     boot.loader.grub.device = "/dev/sda"; # or "nodev" for efi only
