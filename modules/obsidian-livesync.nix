@@ -1,6 +1,7 @@
 { config, lib, ... }:
 let
 	cfg = config.services.obsidian-livesync;
+	couchdb-port = config.services.couchdb.port or 5984;
 in
 {
 	options = {
@@ -10,7 +11,6 @@ in
 			domain = lib.mkOption {
 			    type = lib.types.str;
 			    description = "This option is required and must be set by the user.";
-			    default = lib.mkDefault null;
 			};
 
 			couchdb.adminPass = lib.mkOption {
@@ -27,10 +27,7 @@ in
 		};
 	};
 
-	config = lib.mkIf cfg.enable (
-	lib.mkIf (cfg.domain == null)
-	(throw "You must set `services.obsidian-livesync.domain` to use this service")
-	{
+	config = lib.mkIf cfg.enable {
 		services.couchdb = {
 			enable = true;
 			adminPass = cfg.couchdb.adminPass;
@@ -39,19 +36,19 @@ in
 
 		services.nginx = {
 			enable = true;
-			virtualHost.${cfg.domain} = {
+			virtualHosts.${cfg.domain} = {
 				enableACME = true;
 				forceSSL = true;
 				locations."/" = {
-					proxyPass = "http://127.0.0.1:${config.services.couchdb.port}";
-				        proxySetHeader = {
-						  Host = "$host";
-						  X-Real-IP = "$remote_addr";
-						  X-Forwarded-For = "$proxy_add_x_forwarded_for";
-						  X-Forwarded-Proto = "$scheme";
-					};
+					proxyPass = "http://127.0.0.1:${toString couchdb-port}";
+			        	extraConfig = ''
+					 	proxy_set_header Host "$host";
+					 	proxy_set_header X-Real-IP "$remote_addr";
+					 	proxy_set_header X-Forwarded-For "$proxy_add_x_forwarded_for";
+					 	proxy_set_header X-Forwarded-Proto "$scheme";
+					'';
 				};
 			};
 		};
-	});
+	};
 }
