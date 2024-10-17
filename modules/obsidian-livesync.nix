@@ -50,7 +50,7 @@ in
 						add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS";
 						add_header Access-Control-Allow-Headers "Content-Type, Authorization";
 						add_header Access-Control-Allow-Credentials "true";
-						add_header Access-Control-Max-Age 86400
+						add_header Access-Control-Max-Age 86400;
 					'';
 				};
 			};
