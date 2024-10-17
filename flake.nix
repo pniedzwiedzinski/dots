@@ -73,6 +73,7 @@
 				}
 
 			];
+			srv3 = nixosSystem "x86_64-linux" "srv3" [];
 		};
 	};
 }
