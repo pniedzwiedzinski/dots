@@ -58,14 +58,12 @@ in
 				
 				[httpd]
 				WWW-Authenticate = Basic realm="couchdb"
+				enable_cors = true
 				bind_address = 127.0.0.1
-				
+
 				[cors]
-				origins = app://obsidian.md, capacitor://localhost, http://localhost
-				credentials = true
-				headers = accept, authorization, content-type, origin, referer
-				methods = GET,PUT,POST,HEAD,DELETE
-				max_age = 3600
+				#origins = app://obsidian.md,capacitor://localhost,http://localhost
+				#credentials = true
 			'';
 		};
 
@@ -81,17 +79,13 @@ in
 						proxy_set_header X-Real-IP "$remote_addr";
 						proxy_set_header X-Forwarded-For "$proxy_add_x_forwarded_for";
 						proxy_set_header X-Forwarded-Proto "$scheme";
-					        add_header Access-Control-Allow-Origin "app://obsidian.md";
-						add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS";
-						add_header Access-Control-Allow-Headers "Content-Type, Authorization";
-						add_header Access-Control-Allow-Credentials "true";
-						add_header Access-Control-Max-Age 86400;
+						add_header Access-Control-Allow-Origin "app://obsidian.md" always;
+						add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS" always;
+						add_header Access-Control-Allow-Headers "Content-Type, Authorization" always;
+						add_header Access-Control-Allow-Credentials "true" always;
+						add_header Access-Control-Max-Age 86400 always;
 
 						if ($request_method = OPTIONS) {
-							add_header Access-Control-Allow-Origin "app://obsidian.md";
-							add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS";
-							add_header Access-Control-Allow-Headers "Content-Type, Authorization";
-							add_header Access-Control-Allow-Credentials "true";
 							return 204;
 						}
 					'';
