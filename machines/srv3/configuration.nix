@@ -4,6 +4,8 @@ let
   
   www = "/srv/www";
 
+  domain = "niedzwiedzinski.cyou";
+
 in
   {
     imports =
@@ -16,8 +18,8 @@ in
 
     services.obsidian-livesync = {
     	enable = true;
-	domain = "obsidian.niedzwiedzinski.cyou";
-	couchdb.adminPass = "123";
+	domain = "obsidian.${domain}";
+	adminsFile = "/etc/couchdb.ini";
     };
 
     boot.loader.grub.enable = true;
@@ -36,7 +38,7 @@ in
       };
       hostName = "srv3";
       extraHosts = ''
-      192.168.1.136 srv3.niedzwiedzinski.cyou git.niedzwiedzinski.cyou tmp.niedzwiedzinski.cyou zhr.niedzwiedzinski.cyou help.niedzwiedzinski.cyou niedzwiedzinski.cyou pics.niedzwiedzinski.cyou fresh.niedzwiedzinski.cyou
+      192.168.1.136 srv3.niedzwiedzinski.cyou git.niedzwiedzinski.cyou tmp.niedzwiedzinski.cyou zhr.niedzwiedzinski.cyou help.niedzwiedzinski.cyou niedzwiedzinski.cyou pics.niedzwiedzinski.cyou fresh.niedzwiedzinski.cyou obsidian.${domain}
       192.168.1.144 srv2.niedzwiedzinski.cyou
     '' + lib.readFile ( pkgs.fetchurl {
       url = "https://raw.githubusercontent.com/StevenBlack/hosts/d2be343994aacdec74865ff8d159cf6e46359adf/alternates/fakenews-gambling-porn/hosts";
