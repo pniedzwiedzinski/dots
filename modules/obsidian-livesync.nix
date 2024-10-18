@@ -79,7 +79,7 @@ in
 						proxy_set_header X-Real-IP "$remote_addr";
 						proxy_set_header X-Forwarded-For "$proxy_add_x_forwarded_for";
 						proxy_set_header X-Forwarded-Proto "$scheme";
-						add_header Access-Control-Allow-Origin "app://obsidian.md" always;
+						add_header Access-Control-Allow-Origin "$http_origin" always;
 						add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS" always;
 						add_header Access-Control-Allow-Headers "Content-Type, Authorization" always;
 						add_header Access-Control-Allow-Credentials "true" always;
