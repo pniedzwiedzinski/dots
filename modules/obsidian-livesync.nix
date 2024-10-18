@@ -81,14 +81,14 @@ in
 						proxy_set_header X-Real-IP "$remote_addr";
 						proxy_set_header X-Forwarded-For "$proxy_add_x_forwarded_for";
 						proxy_set_header X-Forwarded-Proto "$scheme";
-					        add_header Access-Control-Allow-Origin "app://obsidian.md";
+					        # add_header Access-Control-Allow-Origin "app://obsidian.md";
 						add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS";
 						add_header Access-Control-Allow-Headers "Content-Type, Authorization";
 						add_header Access-Control-Allow-Credentials "true";
 						add_header Access-Control-Max-Age 86400;
 
 						if ($request_method = OPTIONS) {
-							add_header Access-Control-Allow-Origin "app://obsidian.md";
+							# add_header Access-Control-Allow-Origin "app://obsidian.md";
 							add_header Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS";
 							add_header Access-Control-Allow-Headers "Content-Type, Authorization";
 							add_header Access-Control-Allow-Credentials "true";

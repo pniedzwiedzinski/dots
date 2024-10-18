@@ -62,6 +62,12 @@
   services.udev.packages = [ pkgs.sane-airscan ];
   hardware.sane.disabledDefaultBackends = [ "escl" ];
 
+	programs.nix-ld.dev = {
+		enable = true;
+		libraries = [
+			pkgs.libgcc.lib
+		];
+	};
 
 	programs.appimage = {
 		enable = true;
