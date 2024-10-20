@@ -11,6 +11,7 @@ in
     imports =
       [
       ../../modules/obsidian-livesync.nix
+      ./home-assistant.nix
       ./hardware-configuration.nix
       ./cgit.nix
       ./noip.nix
