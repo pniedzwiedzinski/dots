@@ -30,7 +30,7 @@ in
   home.homeDirectory = "/home/pn";
 
   programs.brave = {
-    enable = true;
+    enable = false;
     package = pkgs.brave.overrideAttrs (oldAttrs: {
       commandLineArgs = [
         "--profile-directory=${config.home.homeDirectory}/.config/BraveSoftware/Brave-Browser/Default"
