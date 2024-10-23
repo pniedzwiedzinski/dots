@@ -115,7 +115,7 @@ in
 		gnome.gnome-boxes
 		gnome.file-roller
 		gnomeExtensions.hibernate-status-button
-		brave
+		#brave #specified in home.nix
 		newsflash
 		spotify
 		fragments
