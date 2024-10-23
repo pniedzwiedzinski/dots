@@ -53,6 +53,11 @@
 #   enableSSHSupport = true;
 # };
 
+	services.locate = {
+		enable = true;
+		package = pkgs.plocate;
+	};
+
   services.printing.drivers = with pkgs; [ cnijfilter2 ];
   services.printing.logLevel = "debug";
   services.avahi.enable = true;
