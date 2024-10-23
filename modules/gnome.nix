@@ -119,7 +119,7 @@ in
             	(pkgs.brave.overrideAttrs (oldAttrs: {
 		  installPhase = oldAttrs.installPhase + ''
 		  	substituteInPlace $out/share/applications/brave-browser.desktop \
-			--replace %U "%U --profile-directory=$HOME/.config/BraveSoftware/Brave-Browser/Default"
+			--replace %U "%U --profile-directory=/home/pn/.config/BraveSoftware/Brave-Browser/Default"
 		  '';
                 }))
 
