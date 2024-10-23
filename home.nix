@@ -29,10 +29,17 @@ in
   home.username = "pn";
   home.homeDirectory = "/home/pn";
 
-  programs.chromium.enable = true;
-  programs.chromium.extensions = [
-    { id = "fjcldmjmjhkklehbacihaiopjklihlgg"; }
-  ];
+  programs.brave = {
+    enable = true;
+    package = pkgs.brave.overrideAttrs (oldAttrs: {
+      commandLineArgs = [
+        "--profile-directory=${config.home.homeDirectory}/.config/BraveSoftware/Brave-Browser/Default"
+      ];
+    });
+    extensions = [
+      { id = "fjcldmjmjhkklehbacihaiopjklihlgg"; }
+    ];
+  };
 
   xdg.userDirs = {
     enable = true;
