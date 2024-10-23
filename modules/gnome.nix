@@ -116,6 +116,12 @@ in
 		gnome.file-roller
 		gnomeExtensions.hibernate-status-button
 		#brave #specified in home.nix
+            	(pkgs.brave.overrideAttrs (oldAttrs: {
+                  commandLineArgs = [
+                    "--profile-directory=$HOME/.config/BraveSoftware/Brave-Browser/Default"
+                  ];
+                }))
+
 		newsflash
 		spotify
 		fragments
