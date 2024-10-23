@@ -117,9 +117,10 @@ in
 		gnomeExtensions.hibernate-status-button
 		#brave #specified in home.nix
             	(pkgs.brave.overrideAttrs (oldAttrs: {
-                  commandLineArgs = [
-                    "--profile-directory=$HOME/.config/BraveSoftware/Brave-Browser/Default"
-                  ];
+		  installPhase = oldAttrs.installPhase + ''
+		  	substituteInPlace $out/share/applications/brave-browser.desktop \
+			--replace %U "%U --profile-directory=$HOME/.config/BraveSoftware/Brave-Browser/Default"
+		  '';
                 }))
 
 		newsflash
