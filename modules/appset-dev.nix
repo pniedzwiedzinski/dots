@@ -7,4 +7,7 @@
 		python3
 		nodejs
 	];
+
+	virtualisation.docker.enable = true;
+	users.users.pn.extraGroups = [ "docker" ];
 }
