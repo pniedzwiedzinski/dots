@@ -5,6 +5,7 @@
 		vim
 		jq
 		python3
+		python3Packages.pip
 		nodejs
 	];
 
