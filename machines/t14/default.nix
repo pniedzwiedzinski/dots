@@ -7,6 +7,7 @@
 		../x220-gnome/pass.nix
 		./hardware-configuration.nix
 		../x220-gnome/pn.nix
+		../../modules/appset-dev.nix
 		];
 
 # Enable networking
