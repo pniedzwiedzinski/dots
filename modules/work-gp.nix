@@ -13,14 +13,8 @@
 		};
 	};
 
-	services.xserver.windowManager.i3 = {
+	services.xserver.desktopManager.lxqt = {
 		enable = true;
-		extraPackages = with pkgs; [
-			dmenu
-			i3status
-			i3lock
-			i3blocks
-		];
 	};
 
 	virtualisation.libvirtd.enable = true;
