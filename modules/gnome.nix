@@ -133,6 +133,7 @@ in
 
 	fonts.packages = with pkgs; [
 		#nerdfonts
+		liberation_ttf
 	];
 
 	nixpkgs.config.allowUnfree = true;
