@@ -129,6 +129,7 @@ in
 		libreoffice
 		signal-desktop
 		vlc
+		wl-clipboard
 	];
 
 	fonts.packages = with pkgs; [
