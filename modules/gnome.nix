@@ -130,6 +130,7 @@ in
 		signal-desktop
 		vlc
 		wl-clipboard
+		mousai
 	];
 
 	fonts.packages = with pkgs; [
