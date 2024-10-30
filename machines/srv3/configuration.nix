@@ -13,8 +13,8 @@ in
       ../../modules/obsidian-livesync.nix
       ./home-assistant.nix
       ./hardware-configuration.nix
-      ./webdav.nix
-      ./cgit.nix
+      ./services/webdav
+      ./services/cgit
       ./noip.nix
     ];
 
@@ -22,6 +22,11 @@ in
     	enable = true;
 	domain = "obsidian.${domain}";
 	adminsFile = "/etc/couchdb.ini";
+    };
+
+    services.srv3-webdav = {
+    	enable = true;
+    	domain = "files.${domain}";
     };
 
     boot.loader.grub.enable = true;
