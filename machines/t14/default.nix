@@ -7,6 +7,7 @@
 		../x220-gnome/pass.nix
 		./hardware-configuration.nix
 		../x220-gnome/pn.nix
+		../../modules/appset-dev.nix
 		];
 
 # Enable networking
@@ -53,6 +54,11 @@
 #   enableSSHSupport = true;
 # };
 
+	services.locate = {
+		enable = true;
+		package = pkgs.plocate;
+	};
+
   services.printing.drivers = with pkgs; [ cnijfilter2 ];
   services.printing.logLevel = "debug";
   services.avahi.enable = true;
@@ -62,6 +68,12 @@
   services.udev.packages = [ pkgs.sane-airscan ];
   hardware.sane.disabledDefaultBackends = [ "escl" ];
 
+	programs.nix-ld.dev = {
+		enable = true;
+		libraries = [
+			pkgs.libgcc.lib
+		];
+	};
 
 	programs.appimage = {
 		enable = true;

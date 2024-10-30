@@ -15,6 +15,9 @@
 		disko.url = "github:nix-community/disko";
   		disko.inputs.nixpkgs.follows = "nixpkgs";
 		impermanence.url = "github:nix-community/impermanence";
+		agenix.url = "github:ryantm/agenix";
+		nix-ld.url = "github:Mic92/nix-ld";
+		nix-ld.inputs.nixpkgs.follows = "nixpkgs";
 	};
 
 	outputs = { self, nixpkgs, ... }@inputs: 
@@ -54,6 +57,8 @@
 					inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
 					inputs.home-manager.nixosModules.default
 					inputs.nix-index-database.nixosModules.nix-index
+					inputs.agenix.nixosModules.default
+					inputs.nix-ld.nixosModules.nix-ld
 					{
 						home-manager.useGlobalPkgs = true;
 						home-manager.useUserPackages = true;

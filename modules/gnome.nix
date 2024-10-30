@@ -115,7 +115,14 @@ in
 		gnome.gnome-boxes
 		gnome.file-roller
 		gnomeExtensions.hibernate-status-button
-		brave
+		#brave #specified in home.nix
+            	(pkgs.brave.overrideAttrs (oldAttrs: {
+		  installPhase = oldAttrs.installPhase + ''
+		  	substituteInPlace $out/share/applications/brave-browser.desktop \
+			--replace %U "--profile-directory=Default %U"
+		  '';
+                }))
+
 		newsflash
 		spotify
 		fragments
