@@ -11,7 +11,9 @@ in
     imports =
       [
       ../../modules/obsidian-livesync.nix
+      ./home-assistant.nix
       ./hardware-configuration.nix
+      ./webdav.nix
       ./cgit.nix
       ./noip.nix
     ];
@@ -165,6 +167,9 @@ in
           autoindex on;
         }
       '';
+      locations."/harcdzielnia/" = {
+        return = "301 https://harcdzielnia.niedzwiedzinski.cyou";
+      };
     };
     "help.niedzwiedzinski.cyou" = {
       enableACME = true;
