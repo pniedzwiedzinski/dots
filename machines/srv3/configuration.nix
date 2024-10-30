@@ -179,6 +179,7 @@ in
   security.acme.defaults.email = "pniedzwiedzinski19@gmail.com";
   security.acme.acceptTerms = true;
 
+  networking.firewall.enable = true;
   networking.firewall.allowedTCPPorts = [ 53 80 443 ];
   networking.firewall.allowedUDPPorts = [ 53 ];
 
