@@ -131,6 +131,7 @@ in
 		vlc
 		wl-clipboard
 		mousai
+		gnome-frog
 	];
 
 	fonts.packages = with pkgs; [
