@@ -19,7 +19,7 @@ in
     ];
 
     services.obsidian-livesync = {
-    	enable = true;
+    	enable = false;
 	domain = "obsidian.${domain}";
 	adminsFile = "/etc/couchdb.ini";
     };
