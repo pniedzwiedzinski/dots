@@ -13,6 +13,18 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  fileSystems."/data" = {
+    device = "/dev/disk/by-uuid/f5a131d0-aaec-4129-8f46-9136abef4f1a";
+    fsType = "btrfs";
+    options = [ "subvol=data" ];
+  };
+
+  fileSystems."/snapshots" = {
+    device = "/dev/disk/by-uuid/f5a131d0-aaec-4129-8f46-9136abef4f1a";
+    fsType = "btrfs";
+    options = [ "subvol=snapshots" ];
+  };
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/6be0c826-51c9-40dd-9210-6d79f329e6e6";
       fsType = "ext4";
