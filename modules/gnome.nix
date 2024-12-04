@@ -115,6 +115,7 @@ in
 		gnome.gnome-boxes
 		gnome.file-roller
 		gnomeExtensions.hibernate-status-button
+		gnomeExtensions.caffeine
 		#brave #specified in home.nix
             	(pkgs.brave.overrideAttrs (oldAttrs: {
 		  installPhase = oldAttrs.installPhase + ''
