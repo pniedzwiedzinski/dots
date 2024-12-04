@@ -84,6 +84,9 @@
 		obsidian
 	];
 
+	boot.binfmt.emulatedSystems = ["i686-linux" "aarch64-linux"];
+  	nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
+
 
 
 # Open ports in the firewall.
