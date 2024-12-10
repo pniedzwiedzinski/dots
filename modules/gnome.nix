@@ -6,6 +6,7 @@ in
 
 	imports = [
 		./gnome-cast.nix
+		./appset-desktop.nix
 	];
 
 # Enable the X11 windowing system.
