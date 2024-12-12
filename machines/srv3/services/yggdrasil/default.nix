@@ -13,6 +13,12 @@ in
       ];
       Peers = [];
       AllowedPublicKeys = [];
+      MulticastInterfaces = [
+        {
+	  Regex = "*";
+	  Listen = false;
+	}
+      ];
     };
   };
 
