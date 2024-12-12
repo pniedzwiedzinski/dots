@@ -15,8 +15,10 @@ in
       AllowedPublicKeys = [];
       MulticastInterfaces = [
         {
-	  Regex = "*";
+	  Regex = ".*";
+          Beacon = false;
 	  Listen = false;
+          Password = "";
 	}
       ];
     };
