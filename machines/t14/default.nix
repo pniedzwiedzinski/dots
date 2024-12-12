@@ -2,6 +2,7 @@
 {
 	imports =
 		[ # Include the results of the hardware scan.
+		./yggdrasil.nix
 		../base.nix
 		../../modules/media-drive.nix
 		../x220-gnome/pass.nix
