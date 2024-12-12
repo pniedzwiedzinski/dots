@@ -15,6 +15,7 @@ in
       ./hardware-configuration.nix
       ./services/webdav
       ./services/cgit
+      ./services/yggdrasil
       ./noip.nix
     ];
 
