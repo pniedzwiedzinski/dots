@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, options, lib, pkgs, ... }:
 let
   crs = pkgs.callPackage ./coreruleset.nix { };
   
@@ -23,6 +23,8 @@ in
 	domain = "obsidian.${domain}";
 	adminsFile = "/etc/couchdb.ini";
     };
+
+    services.vnstat.enable = true;
 
     services.srv3-webdav = {
     	enable = true;
@@ -106,6 +108,23 @@ in
     passwordFile = "/fresh/passwd";
   };
 
+  #options.services.nginx.virtualHosts = pkgs.lib.mkOption {
+    #type = pkgs.lib.types.attrsOf (pkgs.lib.types.submodule {
+      #config.extraConfig = pkgs.lib.mkDefault ''
+      #if ($http_user_agent ~* "(AdsBot-Google|Amazonbot|anthropic-ai|Applebot|Applebot-Extended|AwarioRssBot|AwarioSmartBot|Bytespider|CCBot|ChatGPT-User|ClaudeBot|Claude-Web|cohere-ai|DataForSeoBot|Diffbot|FacebookBot|FriendlyCrawler|Google-Extended|GoogleOther|GPTBot|img2dataset|ImagesiftBot|magpie-crawler|Meltwater|omgili|omgilibot|peer39_crawler|peer39_crawler/1.0|PerplexityBot|PiplBot|scoop.it|Seekr|YouBot)"){
+      #return 403;
+      #}
+      #'';
+    #});
+  #};
+
+  services.nginx.virtualHosts."git.niedzwiedzinski.cyou".extraConfig = pkgs.lib.mkAfter ''
+    if ($http_user_agent ~* "(AdsBot-Google|Amazonbot|anthropic-ai|Applebot|Applebot-Extended|AwarioRssBot|AwarioSmartBot|Bytespider|CCBot|ChatGPT-User|ClaudeBot|Claude-Web|cohere-ai|DataForSeoBot|Diffbot|FacebookBot|FriendlyCrawler|Google-Extended|GoogleOther|GPTBot|img2dataset|ImagesiftBot|magpie-crawler|Meltwater|omgili|omgilibot|peer39_crawler|peer39_crawler/1.0|PerplexityBot|PiplBot|scoop.it|Seekr|YouBot)"){
+      return 403;
+    }
+    '';
+
+
   services.nginx.enable = true;
   services.nginx.additionalModules = with pkgs.nginxModules; [ modsecurity ];
   services.nginx.appendHttpConfig = ''
@@ -117,7 +136,7 @@ in
     # ';
     charset utf-8;
     source_charset utf-8;
-  '';
+    '';
   services.nginx.virtualHosts = {
     "srv3.niedzwiedzinski.cyou" = let
       modsec_config = builtins.toFile "modsecurity_rules.conf" ''
