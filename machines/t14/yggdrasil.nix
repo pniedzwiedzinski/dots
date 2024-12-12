@@ -7,7 +7,7 @@
     settings = {
       Listen = [];
       Peers = [
-        "tls://patryk.ddns.net:1919"
+        "tls://patrykn.ddns.net:1919"
       ];
       AllowedPublicKeys = [
         "af868e700b6caa8debe0f912ea14b7f7c98a09418d2bf13f56e7a9a5ec73b5a8" #srv4
