@@ -205,6 +205,11 @@ in
       enableACME = true;
       forceSSL = true;
     };
+    "onsolar.site" = {
+      enableACME = true;
+      forceSSL = true;
+      locations."/" = { proxyPass = "http://[200:a0f2:e31f:e926:aae4:283e:dda:2bd6]:80"; }
+    };
   };
   security.acme.defaults.email = "pniedzwiedzinski19@gmail.com";
   security.acme.acceptTerms = true;
