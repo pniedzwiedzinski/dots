@@ -137,7 +137,7 @@ in
 	];
 
 	fonts.packages = with pkgs; [
-		nerdfonts
+		#nerdfonts
 		font-awesome
 		liberation_ttf
 	];
