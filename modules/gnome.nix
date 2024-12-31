@@ -138,6 +138,7 @@ in
 
 	fonts.packages = with pkgs; [
 		nerdfonts
+		font-awesome
 		liberation_ttf
 	];
 
