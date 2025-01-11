@@ -63,7 +63,7 @@
         inputs.home-manager.nixosModules.default
         inputs.nix-index-database.nixosModules.nix-index
         inputs.agenix.nixosModules.default
-        inputs.nix-ld.nixosModules.nix-ld
+        # inputs.nix-ld.nixosModules.nix-ld
         {
           home-manager = {
             useGlobalPkgs = true;

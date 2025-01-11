@@ -1,7 +1,11 @@
 # Dots
 
-Here're all of my configuration files I used every day. Managed by [home-manager](https://github.com/nix-community/home-manager).
+Here're all of my configuration files I used every day. Managed by
+[home-manager](https://github.com/nix-community/home-manager).
 
 ### Programs I use
 
-I use mostly common programs that you are probably familiar of. But I also use some custom software, check it out in [pnpkgs](https://github.com/pniedzwiedzinski/pnpkgs).
+I use mostly common programs that you are probably familiar of. But I also use
+some custom software, check it out in
+[pnpkgs](https://github.com/pniedzwiedzinski/pnpkgs). And I configure vim in
+[pnvf](https://github.com/pniedzwiedzinski/pnvf).

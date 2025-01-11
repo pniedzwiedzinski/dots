@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 ## Sync media files with my external drive at `/media`
 ## Only cp from home: vids, music, pics, books
 ## If you delete file from home it won't be deleted from `/media`
 
-tosync=`ls -d $HOME/{vids,music,pics}` #,books}`
+tosync=$(ls -d "$HOME"/{vids,music,pics,books})
 dest="/media"
 
 #if [ -L "/dev/disk/by-label/media" ]; then
@@ -15,10 +15,10 @@ dest="/media"
 #fi
 
 if [ -z "$(ls -A /media)" ]; then
-   echo "Is disk on?"
-   exit 1
+	echo "Is disk on?"
+	exit 1
 fi
 
 for folder in $tosync; do
-  rsync -aP $folder $dest
+	rsync -aP $folder $dest
 done
