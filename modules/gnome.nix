@@ -113,8 +113,8 @@ in
 	environment.systemPackages = with pkgs; [
 		switch-theme
 		libnotify
-		gnome.gnome-boxes
-		gnome.file-roller
+		gnome-boxes
+		file-roller
 		gnomeExtensions.hibernate-status-button
 		gnomeExtensions.caffeine
 		#brave #specified in home.nix
@@ -134,6 +134,7 @@ in
 		wl-clipboard
 		mousai
 		gnome-frog
+                celluloid
 	];
 
 	fonts.packages = with pkgs; [
