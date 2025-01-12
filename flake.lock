@@ -2715,11 +2715,11 @@
         "nvf": "nvf"
       },
       "locked": {
-        "lastModified": 1736685434,
-        "narHash": "sha256-PwWL9CtFHWhTe4lhNsmHUcyFIEPleZuWgWnwAZC/WlU=",
+        "lastModified": 1736685772,
+        "narHash": "sha256-NCz4qLW0pMQ0bQC0AhaY2g0NOB+VzL2MZLhUrA+UL3g=",
         "owner": "pniedzwiedzinski",
         "repo": "pnvf",
-        "rev": "93158dfb79f505fadbe9fac8815aff0ec49e98d9",
+        "rev": "abc6cb469e116ac025f83c0c13702f1934dda5f2",
         "type": "github"
       },
       "original": {
