@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   imports = [
     ./disko-config.nix
     ../../modules/doas.nix
@@ -16,6 +16,13 @@
   };
 
   virtualisation.docker.enable = true;
+
+  nix.settings.trusted-users = ["root" "@wheel"];
+  nix.settings.experimental-features = ["flakes" "nix-command"];
+
+  networking.firewall.allowedTCPPorts = [8888];
+
+  environment.systemPackages = with pkgs; [lm_sensors];
 
   users = {
     users = {
