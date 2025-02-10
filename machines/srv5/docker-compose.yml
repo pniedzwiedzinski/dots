@@ -1,0 +1,29 @@
+services:
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    ports:
+       - "11434:11434"
+    volumes:
+       - ollama:/root/.ollama
+    devices:
+      - "nvidia.com/gpu=all"
+    environment:
+       - OLLAMA_HOST=0.0.0.0:11434
+    restart: unless-stopped
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:cuda
+    ports:
+       - "3000:8080"
+    volumes:
+       - openwebui_data:/app/backend/data
+    devices:
+      - "nvidia.com/gpu=all"
+    environment:
+       - OLLAMA_BASE_URL=http://ollama:11434
+    restart: unless-stopped
+
+volumes:
+  ollama:
+  openwebui_data:

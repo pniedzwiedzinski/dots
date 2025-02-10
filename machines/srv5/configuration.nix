@@ -1,6 +1,12 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   imports = [
     ./disko-config.nix
+    ./nvidia_gpu.nix
+    ./ollama.nix
     ../../modules/doas.nix
   ];
 
@@ -17,12 +23,31 @@
 
   virtualisation.docker.enable = true;
 
+  programs.nix-ld.enable = true;
+
+  nixpkgs.config.nvidia.acceptLicense = true;
+  nixpkgs.config.allowUnfree = true;
   nix.settings.trusted-users = ["root" "@wheel"];
   nix.settings.experimental-features = ["flakes" "nix-command"];
 
-  networking.firewall.allowedTCPPorts = [8888];
+  networking = {
+    hostName = "srv5";
+    interfaces = {
+      enp4s0.ipv4.addresses = [
+        {
+          address = "192.168.1.244";
+          prefixLength = 24;
+        }
+      ];
+    };
+    defaultGateway = "192.168.1.1";
+    nameservers = ["1.1.1.1" "8.8.8.8"];
+  };
 
-  environment.systemPackages = with pkgs; [lm_sensors];
+  environment.systemPackages = with pkgs; [
+    lm_sensors
+    python3
+  ];
 
   users = {
     users = {
