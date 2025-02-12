@@ -1,7 +1,16 @@
-{pkgs, ...}: {
-  virtualisation.oci-containers = {
-    backend = "podman";
-    containers.homeassistant = {
+{
+  config,
+  lib,
+  ...
+}: let
+  cfg = config.srv.services.home-assistant;
+in {
+  options.srv.services.home-assistant = {
+    enable = lib.mkEnableOption "Web change detection watchdog with UI and notifications";
+  };
+  config = lib.mkIf cfg.enable {
+    virtualisation.oci-containers.containers.homeassistant = {
+      # user = "homeassistant";
       volumes = [
         "/srv/home-assistant:/config"
         "/etc/localtime:/etc/localtime:ro"
@@ -12,8 +21,12 @@
       extraOptions = [
         "--network=host"
       ];
-      autoStart = true;
+    };
+    networking.firewall.allowedTCPPorts = [8123];
+
+    users.users.homeassistant = {
+      isSystemUser = true;
+      group = "srvworker";
     };
   };
-  networking.firewall.allowedTCPPorts = [8123];
 }

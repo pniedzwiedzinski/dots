@@ -49,6 +49,7 @@
           mode = "0755";
         }
         "/etc/NetworkManager"
+        "/srv"
       ];
       files = [
         "/etc/adjtime"

@@ -14,13 +14,6 @@ in {
         User to run the Immich container as
       '';
     };
-    group = lib.mkOption {
-      default = config.homelab.group;
-      type = lib.types.str;
-      description = ''
-        Group to run the Immich container as
-      '';
-    };
     mediaDir = lib.mkOption {
       type = lib.types.path;
       default = "/srv/immich";
@@ -35,12 +28,14 @@ in {
     users.users.immich.extraGroups = [
       "video"
       "render"
+      "srvworker"
     ];
     services.immich = {
       group = "immich";
       enable = true;
       port = 2283;
       mediaLocation = "${cfg.mediaDir}";
+      openFirewall = true;
     };
   };
 }

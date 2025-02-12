@@ -5,6 +5,7 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
     deploy-rs.url = "github:serokell/deploy-rs";
     impermanence.url = "github:nix-community/impermanence";
+    agenix.url = "github:ryantm/agenix";
   };
 
   outputs = {
@@ -12,6 +13,7 @@
     disko,
     deploy-rs,
     impermanence,
+    agenix,
     self,
     ...
   }: {
@@ -22,6 +24,7 @@
       modules = [
         disko.nixosModules.disko
         impermanence.nixosModules.impermanence
+        agenix.nixosModules.default
         ./configuration.nix
         ./hardware-configuration.nix
       ];
@@ -31,7 +34,7 @@
       user = "root";
       nodes = {
         srv3 = {
-          hostname = "srv5"; #TODO FIX
+          hostname = "srv3"; #TODO FIX
           profiles.system.path =
             deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.srv3;
         };

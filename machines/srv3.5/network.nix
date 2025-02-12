@@ -5,12 +5,20 @@
   ...
 }: {
   services.vnstat.enable = true;
+  environment.persistence."/persist".directories = [
+    {
+      directory = "/var/lib/vnstat";
+      user = "vnstatd";
+      group = "vnstatd";
+    }
+  ];
+
   networking = {
     interfaces.enp1s0 = {
       useDHCP = false;
       ipv4.addresses = [
         {
-          address = "192.168.1.244"; #TODO CHANGE
+          address = "192.168.1.244";
           prefixLength = 24;
         }
       ];

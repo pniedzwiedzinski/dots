@@ -5,7 +5,7 @@
 }: let
   cfg = config.srv.services.freshrss;
 in {
-  options.srv.services.immich = {
+  options.srv.services.freshrss = {
     enable = lib.mkEnableOption "Self-hosted photo and video management solution";
   };
   config = lib.mkIf cfg.enable {
