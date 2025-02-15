@@ -8,7 +8,8 @@
     # ./yggdrasil.nix
     ../base.nix
     ../../modules/media-drive.nix
-    ../../modules/tailscale.nix
+    # ../../modules/tailscale.nix
+    ../../modules/clean.nix
     ../x220-gnome/pass.nix
     ./hardware-configuration.nix
     ../x220-gnome/pn.nix
@@ -44,10 +45,6 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  nix.gc = {
-    automatic = true;
-    options = "--delete-older-than 30d";
-  };
   nix.optimise.automatic = true;
   nix.settings.trusted-users = ["@wheel"];
 
