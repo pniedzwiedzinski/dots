@@ -1,21 +1,22 @@
-{ pkgs, ... }:
-{
-	environment.systemPackages = with pkgs; [
-		pkgs.pass-wayland
-	];
-	
-	programs.browserpass.enable = true;
-	programs.chromium.extensions = [
-		"naepdomgkenhinolocfifgehidddafch"
-	];
+{pkgs, ...}: {
+  environment.systemPackages = with pkgs; [
+    #pkgs.pass-wayland
+    (pass.withExtensions
+      (exts: [exts.pass-otp]))
+  ];
 
-	programs.gnupg.agent = {
-		enable = true;
-		pinentryPackage = pkgs.pinentry-gnome3;
-		enableSSHSupport = true;
-	};
+  programs.browserpass.enable = true;
+  programs.chromium.extensions = [
+    "naepdomgkenhinolocfifgehidddafch"
+  ];
 
-	environment.variables = {
-		PASSWORD_STORE_DIR = "$HOME/.local/share/password-store";
-	};
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryPackage = pkgs.pinentry-gnome3;
+    enableSSHSupport = true;
+  };
+
+  environment.variables = {
+    PASSWORD_STORE_DIR = "$HOME/.local/share/password-store";
+  };
 }

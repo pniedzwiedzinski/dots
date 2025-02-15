@@ -18,7 +18,7 @@
       useDHCP = false;
       ipv4.addresses = [
         {
-          address = "192.168.1.244";
+          address = "192.168.1.136";
           prefixLength = 24;
         }
       ];
@@ -28,7 +28,7 @@
     hostName = "srv3";
 
     extraHosts = let
-      services = lib.attrsToList config.services.nginx.virtualHosts;
+      services = lib.attrsToList config.services.caddy.virtualHosts;
       servicesNames = lib.map (el: el.name) services;
       withSpaces = lib.concatMap (x: [x] ++ [" "]) servicesNames;
       servicesString = lib.concatStrings withSpaces;
@@ -53,6 +53,7 @@
     enable = true;
     settings = {
       server = ["1.1.1.1" "8.8.8.8"];
+      address = "/.app/192.168.1.136";
     };
   };
 }

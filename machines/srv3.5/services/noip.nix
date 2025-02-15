@@ -8,10 +8,10 @@
 in {
   options.srv.services.noip = {
     enable = lib.mkEnableOption "Dynamic DNS update IP service";
-    passwdFile = lib.mkOption {
+    agePasswdFile = lib.mkOption {
       type = lib.types.path;
     };
-    loginFile = lib.mkOption {
+    ageLoginFile = lib.mkOption {
       type = lib.types.path;
     };
     interface = lib.mkOption {
@@ -21,10 +21,25 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
+    age.secrets = {
+      noip-passwd = {
+        file = cfg.agePasswdFile;
+        mode = "400";
+        owner = "noip";
+        group = "noip";
+      };
+      noip-login = {
+        file = cfg.ageLoginFile;
+        mode = "400";
+        owner = "noip";
+        group = "noip";
+      };
+    };
+
     systemd = let
       serviceScript = pkgs.writeShellScript "noip-setup.sh" ''
-        passwd=$(cat ${cfg.passwdFile})
-        login=$(cat ${cfg.loginFile})
+        passwd=$(cat ${config.age.secrets.noip-passwd.path})
+        login=$(cat ${config.age.secrets.noip-login.path})
         temp=$(mktemp noip.XXX.conf)
         noip2 -I ${cfg.interface} -U 5 -C -c "$temp" -u "$login" -p "$passwd"
         noip2 -c "$temp"
@@ -34,7 +49,7 @@ in {
         enable = true;
         wantedBy = ["multi-user.target"];
         aliases = ["noip2.service"];
-        after = ["network.target" "syslog.target"];
+        after = ["network.target" "syslog.target" "default.target"];
         path = with pkgs; [noip coreutils];
         serviceConfig = {
           WorkingDirectory = "/tmp";

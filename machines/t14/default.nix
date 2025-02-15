@@ -5,9 +5,10 @@
 }: {
   imports = [
     # Include the results of the hardware scan.
-    ./yggdrasil.nix
+    # ./yggdrasil.nix
     ../base.nix
     ../../modules/media-drive.nix
+    ../../modules/tailscale.nix
     ../x220-gnome/pass.nix
     ./hardware-configuration.nix
     ../x220-gnome/pn.nix

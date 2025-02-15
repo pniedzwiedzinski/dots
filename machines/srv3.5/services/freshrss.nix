@@ -6,7 +6,10 @@
   cfg = config.srv.services.freshrss;
 in {
   options.srv.services.freshrss = {
-    enable = lib.mkEnableOption "Self-hosted photo and video management solution";
+    enable = lib.mkEnableOption "Self-hosted rss manager";
+    passwdFile = {
+      type = lib.types.path;
+    };
   };
   config = lib.mkIf cfg.enable {
     services.freshrss = {
@@ -14,8 +17,8 @@ in {
       virtualHost = "fresh.niedzwiedzinski.cyou";
       baseUrl = "https://fresh.niedzwiedzinski.cyou";
       authType = "form";
-      defaultUser = "admin";
-      passwordFile = cfg.age.secrets.freshrssPasswordFile.path;
+      defaultUser = "pn";
+      passwordFile = cfg.passwdFile;
     };
   };
 }
