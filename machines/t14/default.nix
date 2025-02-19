@@ -8,7 +8,7 @@
     # ./yggdrasil.nix
     ../base.nix
     ../../modules/media-drive.nix
-    # ../../modules/tailscale.nix
+    ../../modules/tailscale.nix
     ../../modules/clean.nix
     ../x220-gnome/pass.nix
     ./hardware-configuration.nix

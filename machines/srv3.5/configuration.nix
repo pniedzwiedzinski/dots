@@ -14,6 +14,8 @@
     ./services/docker.nix
     ./services/noip.nix
     # ./services/caddy.nix
+
+    ./services/onedrive.nix
   ];
 
   disko.devices.disk.main.device = "/dev/sda";
@@ -25,6 +27,8 @@
       ageLoginFile = ./secrets/noip-login.age;
     };
   };
+
+  services.onedrive-backup.enable = true;
 
   networking.firewall.allowedTCPPorts = [2283 8123 8000 5000 8080];
 
@@ -62,6 +66,8 @@
     vim
     lm_sensors
   ];
+
+  services.tailscale.enable = true;
 
   security.sudo.wheelNeedsPassword = false;
   nix.settings.trusted-users = ["@wheel"];

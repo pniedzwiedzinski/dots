@@ -53,7 +53,7 @@
     enable = true;
     settings = {
       server = ["1.1.1.1" "8.8.8.8"];
-      address = "/.app/192.168.1.136";
+      address = "/.srv3/192.168.1.136";
     };
   };
 }

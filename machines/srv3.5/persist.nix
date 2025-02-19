@@ -18,6 +18,12 @@
           mode = "0755";
         }
         {
+          directory = "/var/lib/tailscale";
+          user = "root";
+          group = "root";
+          mode = "0700";
+        }
+        {
           directory = "/var/log";
           user = "root";
           group = "root";
