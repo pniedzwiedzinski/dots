@@ -41,7 +41,7 @@ in
         wantedBy = [ "timers.target" ];
         serviceConfig = {
           Type = "oneshot";
-          ExecStart = "${pkgs.nixVersions.stable}/bin/nixos-rebuild --experimental-features 'nix-command flakes' switch --flake github:pniedzwiedzinski:dots#${cfg.machineId}";
+          ExecStart = "${pkgs.nixos-rebuild}/bin/nixos-rebuild switch --flake github:pniedzwiedzinski:dots#${cfg.machineId}";
           User = "root";
           Group = "root";
           Restart = "on-failure";
@@ -63,15 +63,15 @@ in
     networking.hostName = cfg.machineId;
     time.timeZone = cfg.timeZone;
 
-    services.openssh = {
-      enable = true;
-      ports = [ 22 ];
-      settings = {
-        PasswordAuthentication = false;
-        PermitRootLogin = "no";
-      };
-    };
-    networking.firewall.allowedTCPPorts = [ 22 ];
+    # services.openssh = {
+    #   enable = true;
+    #   ports = [ 22 ];
+    #   settings = {
+    #     PasswordAuthentication = false;
+    #     PermitRootLogin = "no";
+    #   };
+    # };
+    # networking.firewall.allowedTCPPorts = [ 22 ];
 
     services.tailscale.enable = true;
 

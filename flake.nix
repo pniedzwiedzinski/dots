@@ -144,7 +144,7 @@
         # };
       };
       deploy = {
-        user = "pn";
+        user = "root";
         nodes = {
           srv2 = {
             hostname = "srv2";
