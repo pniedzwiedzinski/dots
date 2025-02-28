@@ -96,7 +96,6 @@
           }
         ];
         t14 = nixosSystem "x86_64-linux" "t14" [
-          ./modules/gnome.nix
           inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
           inputs.home-manager.nixosModules.default
           inputs.nix-index-database.nixosModules.nix-index
@@ -156,5 +155,15 @@
           );
         };
       };
+      deploy = {
+      user = "root";
+      nodes = {
+        srv2 = {
+          hostname = "srv2";
+          profiles.system.path =
+            deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.srv2;
+        };
+      };
+    };
     };
 }

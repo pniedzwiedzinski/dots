@@ -4,9 +4,7 @@
 {
 
   imports = [
-     ../modules/nur.nix
-    ../modules/doas.nix
-  #  ../modules/internet.nix
+    ./doas.nix
   ];
 
   boot.tmp.cleanOnBoot = true;

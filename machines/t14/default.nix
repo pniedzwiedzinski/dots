@@ -6,17 +6,19 @@
   imports = [
     # Include the results of the hardware scan.
     ../base.nix
-    ../../modules/media-drive.nix
-    ../../modules/tailscale.nix
-    ../../modules/clean.nix
-    ../x220-gnome/pass.nix
+    ./modules/media-drive.nix
+    ./modules/clean.nix
+    ./modules/appset-dev.nix
+    ./modules/pass.nix
+    ./modules/gnome.nix
     ./hardware-configuration.nix
-    ../../modules/appset-dev.nix
   ];
 
   # Enable networking
   networking.networkmanager.enable = true;
   networking.hostName = "t14";
+
+  services.tailscale.enable = true;
 
   # Set your time zone.
   time.timeZone = "Europe/Warsaw";
