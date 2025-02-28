@@ -25,7 +25,7 @@
         disko.nixosModules.disko
         impermanence.nixosModules.impermanence
         agenix.nixosModules.default
-        {system.autoUpgrade.flake = self.outPath;}
+        # {system.autoUpgrade.flake = self.outPath;}
         ./configuration.nix
         ./hardware-configuration.nix
       ];

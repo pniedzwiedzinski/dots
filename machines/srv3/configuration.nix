@@ -12,14 +12,17 @@
 
     ./services/ssh.nix
     ./services/docker.nix
-    ./services/noip.nix
+    # ./services/noip.nix
     # ./services/caddy.nix
-
     ./services/onedrive.nix
+
+    ../../srv
   ];
 
   disko.devices.disk.main.device = "/dev/sda";
 
+  srv.enable = true;
+  srv.machineId = "srv3";
   srv.services = {
     noip = {
       enable = true;

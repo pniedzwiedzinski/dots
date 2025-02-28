@@ -20,6 +20,8 @@
     nix-ld.inputs.nixpkgs.follows = "nixpkgs";
     pnvf.url = "github:pniedzwiedzinski/pnvf";
     pnvf.inputs.nixpkgs.follows = "nixpkgs";
+
+    deploy-rs.url = "github:serokell/deploy-rs";
   };
 
   outputs = {nixpkgs, ...} @ inputs: let
@@ -88,7 +90,17 @@
           };
         }
       ];
-      srv3 = nixosSystem "x86_64-linux" "srv3" [];
+      srv3 = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs;};
+        modules = with inputs; [
+            disko.nixosModules.disko
+            impermanence.nixosModules.impermanence
+            agenix.nixosModules.default
+            ./machines/srv3/configuration.nix
+            ./machines/srv3/hardware-configuration.nix
+          ];
+      };
     };
   };
 }
