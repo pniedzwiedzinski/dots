@@ -60,6 +60,25 @@ in
       };
     };
 
+    networking.hostName = cfg.machineId;
+    time.timeZone = cfg.timeZone;
+
+    services.openssh = {
+      enable = true;
+      ports = [22];
+      settings = {
+        PasswordAuthentication = false;
+        PermitRootLogin = "no";
+      };
+    };
+    networking.firewall.allowedTCPPorts = [22];
+
+    services.tailscale.enable = true;
+
+    security.sudo.wheelNeedsPassword = false;
+    nix.settings.trusted-users = ["@wheel"];
+    nix.settings.experimental-features = ["flakes" "nix-command"];
+
     users.users.pn = {
       isNormalUser = true;
       home = "/home/pn";
