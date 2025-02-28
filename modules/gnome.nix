@@ -15,16 +15,16 @@ in {
   services.xserver.desktopManager.xterm.enable = false;
   services.xserver.excludePackages = [pkgs.xterm];
 
-  environment.gnome.excludePackages = with pkgs.gnome; [
-    pkgs.epiphany
+  environment.gnome.excludePackages = with pkgs; [
+    epiphany
     baobab
     totem
     yelp
     file-roller
     seahorse
     gnome-clocks
-    pkgs.gnome-connections
-    pkgs.gnome-tour
+    gnome-connections
+    gnome-tour
   ];
 
   programs.dconf = {

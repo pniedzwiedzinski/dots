@@ -64,7 +64,7 @@
   services.printing.drivers = with pkgs; [cnijfilter2];
   services.printing.logLevel = "debug";
   services.avahi.enable = true;
-  services.avahi.nssmdns = true;
+  services.avahi.nssmdns4 = true;
   hardware.sane.enable = true;
   hardware.sane.extraBackends = [pkgs.sane-airscan];
   services.udev.packages = [pkgs.sane-airscan];
