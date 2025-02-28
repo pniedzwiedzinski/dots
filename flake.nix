@@ -41,7 +41,7 @@
   };
 
   outputs =
-    { nixpkgs, ... }@inputs:
+    { nixpkgs, self, ... }@inputs:
     let
       nixosSystem =
         system: name: nixosModules:
@@ -119,7 +119,7 @@
           modules = (
             with inputs;
             [
-              raspberry-pi-nix.nixosModules.raspberry-pi 
+              raspberry-pi-nix.nixosModules.raspberry-pi
               raspberry-pi-nix.nixosModules.sd-image
             ]
           );
@@ -156,14 +156,13 @@
         };
       };
       deploy = {
-      user = "root";
-      nodes = {
-        srv2 = {
-          hostname = "srv2";
-          profiles.system.path =
-            deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.srv2;
+        user = "root";
+        nodes = {
+          srv2 = {
+            hostname = "srv2";
+            profiles.system.path = inputs.deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.srv2;
+          };
         };
       };
-    };
     };
 }
