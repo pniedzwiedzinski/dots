@@ -8,6 +8,7 @@
     python3Packages.pip
     nodejs
     deploy-rs
+    nixfmt-rfc-style
   ];
 
   virtualisation.docker.enable = true;
