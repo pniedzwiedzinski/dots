@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     ../base.nix
@@ -46,7 +47,7 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   nix.optimise.automatic = true;
-  nix.settings.trusted-users = ["@wheel"];
+  nix.settings.trusted-users = [ "@wheel" ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -61,14 +62,14 @@
     package = pkgs.plocate;
   };
 
-  services.printing.drivers = with pkgs; [cnijfilter2];
+  services.printing.drivers = with pkgs; [ cnijfilter2 ];
   services.printing.logLevel = "debug";
   services.avahi.enable = true;
   services.avahi.nssmdns4 = true;
   hardware.sane.enable = true;
-  hardware.sane.extraBackends = [pkgs.sane-airscan];
-  services.udev.packages = [pkgs.sane-airscan];
-  hardware.sane.disabledDefaultBackends = ["escl"];
+  hardware.sane.extraBackends = [ pkgs.sane-airscan ];
+  services.udev.packages = [ pkgs.sane-airscan ];
+  hardware.sane.disabledDefaultBackends = [ "escl" ];
 
   # programs.nix-ld.dev = {
   # 	enable = true;
@@ -86,14 +87,22 @@
     obsidian
   ];
 
-  boot.binfmt.emulatedSystems = ["i686-linux" "aarch64-linux"];
+  boot.binfmt.emulatedSystems = [
+    "i686-linux"
+    "aarch64-linux"
+  ];
   nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
 
   users.users.pn = {
-		isNormalUser = true;
-		description = "Patryk Niedźwiedziński";
-		extraGroups = [ "lp" "scanner" "networkmanager" "wheel" ];
-	};
+    isNormalUser = true;
+    description = "Patryk Niedźwiedziński";
+    extraGroups = [
+      "lp"
+      "scanner"
+      "networkmanager"
+      "wheel"
+    ];
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

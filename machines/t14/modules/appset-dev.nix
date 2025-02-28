@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   environment.systemPackages = with pkgs; [
     busybox
     vscode
@@ -12,5 +13,5 @@
   ];
 
   virtualisation.docker.enable = true;
-  users.users.pn.extraGroups = ["docker"];
+  users.users.pn.extraGroups = [ "docker" ];
 }
