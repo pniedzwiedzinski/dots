@@ -41,7 +41,7 @@ in
         wantedBy = [ "timers.target" ];
         serviceConfig = {
           Type = "oneshot";
-          ExecStart = "${pkgs.nixFlakes}/bin/nixos-rebuild --experimental-features 'nix-command flakes' switch --flake github:pniedzwiedzinski:dots#${cfg.machineId}";
+          ExecStart = "${pkgs.nixVersions.stable}/bin/nixos-rebuild --experimental-features 'nix-command flakes' switch --flake github:pniedzwiedzinski:dots#${cfg.machineId}";
           User = "root";
           Group = "root";
           Restart = "on-failure";
@@ -65,19 +65,22 @@ in
 
     services.openssh = {
       enable = true;
-      ports = [22];
+      ports = [ 22 ];
       settings = {
         PasswordAuthentication = false;
         PermitRootLogin = "no";
       };
     };
-    networking.firewall.allowedTCPPorts = [22];
+    networking.firewall.allowedTCPPorts = [ 22 ];
 
     services.tailscale.enable = true;
 
     security.sudo.wheelNeedsPassword = false;
-    nix.settings.trusted-users = ["@wheel"];
-    nix.settings.experimental-features = ["flakes" "nix-command"];
+    nix.settings.trusted-users = [ "@wheel" ];
+    nix.settings.experimental-features = [
+      "flakes"
+      "nix-command"
+    ];
 
     users.users.pn = {
       isNormalUser = true;

@@ -2,7 +2,8 @@
   pkgs,
   inputs,
   ...
-}: {
+}:
+{
   imports = [
     ./disko-config.nix
 
@@ -33,7 +34,13 @@
 
   services.onedrive-backup.enable = false;
 
-  networking.firewall.allowedTCPPorts = [2283 8123 8000 5000 8080];
+  networking.firewall.allowedTCPPorts = [
+    2283
+    8123
+    8000
+    5000
+    8080
+  ];
 
   time.timeZone = "Europe/Warsaw";
   i18n.defaultLocale = "en_US.UTF-8"; # Less confusing locale than polish one
@@ -72,20 +79,20 @@
 
   services.tailscale.enable = true;
 
-  security.sudo.wheelNeedsPassword = false;
-  nix.settings.trusted-users = ["@wheel"];
-  nix.settings.experimental-features = ["flakes" "nix-command"];
+  # security.sudo.wheelNeedsPassword = false;
+  # nix.settings.trusted-users = ["@wheel"];
+  # nix.settings.experimental-features = ["flakes" "nix-command"];
 
-  users = {
-    users = {
-      pn = {
-        description = "patryk";
-        isNormalUser = true;
-        extraGroups = ["wheel" "git" "docker"];
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqlCe4ovKa/Gwl5xmgu9nvVPmFXMgwdeLRYW7Gg7RWx pniedzwiedzinski19@gmail.com"
-        ];
-      };
-    };
-  };
+  # users = {
+  #   users = {
+  #     pn = {
+  #       description = "patryk";
+  #       isNormalUser = true;
+  #       extraGroups = ["wheel" "git" "docker"];
+  #       openssh.authorizedKeys.keys = [
+  #         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqlCe4ovKa/Gwl5xmgu9nvVPmFXMgwdeLRYW7Gg7RWx pniedzwiedzinski19@gmail.com"
+  #       ];
+  #     };
+  #   };
+  # };
 }

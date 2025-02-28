@@ -83,18 +83,6 @@
     in
     {
       nixosConfigurations = {
-        x220-gnome = nixosSystem "x86_64-linux" "x220-gnome" [
-          inputs.nixos-hardware.nixosModules.lenovo-thinkpad-x220
-          inputs.home-manager.nixosModules.default
-          inputs.disko.nixosModules.disko
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              users.pn = import ./home.nix;
-            };
-          }
-        ];
         t14 = nixosSystem "x86_64-linux" "t14" [
           inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
           inputs.home-manager.nixosModules.default
@@ -134,34 +122,46 @@
             ]
           );
         };
-        srv4 = server {
-          name = "srv4";
-          modules = (
-            with inputs;
-            [
-              disko.nixosModules.disko
-              impermanence.nixosModules.impermanence
-            ]
-          );
-        };
-        srv5 = server {
-          name = "srv5";
-          modules = (
-            with inputs;
-            [
-              disko.nixosModules.disko
-              impermanence.nixosModules.impermanence
-            ]
-          );
-        };
+        # srv4 = server {
+        #   name = "srv4";
+        #   modules = (
+        #     with inputs;
+        #     [
+        #       disko.nixosModules.disko
+        #       impermanence.nixosModules.impermanence
+        #     ]
+        #   );
+        # };
+        # srv5 = server {
+        #   name = "srv5";
+        #   modules = (
+        #     with inputs;
+        #     [
+        #       disko.nixosModules.disko
+        #       impermanence.nixosModules.impermanence
+        #     ]
+        #   );
+        # };
       };
       deploy = {
-        user = "root";
+        user = "pn";
         nodes = {
           srv2 = {
             hostname = "srv2";
             profiles.system.path = inputs.deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.srv2;
           };
+          srv3 = {
+            hostname = "srv3";
+            profiles.system.path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.srv3;
+          };
+          # srv4 = {
+          #   hostname = "srv4";
+          #   profiles.system.path = inputs.deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.srv4;
+          # };
+          # srv5 = {
+          #   hostname = "srv5";
+          #   profiles.system.path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.srv5;
+          # };
         };
       };
     };
