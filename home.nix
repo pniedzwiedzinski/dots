@@ -1,31 +1,6 @@
 { config, pkgs, ... }:
-let
-  # secrets = import ./secrets.nix;
-  # wywozik = pkgs.nur.repos.pn.wywozik-todo.override {
-  #   configFile = ''
-  #     CITY = "Poznań"
-  #     STREET = "${secrets.street}"
-  #     NUMBER = "${secrets.number}"
-  #     HOUSING = "zamieszkana"
-  #     TOKEN = "${secrets.todoist}"
-  #   '';
-  # };
-
-  platformSetup = [
-      # ./platforms/linux
-      # ./programs/rclone.nix
-    ];
-in
 {
-  #dconf.enable = false;
 
-  #programs.obs-studio = {
-    #enable = true;
-    #plugins = with pkgs; [ obs-wlrobs obs-v4l2sink ];
-  #};
-
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
   home.username = "pn";
   home.homeDirectory = "/home/pn";
 
@@ -51,44 +26,34 @@ in
     templates = "${config.home.homeDirectory}/templates";
   };
 
-  imports = [
-    # Platform specific config
-    # ./programs/zsh
-    #./programs/newsboat
-    ./programs/git.nix
-    #./programs/mpv.nix
-    #./programs/sent
-    # ./programs/qutebrowser.nix
-  ] ++ platformSetup;
+  programs.git = {
+    enable = true;
+    package = pkgs.gitAndTools.gitFull;
+    userName = "Patryk Niedźwiedziński";
+    userEmail = "pniedzwiedzinski19@gmail.com";
+    signing = {
+      key = "pniedzwiedzinski19@gmail.com";
+      signByDefault = true;
+    };
+    aliases = {
+      lg = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative";
+    };
 
-  home.packages = with pkgs; [
-    whatsapp-for-linux
-    # wywozik
-    # Basic
-    #slop
-    #xlibs.xdpyinfo
-    #amfora
-    #translate-shell
-    #nix-index
-    #fzf
+    extraConfig = {
+      url."ssh://git@github.com/".insteadOf = "https://github.com/";
+      url."ssh://git@github.com/pniedzwiedzinski/".insteadOf = "pn:";
+      url."ssh://git@gitlab.com/".insteadOf = "https://gitlab.com/";
+      url."ssh://git@bitbucket.org/".insteadOf = "https://bitbucket.org/";
 
-    # Handy tools
-    #skanlite
-    #imagemagick
-
-
-    # Misc
-    #weechat
-    #todoist
-    #browserpass
-    ##minecraft
-    #spotify-tui
-    #spotifyd
-    ## gimp
-    #pandoc
-    #texlive.combined.scheme-medium
-    #zathura
-  ];
+      sendemail = {
+        smtpserver = "${pkgs.msmtp}/bin/msmtp";
+        smtpserveroption = [
+          "-a"
+          "pniedzwiedzinski19@gmail.com"
+        ];
+      };
+    };
+  };
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

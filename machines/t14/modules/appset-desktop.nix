@@ -2,7 +2,8 @@
 {
 	environment.systemPackages = with pkgs; [
 	  tuba
-          yt-dlp
+      yt-dlp
+	  whatsapp-for-linux
 	];
 
 }
