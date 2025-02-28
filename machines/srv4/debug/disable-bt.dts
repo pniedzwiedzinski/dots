@@ -1,0 +1,68 @@
+/dts-v1/;
+
+/ {
+	compatible = "brcm,bcm2835";
+
+	fragment@0 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+			status = "disabled";
+		};
+	};
+
+	fragment@1 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+			pinctrl-names = "default";
+			pinctrl-0 = <0xffffffff>;
+			status = "okay";
+		};
+	};
+
+	fragment@2 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+			status = "disabled";
+		};
+	};
+
+	fragment@3 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+			brcm,pins;
+			brcm,function;
+			brcm,pull;
+		};
+	};
+
+	fragment@4 {
+		target = <0xffffffff>;
+
+		__overlay__ {
+			brcm,pins;
+			brcm,function;
+			brcm,pull;
+		};
+	};
+
+	fragment@5 {
+		target-path = "/aliases";
+
+		__overlay__ {
+			serial0 = "/soc/serial@7e201000";
+			serial1 = "/soc/serial@7e215040";
+		};
+	};
+
+	__fixups__ {
+		uart1 = "/fragment@0:target:0";
+		uart0 = "/fragment@1:target:0";
+		uart0_pins = "/fragment@1/__overlay__:pinctrl-0:0", "/fragment@3:target:0";
+		bt = "/fragment@2:target:0";
+		bt_pins = "/fragment@4:target:0";
+	};
+};

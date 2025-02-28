@@ -1,0 +1,8 @@
+tunnel: solarpi-test
+
+ingress:
+    - hostname: 'solar.niedzwiedzinski.cyou'
+      service: http://solar.niedzwiedzinski.local:80
+    - service: http_status:404
+
+
