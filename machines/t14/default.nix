@@ -11,7 +11,6 @@
     ../../modules/clean.nix
     ../x220-gnome/pass.nix
     ./hardware-configuration.nix
-    ../x220-gnome/pn.nix
     ../../modules/appset-dev.nix
   ];
 
@@ -87,6 +86,12 @@
 
   boot.binfmt.emulatedSystems = ["i686-linux" "aarch64-linux"];
   nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
+
+  users.users.pn = {
+		isNormalUser = true;
+		description = "Patryk Niedźwiedziński";
+		extraGroups = [ "lp" "scanner" "networkmanager" "wheel" ];
+	};
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
