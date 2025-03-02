@@ -1,9 +1,11 @@
 {
   pkgs,
-  inputs,
+  lib,
+  config,
   ...
-}:
-{
+}: let
+  domain = "niedzwiedzinski.cyou";
+in {
   imports = [
     ./disko-config.nix
 
@@ -22,24 +24,24 @@
 
   disko.devices.disk.main.device = "/dev/sda";
 
-  srv.enable = true;
-  srv.machineId = "srv3";
-  srv.services = {
-    noip = {
-      enable = true;
-      agePasswdFile = ./secrets/noip-passwd.age;
-      ageLoginFile = ./secrets/noip-login.age;
+  srv = {
+    enable = true;
+    machineId = "srv3";
+    services = {
+      noip = {
+        enable = true;
+        agePasswdFile = ./secrets/noip-passwd.age;
+        ageLoginFile = ./secrets/noip-login.age;
+      };
     };
   };
 
   services.onedrive-backup.enable = false;
 
   networking.firewall.allowedTCPPorts = [
-    2283
+    80
+    443
     8123
-    8000
-    5000
-    8080
   ];
 
   time.timeZone = "Europe/Warsaw";
@@ -53,19 +55,6 @@
     };
     optimise.automatic = true;
   };
-  system.autoUpgrade = {
-    enable = true;
-    # flake = inputs.self.outPath; <- set in flake.nix
-    flags = [
-      "--update-input"
-      "nixpkgs"
-      "--commit-lock-file"
-      "-L" # print build logs
-    ];
-    dates = "02:00";
-    randomizedDelaySec = "45min";
-    allowReboot = true;
-  };
 
   environment.systemPackages = with pkgs; [
     ripgrep
@@ -77,22 +66,110 @@
     lm_sensors
   ];
 
-  services.tailscale.enable = true;
+  services = {
+    tailscale = {
+      enable = true;
+      permitCertUid = "traefik";
+    };
 
-  # security.sudo.wheelNeedsPassword = false;
-  # nix.settings.trusted-users = ["@wheel"];
-  # nix.settings.experimental-features = ["flakes" "nix-command"];
+    traefik = {
+      enable = true;
+      staticConfigOptions = {
+        certificatesResolvers = {
+          tailscale.tailscale = {};
+          letsencrypt = {
+            acme = {
+              email = "patryk@niedzwiedzinski.cyou";
+              storage = "/persistent/letsencrypt.json";
+              dnsChallenge = {
+                provider = "cloudflare";
+              };
+            };
+          };
+        };
 
-  # users = {
-  #   users = {
-  #     pn = {
-  #       description = "patryk";
-  #       isNormalUser = true;
-  #       extraGroups = ["wheel" "git" "docker"];
-  #       openssh.authorizedKeys.keys = [
-  #         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqlCe4ovKa/Gwl5xmgu9nvVPmFXMgwdeLRYW7Gg7RWx pniedzwiedzinski19@gmail.com"
-  #       ];
-  #     };
-  #   };
-  # };
+        entryPoints = {
+          web = {
+            address = "0.0.0.0:80";
+            # http.redirections.entryPoint = {
+            #   to = "websecure";
+            #   scheme = "https";
+            #   permanent = true;
+            # };
+          };
+
+          websecure = {
+            address = "0.0.0.0:443";
+            http.tls = {
+              certResolver = "letsencrypt";
+              domains = [
+                {
+                  main = domain;
+                  sans = ["*.${domain}"];
+                }
+              ];
+            };
+          };
+        };
+      };
+      dynamicConfigOptions = let
+        generateService = service: {
+          loadBalancer.servers = [{url = "http://localhost:" + service.port;}];
+        };
+        generateRouter = service: {
+          entryPoints = ["web"];
+          rule = "Host(`" + service.name + ".${config.srv.machineId}.${domain}`)";
+          service = service.name;
+        };
+        makeServices = servicesList: {
+          services = lib.listToAttrs (map (s: {
+              inherit (s) name;
+              value = generateService s;
+            })
+            servicesList);
+          routers = lib.listToAttrs (map (s: {
+              inherit (s) name;
+              value = generateRouter s;
+            })
+            servicesList);
+        };
+      in {
+        http =
+          {
+            routers = {
+              freshrss = {
+                entryPoints = ["websecure"];
+                tls.certResolver = "tailscale";
+              };
+            };
+          }
+          // makeServices [
+            {
+              name = "home-assistant";
+              port = "8123";
+            }
+            {
+              name = "paperless";
+              port = "8000";
+            }
+            {
+              name = "paperless-gpt";
+              port = "8001";
+            }
+            {
+              name = "changedetection";
+              port = "5000";
+            }
+            {
+              name = "freshrss";
+              port = "8080";
+            }
+            {
+              name = "immich";
+              port = "2283";
+            }
+          ];
+      };
+    };
+  };
 }
