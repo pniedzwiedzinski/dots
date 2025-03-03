@@ -40,7 +40,10 @@
     LC_TIME = "pl_PL.UTF-8";
   };
 
-  programs.vim.defaultEditor = true;
+  programs.vim = {
+    enable = true;
+    defaultEditor = true;
+  };
   programs.nano.enable = false;
   programs.git.enable = true;
 
@@ -60,6 +63,7 @@
   services.locate = {
     enable = true;
     package = pkgs.plocate;
+    localuser = null;
   };
 
   services.printing.drivers = with pkgs; [ cnijfilter2 ];
