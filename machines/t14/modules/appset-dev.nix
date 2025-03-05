@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   environment.systemPackages = with pkgs; [
     busybox
     vscode
@@ -10,8 +9,9 @@
     nodejs
     deploy-rs
     nixfmt-rfc-style
+    devenv
   ];
 
   virtualisation.docker.enable = true;
-  users.users.pn.extraGroups = [ "docker" ];
+  users.users.pn.extraGroups = ["docker"];
 }
