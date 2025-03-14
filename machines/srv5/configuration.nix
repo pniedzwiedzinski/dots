@@ -4,6 +4,8 @@
     ./nvidia_gpu.nix
     ./ollama.nix
     ../doas.nix
+
+    ./wakeonhttp/host-module.nix
   ];
 
   srv = {
@@ -20,6 +22,10 @@
       PermitRootLogin = "no";
       AllowUsers = ["pn@192.168.1.*"];
     };
+  };
+
+  services.wakeonhttp = {
+    enable = true;
   };
 
   virtualisation.docker.enable = true;
