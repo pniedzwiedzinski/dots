@@ -1,9 +1,11 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
-  fileSystems."/persist".neededForBoot = true;
+{lib, ...}: {
+  fileSystems."/persist" = {
+    device = "/dev/disk/by-label/data";
+    fsType = "btrfs";
+    options = ["subvol=data" "compress=zstd" "noatime"];
+    neededForBoot = true;
+  };
+
   users.mutableUsers = false;
   systemd.tmpfiles.rules = ["d /var/lib/systemd/pstore 0755 root root 14d"];
 

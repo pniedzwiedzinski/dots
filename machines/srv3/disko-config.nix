@@ -41,14 +41,6 @@
                     mountOptions = ["compress=zstd" "noatime"];
                     mountpoint = "/nix";
                   };
-                  "/persist/active" = {
-                    mountOptions = ["compress=zstd" "noatime"];
-                    mountpoint = "/persist";
-                  };
-                  "/persist/snapshots" = {
-                    mountOptions = ["compress=zstd" "noatime"];
-                    mountpoint = "/persist/.snapshots";
-                  };
                   "/swap" = {
                     mountpoint = "/.swapvol";
                     swap = {

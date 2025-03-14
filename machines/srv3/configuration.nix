@@ -22,7 +22,7 @@ in {
     ../../srv
   ];
 
-  disko.devices.disk.main.device = "/dev/sda";
+  disko.devices.disk.main.device = "/dev/sdb";
 
   srv = {
     enable = true;
