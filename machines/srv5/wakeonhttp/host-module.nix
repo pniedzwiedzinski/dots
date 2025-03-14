@@ -30,7 +30,7 @@ in {
 
       forwardUrl = mkOption {
         type = types.str;
-        default = "http://localhost:8000";
+        default = "http://localhost:8080";
         description = "Service to pass requests";
       };
     };
@@ -46,7 +46,7 @@ in {
           ${pythonEnv.interpreter} ${./host_proxy.py} \
             --port=${toString cfg.port} \
             --timeout=${toString cfg.shutdownTimeout} \
-            --forward-url=${cfg.forwardUrl}
+            --service-url=${cfg.forwardUrl}
         '';
         Restart = "always";
         User = "root";
