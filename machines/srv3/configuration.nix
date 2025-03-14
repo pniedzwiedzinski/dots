@@ -36,7 +36,7 @@ in {
     };
   };
 
-  services.onedrive-backup.enable = false;
+  services.onedrive-backup.enable = true;
 
   networking.firewall.allowedTCPPorts = [
     80
