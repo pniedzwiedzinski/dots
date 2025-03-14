@@ -1,14 +1,15 @@
-{
-  pkgs,
-  config,
-  ...
-}: {
+{pkgs, ...}: {
   imports = [
     ./disko-config.nix
     ./nvidia_gpu.nix
     ./ollama.nix
-    ../../modules/doas.nix
+    ../doas.nix
   ];
+
+  srv = {
+    enable = true;
+    machineId = "srv5";
+  };
 
   disko.devices.disk.main.device = "/dev/sda";
 
@@ -48,17 +49,4 @@
     lm_sensors
     python3
   ];
-
-  users = {
-    users = {
-      pn = {
-        description = "patryk";
-        isNormalUser = true;
-        extraGroups = ["wheel" "git" "docker"];
-        openssh.authorizedKeys.keys = [
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqlCe4ovKa/Gwl5xmgu9nvVPmFXMgwdeLRYW7Gg7RWx pniedzwiedzinski19@gmail.com"
-        ];
-      };
-    };
-  };
 }
