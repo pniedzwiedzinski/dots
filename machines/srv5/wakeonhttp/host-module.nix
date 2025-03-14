@@ -9,6 +9,7 @@ with lib; let
   pythonEnv = pkgs.python3.withPackages (ps:
     with ps; [
       flask
+      requests
     ]);
 in {
   options = {
