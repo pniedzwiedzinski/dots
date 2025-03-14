@@ -52,5 +52,6 @@ in {
         User = "root";
       };
     };
+    networking.firewall.allowedTCPPorts = [cfg.port];
   };
 }
