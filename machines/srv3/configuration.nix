@@ -168,6 +168,10 @@ in {
               name = "immich";
               port = "2283";
             }
+            {
+              name = "n8n";
+              port = "5678";
+            }
           ];
       };
     };
