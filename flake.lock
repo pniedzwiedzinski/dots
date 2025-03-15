@@ -652,6 +652,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_7": {
+      "locked": {
+        "lastModified": 1735471104,
+        "narHash": "sha256-0q9NGQySwDQc7RhAV2ukfnu7Gxa5/ybJ2ANT8DQrQrs=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "88195a94f390381c6afcdaa933c2f6ff93959cb4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixvim": {
       "inputs": {
         "devshell": "devshell",
@@ -2877,7 +2893,8 @@
         "nixpkgs": "nixpkgs_3",
         "pnvf": "pnvf",
         "raspberry-pi-nix": "raspberry-pi-nix",
-        "ronvim": "ronvim"
+        "ronvim": "ronvim",
+        "zen": "zen"
       }
     },
     "rpi-bluez-firmware-src": {
@@ -3134,6 +3151,24 @@
       "original": {
         "owner": "numtide",
         "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "zen": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_7"
+      },
+      "locked": {
+        "lastModified": 1742065992,
+        "narHash": "sha256-G0/hK4Khox9O8cNF2wEO1sh16i9LioyRIj51ZJWh7WY=",
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
+        "rev": "09269be63797cd668ca41bd13fc8a2d29f3e6afc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "0xc000022070",
+        "repo": "zen-browser-flake",
         "type": "github"
       }
     }

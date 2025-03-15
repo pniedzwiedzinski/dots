@@ -6,6 +6,7 @@
   ];
 
   programs.browserpass.enable = true;
+  programs.firefox.nativeMessagingHosts.browserpass = true;
   programs.chromium.extensions = [
     "naepdomgkenhinolocfifgehidddafch"
   ];

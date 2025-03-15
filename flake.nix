@@ -33,6 +33,7 @@
     nix-ld.inputs.nixpkgs.follows = "nixpkgs";
     pnvf.url = "github:pniedzwiedzinski/pnvf";
     pnvf.inputs.nixpkgs.follows = "nixpkgs";
+    zen.url = "github:0xc000022070/zen-browser-flake";
 
     raspberry-pi-nix.url = "github:nix-community/raspberry-pi-nix";
     raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -96,6 +97,7 @@
           environment.systemPackages = [
             inputs.ronvim.packages.x86_64-linux.default
             inputs.pnvf.packages.x86_64-linux.default
+            inputs.zen.packages.x86_64-linux.default
           ];
         }
       ];
