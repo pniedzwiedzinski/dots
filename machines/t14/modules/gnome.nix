@@ -25,6 +25,7 @@ in {
     gnome-clocks
     gnome-connections
     gnome-tour
+    geary
   ];
 
   programs.dconf = {
@@ -34,7 +35,7 @@ in {
         lockAll = true;
         settings = {
           "org/gnome/shell" = {
-            favorite-apps = ["brave-browser.desktop" "org.gnome.Geary.desktop" "org.gnome.Nautilus.desktop"];
+            favorite-apps = ["brave-browser.desktop" "thunderbird.desktop" "org.gnome.Nautilus.desktop"];
           };
 
           "org/gnome/desktop/interface" = {
@@ -115,6 +116,7 @@ in {
     libnotify
     gnome-boxes
     file-roller
+    thunderbird
     gnomeExtensions.hibernate-status-button
     gnomeExtensions.caffeine
     #brave #specified in home.nix
