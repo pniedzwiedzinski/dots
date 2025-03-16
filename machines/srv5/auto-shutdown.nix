@@ -10,17 +10,22 @@
     	# Check for running Ollama jobs
     	ollama_jobs=$(docker exec ollama ollama ps | wc -l)
 
-    	if [[ "$ssh_sessions" -eq 0 && "$ollama_jobs" -le 1 ]]; then
+    	if [[ "$ssh_sessions" -eq 0 ]]; then
+        echo "SSH active"
+        return 1
+      fi
+      if [[ "$ollama_jobs" -le 1 ]]; then
+        echo "Ollama active"
     		return 1 # No activity (ollama ps header line counts as 1)
-    	else
-    		return 0 # Activity detected
     	fi
+    	return 0 # Activity detected
     }
 
     while true; do
     	if check_activity; then
     		sleep 60 # Check again in a minute
     	else
+        echo "No SSH and Ollama active, starting timeout"
     		sleep 300 # No activity, wait 5 more minutes
     		if ! check_activity; then
     			echo "No activity detected, shutting down..."
