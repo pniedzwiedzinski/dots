@@ -5,6 +5,8 @@
     ./ollama.nix
     ../doas.nix
 
+    ./docker-compose.nix
+
     ./auto-shutdown.nix
   ];
 
