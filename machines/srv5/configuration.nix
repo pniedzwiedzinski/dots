@@ -5,7 +5,7 @@
     ./ollama.nix
     ../doas.nix
 
-    ./wakeonhttp/host-module.nix
+    ./auto-shutdown.nix
   ];
 
   srv = {
@@ -22,10 +22,6 @@
       PermitRootLogin = "no";
       AllowUsers = ["pn@192.168.1.*"];
     };
-  };
-
-  services.wakeonhttp = {
-    enable = true;
   };
 
   virtualisation.docker.enable = true;

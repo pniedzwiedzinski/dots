@@ -3,6 +3,13 @@
   lib,
   ...
 }: {
+  imports = [./wakeonhttp.nix];
+
+  services.wakeonhttp = {
+    enable = true;
+    port = 5000;
+    gpioPin = 14;
+  };
 
   srv.enable = true;
 
