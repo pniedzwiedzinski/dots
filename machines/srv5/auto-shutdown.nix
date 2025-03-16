@@ -10,11 +10,11 @@
     	# Check for running Ollama jobs
     	ollama_jobs=$(docker exec ollama ollama ps | wc -l)
 
-    	if [[ "$ssh_sessions" -eq 0 ]]; then
+    	if [[ "$ssh_sessions" -ge 1 ]]; then
         echo "SSH active"
         return 1
       fi
-      if [[ "$ollama_jobs" -le 1 ]]; then
+      if [[ "$ollama_jobs" -ge 2 ]]; then
         echo "Ollama active"
     		return 1 # No activity (ollama ps header line counts as 1)
     	fi
