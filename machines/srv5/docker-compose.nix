@@ -52,47 +52,6 @@
       "docker-compose-ollama-root.target"
     ];
   };
-  virtualisation.oci-containers.containers."ollama-open-webui" = {
-    image = "ghcr.io/open-webui/open-webui:cuda";
-    environment = {
-      "OLLAMA_BASE_URL" = "http://ollama:11434";
-    };
-    volumes = [
-      "openwebui_data:/app/backend/data:rw"
-    ];
-    ports = [
-      "8080:8080/tcp"
-    ];
-    log-driver = "journald";
-    extraOptions = [
-      "--device=nvidia.com/gpu=all"
-      "--network-alias=open-webui"
-      "--network=ollama_default"
-    ];
-  };
-  systemd.services."docker-ollama-open-webui" = {
-    serviceConfig = {
-      Restart = lib.mkOverride 90 "always";
-      RestartMaxDelaySec = lib.mkOverride 90 "1m";
-      RestartSec = lib.mkOverride 90 "100ms";
-      RestartSteps = lib.mkOverride 90 9;
-    };
-    after = [
-      "docker-network-ollama_default.service"
-      "docker-volume-ollama_openwebui_data.service"
-    ];
-    requires = [
-      "docker-network-ollama_default.service"
-      "docker-volume-ollama_openwebui_data.service"
-    ];
-    partOf = [
-      "docker-compose-ollama-root.target"
-    ];
-    wantedBy = [
-      "docker-compose-ollama-root.target"
-    ];
-  };
-
   # Networks
   systemd.services."docker-network-ollama_default" = {
     path = [pkgs.docker];
@@ -121,19 +80,6 @@
     partOf = ["docker-compose-ollama-root.target"];
     wantedBy = ["docker-compose-ollama-root.target"];
   };
-  systemd.services."docker-volume-ollama_openwebui_data" = {
-    path = [pkgs.docker];
-    serviceConfig = {
-      Type = "oneshot";
-      RemainAfterExit = true;
-    };
-    script = ''
-      docker volume inspect ollama_openwebui_data || docker volume create ollama_openwebui_data
-    '';
-    partOf = ["docker-compose-ollama-root.target"];
-    wantedBy = ["docker-compose-ollama-root.target"];
-  };
-
   # Root service
   # When started, this will automatically create all resources and start
   # the containers. When stopped, this will teardown all resources.
