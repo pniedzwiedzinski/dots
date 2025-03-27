@@ -28,6 +28,12 @@ in {
         default = 14;
         description = "GPIO pin number connected to the host";
       };
+
+      ollamaUrl = mkOption {
+        type = types.str;
+        default = "http://192.168.1.244:11434";
+        description = "Ollama server url";
+      };
     };
   };
 
@@ -40,7 +46,8 @@ in {
         ExecStart = ''
           ${pythonEnv.interpreter} ${./wakeonhttp.py} \
             --port=${toString cfg.port} \
-            --gpio-pin=${toString cfg.gpioPin}
+            --gpio-pin=${toString cfg.gpioPin} \
+            --ollama-url=${toString cfg.ollamaUrl}
         '';
         Restart = "always";
         User = "wakeonhttp";

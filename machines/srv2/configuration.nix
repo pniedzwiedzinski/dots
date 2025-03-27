@@ -9,6 +9,7 @@
     enable = true;
     port = 5000;
     gpioPin = 14;
+    ollamaUrl = "http://srv5:11434";
   };
 
   srv.enable = true;

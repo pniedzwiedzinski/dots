@@ -172,6 +172,14 @@ in {
               name = "n8n";
               port = "5678";
             }
+            {
+              name = "ai";
+              port = "1111";
+            }
+            {
+              name = "litellm";
+              port = "4000";
+            }
           ];
       };
     };

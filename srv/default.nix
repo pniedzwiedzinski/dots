@@ -33,15 +33,15 @@ in {
     networking.hostName = cfg.machineId;
     time.timeZone = cfg.timeZone;
 
-    # services.openssh = {
-    #   enable = true;
-    #   ports = [ 22 ];
-    #   settings = {
-    #     PasswordAuthentication = false;
-    #     PermitRootLogin = "no";
-    #   };
-    # };
-    # networking.firewall.allowedTCPPorts = [ 22 ];
+    services.openssh = {
+      enable = true;
+      ports = [22];
+      settings = {
+        PasswordAuthentication = false;
+        PermitRootLogin = "no";
+      };
+    };
+    networking.firewall.allowedTCPPorts = [22];
 
     services.tailscale.enable = true;
 
