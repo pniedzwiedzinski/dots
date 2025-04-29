@@ -43,7 +43,7 @@
                   };
                   "/home" = {
                     mountOptions = ["compress=zstd" "noatime"];
-                    mountpoint = "/nix";
+                    mountpoint = "/home";
                   };
                 };
               };
