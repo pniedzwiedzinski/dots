@@ -82,11 +82,12 @@
       };
   in {
     nixosConfigurations = {
-      t14 = nixosSystem "x86_64-linux" "t14" [
-        inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
-        inputs.home-manager.nixosModules.default
-        inputs.nix-index-database.nixosModules.nix-index
-        inputs.agenix.nixosModules.default
+      t14 = nixosSystem "x86_64-linux" "t14" (with input; [
+        nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
+        home-manager.nixosModules.default
+        nix-index-database.nixosModules.nix-index
+        agenix.nixosModules.default
+        disko.nixosModules.disko
         # inputs.nix-ld.nixosModules.nix-ld
         {
           home-manager = {
@@ -95,12 +96,12 @@
             users.pn = import ./home.nix;
           };
           environment.systemPackages = [
-            inputs.ronvim.packages.x86_64-linux.default
-            inputs.pnvf.packages.x86_64-linux.default
-            inputs.zen.packages.x86_64-linux.default
+            ronvim.packages.x86_64-linux.default
+            pnvf.packages.x86_64-linux.default
+            zen.packages.x86_64-linux.default
           ];
         }
-      ];
+      ]);
       srv2 = server {
         name = "srv2";
         system = "aarch64-linux";

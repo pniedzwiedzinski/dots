@@ -13,8 +13,11 @@
     ./modules/gnome.nix
     ./hardware-configuration.nix
 
+    ./disko-config.nix
     ./virt.nix
   ];
+
+  # disko.devices.disk.main.device = "/dev/sda";
 
   # Enable networking
   networking.networkmanager.enable = true;
