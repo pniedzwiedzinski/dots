@@ -107,20 +107,31 @@ def create_app(ollama_url, gpio_pin):
         logger.error("Failed to bring Ollama server online")
         return False
 
+    power_cycle_in_progress = False  # Flag to track power cycle status
+
     @app.before_request
     def ollama_health_check():
         """
         Pre-request handler to check Ollama server health and power cycle if needed
         """
+        nonlocal power_cycle_in_progress
+
         try:
             if not check_ollama_server():
-                logger.warning("Ollama server is offline. Attempting to power cycle...")
-                power_cycle_server()
+                if power_cycle_in_progress:
+                    logger.warning("Power cycle already in progress. Waiting...")
+                else:
+                    logger.warning("Ollama server is offline. Attempting to power cycle...")
+                    power_cycle_in_progress = True
+                    power_cycle_server()
 
                 # Wait for server to come back online
                 if not wait_for_server_online():
                     raise Exception("Could not bring Ollama server online")
+
+                power_cycle_in_progress = False
         except Exception as e:
+            power_cycle_in_progress = False
             logger.error(f"Server health check failed: {e}")
             return "Ollama Server Unavailable", 503
 
