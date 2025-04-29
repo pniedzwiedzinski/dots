@@ -29,9 +29,23 @@
             root = {
               end = "-16G";
               content = {
-                type = "filesystem";
-                format = "ext4";
-                mountpoint = "/";
+                type = "btrfs";
+                mountpoint = "/partition-root";
+                postCreateHook = "mount /dev/disk/by-partlabel/disk-main-root /mnt && btrfs subvolume snapshot -r /mnt/root /mnt/root-blank && umount /mnt";
+                subvolumes = {
+                  "/root" = {
+                    mountOptions = ["compress=zstd" "noatime"];
+                    mountpoint = "/";
+                  };
+                  "/nix" = {
+                    mountOptions = ["compress=zstd" "noatime"];
+                    mountpoint = "/nix";
+                  };
+                  "/home" = {
+                    mountOptions = ["compress=zstd" "noatime"];
+                    mountpoint = "/nix";
+                  };
+                };
               };
             };
             plainSwap = {

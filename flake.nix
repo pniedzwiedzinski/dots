@@ -82,7 +82,7 @@
       };
   in {
     nixosConfigurations = {
-      t14 = nixosSystem "x86_64-linux" "t14" (with input; [
+      t14 = nixosSystem "x86_64-linux" "t14" (with inputs; [
         nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
         home-manager.nixosModules.default
         nix-index-database.nixosModules.nix-index
