@@ -3,14 +3,16 @@ name: "Rebuild system"
 on:
   push:
   workflow_dispatch:
-  schedule:
-  - cron: "0 8 * * 0"
 
 jobs:
-  fetcher:
+  build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v4
+      - uses: wimpysworld/nothing-but-nix@main
 
       - name: "Install Nix ❄️"
         uses: cachix/install-nix-action@v30
