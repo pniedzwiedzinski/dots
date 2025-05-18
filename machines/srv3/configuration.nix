@@ -177,8 +177,8 @@ in {
               port = "1111";
             }
             {
-              name = "litellm";
-              port = "4000";
+              name = "research";
+              port = "3001";
             }
           ];
       };

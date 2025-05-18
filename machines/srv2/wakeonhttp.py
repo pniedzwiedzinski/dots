@@ -116,6 +116,10 @@ def create_app(ollama_url, gpio_pin):
         """
         nonlocal power_cycle_in_progress
 
+        client_ip = request.remote_addr
+        logger.info(f"Incoming request from IP: {client_ip}")
+
+
         try:
             if not check_ollama_server():
                 if power_cycle_in_progress:

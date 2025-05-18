@@ -6,11 +6,13 @@
       "https://cache.nixos.org"
       "https://nix-community.cachix.org"
       "https://srv2.cachix.org"
+      "https://cache.garnix.io"
     ];
     trusted-public-keys = [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "srv2.cachix.org-1:GzCcwjhuc/lUbBQ7ARcdiUXeQxgmTeK/NZMfAuA1+Ps="
+      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
     ];
   };
 
@@ -80,6 +82,22 @@
           ]
           ++ (options.modules or []);
       };
+
+    deployPkgs = system: let
+      pkgs = import nixpkgs {inherit system;};
+    in
+      import nixpkgs {
+        inherit system;
+        overlays = [
+          inputs.deploy-rs.overlay # or deploy-rs.overlays.default
+          (_: super: {
+            deploy-rs = {
+              inherit (pkgs) deploy-rs;
+              inherit (super.deploy-rs) lib;
+            };
+          })
+        ];
+      };
   in {
     nixosConfigurations = {
       t14 = nixosSystem "x86_64-linux" "t14" (with inputs; [
@@ -140,11 +158,11 @@
       nodes = {
         srv2 = {
           hostname = "srv2";
-          profiles.system.path = inputs.deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.srv2;
+          profiles.system.path = (deployPkgs "aarch64-linux").deploy-rs.lib.activate.nixos self.nixosConfigurations.srv2;
         };
         srv3 = {
           hostname = "srv3";
-          profiles.system.path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.srv3;
+          profiles.system.path = (deployPkgs "x86_64-linux").deploy-rs.lib.activate.nixos self.nixosConfigurations.srv3;
         };
         # srv4 = {
         #   hostname = "srv4";
@@ -152,7 +170,7 @@
         # };
         srv5 = {
           hostname = "srv5";
-          profiles.system.path = inputs.deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.srv5;
+          profiles.system.path = (deployPkgs "x86_64-linux").deploy-rs.lib.activate.nixos self.nixosConfigurations.srv5;
         };
       };
     };
