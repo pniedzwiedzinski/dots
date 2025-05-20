@@ -29,7 +29,7 @@ in {
     machineId = "srv3";
     services = {
       noip = {
-        enable = true;
+        enable = false;
         agePasswdFile = ./secrets/noip-passwd.age;
         ageLoginFile = ./secrets/noip-login.age;
       };

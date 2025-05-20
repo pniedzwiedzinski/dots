@@ -25,4 +25,4 @@ jobs:
 
       - name: "Build"
         id: fetcher
-        run: nix build .#nixosConfigurations.t14.config.system.build.toplevel
+        run: nix build .#deploy.nodes.srv3.profiles.system.path
