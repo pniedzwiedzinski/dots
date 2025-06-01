@@ -71,6 +71,11 @@ in {
             command = "switch-theme";
             name = "Switch Theme 2";
           };
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
+            binding = "<Super>F12";
+            command = "switch-theme";
+            name = "Switch Theme 2";
+          };
         };
       }
     ];
