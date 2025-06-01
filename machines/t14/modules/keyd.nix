@@ -9,8 +9,8 @@
           leftmeta = "layer(super_layer)";
           # "leftmeta+left" = "alt+left";
         };
-        super_layer = {
-          left = "alt+left";
+        "super_layer:A" = {
+          left = "left";
         };
       };
     };
