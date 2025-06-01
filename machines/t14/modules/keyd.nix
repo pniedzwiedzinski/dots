@@ -5,7 +5,7 @@
       ids = ["04b3:301e:b108cf48"]; # Applies to all keyboards
       settings = {
         main = {
-          leftalt = "leftmeta";
+          "leftalt+space" = "leftmeta";
         };
       };
     };
