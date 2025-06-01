@@ -91,7 +91,6 @@
   services.locate = {
     enable = true;
     package = pkgs.plocate;
-    localuser = null;
   };
 
   services.printing.drivers = with pkgs; [cnijfilter2];
