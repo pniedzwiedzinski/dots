@@ -11,6 +11,8 @@
     ./modules/appset-dev.nix
     ./modules/pass.nix
     ./modules/gnome.nix
+    ./modules/keyd.nix
+
     ./hardware-configuration.nix
 
     ./disko-config.nix
