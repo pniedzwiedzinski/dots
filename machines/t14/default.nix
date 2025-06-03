@@ -12,6 +12,7 @@
     ./modules/pass.nix
     ./modules/gnome.nix
     ./modules/keyd.nix
+    ./modules/gpt.nix
 
     ./hardware-configuration.nix
 
