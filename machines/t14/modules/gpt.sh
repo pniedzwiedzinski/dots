@@ -45,7 +45,15 @@ else
 fi
 
 # Define the prompt for the OpenRouter API
-prompt="Convert the following plain English description to a bash command. If it cannot be converted to a valid bash command, return null: \"$plain_command\""
+prompt="You are a helpful assistant that translates plain English requests into bash commands. Your task is to understand what the user wants to accomplish and provide the appropriate bash command(s) to achieve that goal.
+
+Rules:
+1. Return ONLY the bash command(s), nothing else - no markdown, no backticks, no code blocks, no explanations
+2. Output should be plain text that can be executed directly
+3. If multiple commands are needed, separate them with && or ;
+4. If the request cannot be accomplished with bash commands, return: CANNOT_EXECUTE
+
+Request: \"$plain_command\""
 
 # Properly format the JSON payload for OpenRouter
 json_payload=$(jq -n --arg prompt "$prompt" '{
@@ -76,9 +84,9 @@ fi
 # Extract the command from the API response using jq
 bash_command=$(echo "$response" | jq -r '.choices[0].message.content' | sed 's/^ *//;s/ *$//')
 
-# Check if the bash_command is null or empty
-if [ -z "$bash_command" ] || [ "$bash_command" == "null" ]; then
-    echo "Error: No valid bash command was generated."
+# Check if the bash_command is null, empty, or cannot be executed
+if [ -z "$bash_command" ] || [ "$bash_command" == "null" ] || [ "$bash_command" == "CANNOT_EXECUTE" ]; then
+    echo "Error: No valid bash command was generated or request cannot be executed."
     exit 1
 fi
 
@@ -87,7 +95,7 @@ echo "Bash command generated: $bash_command"
 read -p "Do you want to execute this command? [y/N]: " confirmation
 
 if [[ "$confirmation" =~ ^[Yy]$ ]]; then
-    eval "$bash_command"
+    $bash_command
 else
     echo "Command execution aborted."
 fi
