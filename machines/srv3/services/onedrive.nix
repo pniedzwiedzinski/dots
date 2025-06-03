@@ -11,12 +11,13 @@
     export "PATH=${pkgs.gzip}/bin:${pkgs.gnutar}/bin:${pkgs.openssl}/bin:$PATH"
 
     CONF_DIR="/persist/onedrive"
-    BACKUP_DIR=/tmp/backups
+    BACKUP_DIR="/persist/backup"
 
     TARGET="backup_$(date +%Y-%m-%d_%H-%M-%S)"
     mkdir -p "$BACKUP_DIR/$TARGET"
     tar --exclude="/persist/var/lib/docker" -cvpPzf "$BACKUP_DIR/$TARGET/$TARGET.tar.gz" /persist
     ${pkgs.onedrive}/bin/onedrive -v --confdir "$CONF_DIR" --sync --upload-only --no-remote-delete --syncdir="$BACKUP_DIR/$TARGET"
+    rm "$BACKUP_DIR/$TARGET/$TARGET.tar.gz"
   '';
 in {
   options.services.onedrive-backup = {

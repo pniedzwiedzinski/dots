@@ -13,6 +13,7 @@
   };
 
   srv.enable = true;
+  system.autoUpgrade.enable = false;
 
   # https://www.raspberrypi.com/documentation/computers/linux_kernel.html#native-build-configuration
   raspberry-pi-nix.board = "bcm2711";

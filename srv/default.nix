@@ -25,6 +25,7 @@ in {
   ];
   config = lib.mkIf cfg.enable {
     system.autoUpgrade = {
+      enable = lib.mkDefault true;
       dates = "*-*-* 07:00:00";
       randomizedDelaySec = "1h";
       flake = "github:pniedzwiedzinski/dots";
