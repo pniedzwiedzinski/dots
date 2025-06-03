@@ -49,7 +49,7 @@ prompt="Convert the following plain English description to a bash command. If it
 
 # Properly format the JSON payload for OpenRouter
 json_payload=$(jq -n --arg prompt "$prompt" '{
-    model: "google/gemma-2-9b-it",
+    model: "google/gemma-3-12b-it:free",
     messages: [{"role": "user", "content": $prompt}],
     max_tokens: 60,
     temperature: 0.5
