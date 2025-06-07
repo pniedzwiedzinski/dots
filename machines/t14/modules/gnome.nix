@@ -77,7 +77,7 @@ in {
             name = "Switch Theme 2";
           };
           "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
-            binding = "braille_dot_5";
+            binding = "<Alt>F12";
             command = "switch-theme";
             name = "Switch Theme 3";
           };
