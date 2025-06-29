@@ -9,7 +9,6 @@
     nodejs
     deploy-rs
     nixfmt-rfc-style
-    devenv
   ];
 
   virtualisation.docker.enable = true;
