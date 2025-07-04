@@ -89,7 +89,7 @@
       import nixpkgs {
         inherit system;
         overlays = [
-          inputs.deploy-rs.overlay # or deploy-rs.overlays.default
+          inputs.deploy-rs.overlays.default
           (_: super: {
             deploy-rs = {
               inherit (pkgs) deploy-rs;

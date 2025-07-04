@@ -13,6 +13,7 @@
     ./modules/gnome.nix
     ./modules/keyd.nix
     ./modules/gpt.nix
+    ./modules/esphome.nix
 
     ./hardware-configuration.nix
 
