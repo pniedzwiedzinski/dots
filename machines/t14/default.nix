@@ -95,7 +95,10 @@
     package = pkgs.plocate;
   };
 
-  services.printing.drivers = with pkgs; [cnijfilter2];
+  services.printing.drivers = with pkgs; [
+    cnijfilter2
+    fxlinuxprint
+  ];
   services.printing.logLevel = "debug";
   services.avahi.enable = true;
   services.avahi.nssmdns4 = true;
