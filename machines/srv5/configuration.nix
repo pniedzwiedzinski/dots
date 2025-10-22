@@ -22,7 +22,7 @@
     settings = {
       PasswordAuthentication = false;
       PermitRootLogin = "no";
-      AllowUsers = ["pn@192.168.1.*"];
+      AllowUsers = ["pn"];
     };
   };
 
