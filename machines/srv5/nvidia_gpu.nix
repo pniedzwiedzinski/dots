@@ -8,6 +8,8 @@
 
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.production;
 
+  hardware.nvidia.open = false;
+
   hardware.graphics = {
     enable = true;
   };
