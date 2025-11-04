@@ -35,7 +35,7 @@ in {
         lockAll = true;
         settings = {
           "org/gnome/shell" = {
-            favorite-apps = ["zen-beta.desktop" "thunderbird.desktop" "org.gnome.Nautilus.desktop"];
+            favorite-apps = ["brave-browser.desktop" "thunderbird.desktop" "org.gnome.Nautilus.desktop"];
           };
 
           "org/gnome/desktop/interface" = {
