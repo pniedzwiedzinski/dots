@@ -17,7 +17,8 @@ in {
     ./services/docker.nix
     # ./services/noip.nix
     # ./services/caddy.nix
-    ./services/onedrive.nix
+    #./services/onedrive.nix
+    ./backup.nix
 
     ../../srv
   ];
@@ -35,8 +36,6 @@ in {
       };
     };
   };
-
-  services.onedrive-backup.enable = false;
 
   networking.firewall.allowedTCPPorts = [
     80
