@@ -160,8 +160,8 @@ in {
               port = "5000";
             }
             {
-              name = "freshrss";
-              port = "8080";
+              name = "rss";
+              port = "8081";
             }
             {
               name = "immich";
