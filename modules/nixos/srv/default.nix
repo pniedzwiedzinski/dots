@@ -2,9 +2,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   cfg = config.srv;
-in {
+in
+{
   options.srv = {
     enable = lib.mkEnableOption "The homelab services and configuration variables";
     timeZone = lib.mkOption {
@@ -20,9 +22,7 @@ in {
       description = "Machine identifier";
     };
   };
-  imports = [
-    ./services
-  ];
+
   config = lib.mkIf cfg.enable {
     system.autoUpgrade = {
       enable = lib.mkDefault true;
@@ -36,18 +36,18 @@ in {
 
     services.openssh = {
       enable = true;
-      ports = [22];
+      ports = [ 22 ];
       settings = {
         PasswordAuthentication = false;
         PermitRootLogin = "no";
       };
     };
-    networking.firewall.allowedTCPPorts = [22];
+    networking.firewall.allowedTCPPorts = [ 22 ];
 
     services.tailscale.enable = true;
 
     security.sudo.wheelNeedsPassword = false;
-    nix.settings.trusted-users = ["@wheel"];
+    nix.settings.trusted-users = [ "@wheel" ];
     nix.settings.experimental-features = [
       "flakes"
       "nix-command"
@@ -57,7 +57,7 @@ in {
       isNormalUser = true;
       home = "/home/pn";
       description = "Patryk";
-      extraGroups = ["wheel"];
+      extraGroups = [ "wheel" ];
 
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIqlCe4ovKa/Gwl5xmgu9nvVPmFXMgwdeLRYW7Gg7RWx pniedzwiedzinski19@gmail.com"

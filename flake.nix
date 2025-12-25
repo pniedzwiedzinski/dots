@@ -1,23 +1,6 @@
 {
-  description = "Nixos config flake";
-
-  nixConfig = {
-    substituters = [
-      "https://cache.nixos.org"
-      "https://nix-community.cachix.org"
-      "https://srv2.cachix.org"
-      "https://cache.garnix.io"
-    ];
-    trusted-public-keys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "srv2.cachix.org-1:GzCcwjhuc/lUbBQ7ARcdiUXeQxgmTeK/NZMfAuA1+Ps="
-      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
-    ];
-  };
-
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
@@ -40,148 +23,64 @@
     raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs";
 
     deploy-rs.url = "github:serokell/deploy-rs";
+
+    snowfall-lib = {
+      url = "github:snowfallorg/lib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    {
-      nixpkgs,
-      self,
-      ...
-    }@inputs:
-    let
-      nixosSystem =
-        system: name: nixosModules:
-        nixpkgs.lib.nixosSystem {
-          inherit system;
-          specialArgs = { inherit inputs; };
-          modules = nixosModules ++ [
-            (
-              { pkgs, ... }:
-              let
-                rebuild = pkgs.writeShellScriptBin "rebuild" (builtins.readFile ./rebuild.sh);
-              in
-              {
-                networking.hostName = name;
-                environment.systemPackages = [ rebuild ];
-                nix = {
-                  extraOptions = "extra-experimental-features = nix-command flakes";
-                };
-              }
-            )
-            ./systems/${system}/${name}
-          ];
-        };
-      server =
-        options:
-        nixpkgs.lib.nixosSystem {
-          system = options.system or "x86_64-linux";
-          specialArgs = { inherit inputs; };
-          modules =
-            with inputs;
-            [
-              agenix.nixosModules.default
-              ./srv
-              ./machines/${options.name}/configuration.nix
-              { srv.machineId = options.name; }
-            ]
-            ++ (options.modules or [ ]);
-        };
+    inputs:
+    inputs.snowfall-lib.mkFlake {
+      inherit inputs;
+      src = ./.;
 
-      deployPkgs =
-        system:
-        let
-          pkgs = import nixpkgs { inherit system; };
-        in
-        import nixpkgs {
-          inherit system;
-          overlays = [
-            inputs.deploy-rs.overlays.default
-            (_: super: {
-              deploy-rs = {
-                inherit (pkgs) deploy-rs;
-                inherit (super.deploy-rs) lib;
-              };
-            })
-          ];
-        };
-    in
-    {
-      nixosConfigurations = {
-        t14 = nixosSystem "x86_64-linux" "t14" (
-          with inputs;
-          [
-            nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
-            home-manager.nixosModules.default
-            nix-index-database.nixosModules.nix-index
-            agenix.nixosModules.default
-            disko.nixosModules.disko
-            # inputs.nix-ld.nixosModules.nix-ld
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                users.pn = import ./home.nix;
-              };
-              environment.systemPackages = [
-                ronvim.packages.x86_64-linux.default
-                pnvf.packages.x86_64-linux.default
-              ];
-            }
-          ]
-        );
-        srv2 = server {
-          name = "srv2";
-          system = "aarch64-linux";
-          modules = with inputs; [
-            raspberry-pi-nix.nixosModules.raspberry-pi
-            raspberry-pi-nix.nixosModules.sd-image
-          ];
-        };
-        srv3 = server {
-          name = "srv3";
-          modules = with inputs; [
-            disko.nixosModules.disko
-            impermanence.nixosModules.impermanence
-          ];
-        };
-        # srv4 = server {
-        #   name = "srv4";
-        #   modules = (
-        #     with inputs;
-        #     [
-        #       disko.nixosModules.disko
-        #       impermanence.nixosModules.impermanence
-        #     ]
-        #   );
-        # };
-        srv5 = server {
-          name = "srv5";
-          modules = with inputs; [
-            disko.nixosModules.disko
-            # impermanence.nixosModules.impermanence
-          ];
+      snowfall = {
+        namespace = "dots";
+        meta = {
+          name = "dots";
+          title = "Patryk's configurations";
         };
       };
+
       deploy = {
         user = "root";
-        nodes = {
-          srv2 = {
-            hostname = "srv2";
-            profiles.system.path = (deployPkgs "aarch64-linux").deploy-rs.lib.activate.nixos self.nixosConfigurations.srv2;
-          };
-          srv3 = {
-            hostname = "srv3";
-            profiles.system.path = (deployPkgs "x86_64-linux").deploy-rs.lib.activate.nixos self.nixosConfigurations.srv3;
-          };
-          # srv4 = {
-          #   hostname = "srv4";
-          #   profiles.system.path = inputs.deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.srv4;
-          # };
-          srv5 = {
-            hostname = "srv5";
-            profiles.system.path = (deployPkgs "x86_64-linux").deploy-rs.lib.activate.nixos self.nixosConfigurations.srv5;
-          };
-        };
+        nodes = builtins.mapAttrs (
+          hostname: nixosConfig:
+          let
+            system = nixosConfig.config.nixpkgs.system;
+
+            pkgs =
+              let
+                srcPkgs = import inputs.nixpkgs { inherit system; };
+              in
+              import inputs.nixpkgs {
+                inherit system;
+                overlays = [
+                  inputs.deploy-rs.overlays.default
+                  (_: super: {
+                    deploy-rs = {
+                      inherit (srcPkgs) deploy-rs;
+                      inherit (super.deploy-rs) lib;
+                    };
+                  })
+                ];
+              };
+          in
+          {
+            hostname = hostname;
+
+            profiles.system = {
+              path = pkgs.deploy-rs.lib.activate.nixos nixosConfig;
+            };
+          }
+        ) inputs.self.nixosConfigurations;
       };
+
+      checks = builtins.mapAttrs (
+        system: deployLib: deployLib.deployChecks inputs.self.deploy
+      ) inputs.deploy-rs.lib;
+
     };
 }
