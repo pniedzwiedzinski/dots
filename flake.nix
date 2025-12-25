@@ -17,10 +17,10 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nix-index-database.url = "github:nix-community/nix-index-database";
@@ -42,135 +42,146 @@
     deploy-rs.url = "github:serokell/deploy-rs";
   };
 
-  outputs = {
-    nixpkgs,
-    self,
-    ...
-  } @ inputs: let
-    nixosSystem = system: name: nixosModules:
-      nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = {inherit inputs;};
-        modules =
-          nixosModules
-          ++ [
+  outputs =
+    {
+      nixpkgs,
+      self,
+      ...
+    }@inputs:
+    let
+      nixosSystem =
+        system: name: nixosModules:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+          specialArgs = { inherit inputs; };
+          modules = nixosModules ++ [
             (
-              {pkgs, ...}: let
+              { pkgs, ... }:
+              let
                 rebuild = pkgs.writeShellScriptBin "rebuild" (builtins.readFile ./rebuild.sh);
-              in {
+              in
+              {
                 networking.hostName = name;
-                environment.systemPackages = [rebuild];
+                environment.systemPackages = [ rebuild ];
                 nix = {
                   extraOptions = "extra-experimental-features = nix-command flakes";
                 };
               }
             )
-            ./machines/${name}
+            ./systems/${system}/${name}
           ];
-      };
-    server = options:
-      nixpkgs.lib.nixosSystem {
-        system = options.system or "x86_64-linux";
-        specialArgs = {inherit inputs;};
-        modules = with inputs;
-          [
-            agenix.nixosModules.default
-            ./srv
-            ./machines/${options.name}/configuration.nix
-            {srv.machineId = options.name;}
-          ]
-          ++ (options.modules or []);
-      };
+        };
+      server =
+        options:
+        nixpkgs.lib.nixosSystem {
+          system = options.system or "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules =
+            with inputs;
+            [
+              agenix.nixosModules.default
+              ./srv
+              ./machines/${options.name}/configuration.nix
+              { srv.machineId = options.name; }
+            ]
+            ++ (options.modules or [ ]);
+        };
 
-    deployPkgs = system: let
-      pkgs = import nixpkgs {inherit system;};
-    in
-      import nixpkgs {
-        inherit system;
-        overlays = [
-          inputs.deploy-rs.overlays.default
-          (_: super: {
-            deploy-rs = {
-              inherit (pkgs) deploy-rs;
-              inherit (super.deploy-rs) lib;
-            };
-          })
-        ];
-      };
-  in {
-    nixosConfigurations = {
-      t14 = nixosSystem "x86_64-linux" "t14" (with inputs; [
-        nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
-        home-manager.nixosModules.default
-        nix-index-database.nixosModules.nix-index
-        agenix.nixosModules.default
-        disko.nixosModules.disko
-        # inputs.nix-ld.nixosModules.nix-ld
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.pn = import ./home.nix;
-          };
-          environment.systemPackages = [
-            ronvim.packages.x86_64-linux.default
-            pnvf.packages.x86_64-linux.default
+      deployPkgs =
+        system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+        in
+        import nixpkgs {
+          inherit system;
+          overlays = [
+            inputs.deploy-rs.overlays.default
+            (_: super: {
+              deploy-rs = {
+                inherit (pkgs) deploy-rs;
+                inherit (super.deploy-rs) lib;
+              };
+            })
           ];
-        }
-      ]);
-      srv2 = server {
-        name = "srv2";
-        system = "aarch64-linux";
-        modules = with inputs; [
-          raspberry-pi-nix.nixosModules.raspberry-pi
-          raspberry-pi-nix.nixosModules.sd-image
-        ];
-      };
-      srv3 = server {
-        name = "srv3";
-        modules = with inputs; [
-          disko.nixosModules.disko
-          impermanence.nixosModules.impermanence
-        ];
-      };
-      # srv4 = server {
-      #   name = "srv4";
-      #   modules = (
-      #     with inputs;
-      #     [
-      #       disko.nixosModules.disko
-      #       impermanence.nixosModules.impermanence
-      #     ]
-      #   );
-      # };
-      srv5 = server {
-        name = "srv5";
-        modules = with inputs; [
-          disko.nixosModules.disko
-          # impermanence.nixosModules.impermanence
-        ];
-      };
-    };
-    deploy = {
-      user = "root";
-      nodes = {
-        srv2 = {
-          hostname = "srv2";
-          profiles.system.path = (deployPkgs "aarch64-linux").deploy-rs.lib.activate.nixos self.nixosConfigurations.srv2;
         };
-        srv3 = {
-          hostname = "srv3";
-          profiles.system.path = (deployPkgs "x86_64-linux").deploy-rs.lib.activate.nixos self.nixosConfigurations.srv3;
+    in
+    {
+      nixosConfigurations = {
+        t14 = nixosSystem "x86_64-linux" "t14" (
+          with inputs;
+          [
+            nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
+            home-manager.nixosModules.default
+            nix-index-database.nixosModules.nix-index
+            agenix.nixosModules.default
+            disko.nixosModules.disko
+            # inputs.nix-ld.nixosModules.nix-ld
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                users.pn = import ./home.nix;
+              };
+              environment.systemPackages = [
+                ronvim.packages.x86_64-linux.default
+                pnvf.packages.x86_64-linux.default
+              ];
+            }
+          ]
+        );
+        srv2 = server {
+          name = "srv2";
+          system = "aarch64-linux";
+          modules = with inputs; [
+            raspberry-pi-nix.nixosModules.raspberry-pi
+            raspberry-pi-nix.nixosModules.sd-image
+          ];
         };
-        # srv4 = {
-        #   hostname = "srv4";
-        #   profiles.system.path = inputs.deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.srv4;
+        srv3 = server {
+          name = "srv3";
+          modules = with inputs; [
+            disko.nixosModules.disko
+            impermanence.nixosModules.impermanence
+          ];
+        };
+        # srv4 = server {
+        #   name = "srv4";
+        #   modules = (
+        #     with inputs;
+        #     [
+        #       disko.nixosModules.disko
+        #       impermanence.nixosModules.impermanence
+        #     ]
+        #   );
         # };
-        srv5 = {
-          hostname = "srv5";
-          profiles.system.path = (deployPkgs "x86_64-linux").deploy-rs.lib.activate.nixos self.nixosConfigurations.srv5;
+        srv5 = server {
+          name = "srv5";
+          modules = with inputs; [
+            disko.nixosModules.disko
+            # impermanence.nixosModules.impermanence
+          ];
+        };
+      };
+      deploy = {
+        user = "root";
+        nodes = {
+          srv2 = {
+            hostname = "srv2";
+            profiles.system.path = (deployPkgs "aarch64-linux").deploy-rs.lib.activate.nixos self.nixosConfigurations.srv2;
+          };
+          srv3 = {
+            hostname = "srv3";
+            profiles.system.path = (deployPkgs "x86_64-linux").deploy-rs.lib.activate.nixos self.nixosConfigurations.srv3;
+          };
+          # srv4 = {
+          #   hostname = "srv4";
+          #   profiles.system.path = inputs.deploy-rs.lib.aarch64-linux.activate.nixos self.nixosConfigurations.srv4;
+          # };
+          srv5 = {
+            hostname = "srv5";
+            profiles.system.path = (deployPkgs "x86_64-linux").deploy-rs.lib.activate.nixos self.nixosConfigurations.srv5;
+          };
         };
       };
     };
-  };
 }
