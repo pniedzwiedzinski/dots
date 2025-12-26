@@ -1,7 +1,4 @@
 { inputs, pkgs, ... }:
-let
-  rebuild = pkgs.writeShellScriptBin "rebuild" (builtins.readFile ./rebuild.sh);
-in
 {
   imports = with inputs; [
     nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
@@ -21,9 +18,9 @@ in
   environment.systemPackages = with inputs; [
     ronvim.packages.x86_64-linux.default
     pnvf.packages.x86_64-linux.default
-    self.packages.x86_64-linux.gpt
 
-    rebuild
+    self.packages.x86_64-linux.gpt
+    self.packages.x86_64-linux.rebuild
   ];
 
   nix = {

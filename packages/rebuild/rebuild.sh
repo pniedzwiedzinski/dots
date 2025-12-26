@@ -10,7 +10,6 @@
 # As I hope was clear from the video, I am new to nixos, and there may be other, better, options, in which case I'd love to know them! (I'll update the gist if so)
 
 DIR=$HOME/nixos
-OPT=$1
 
 FORCE=false
 [ "$1" = "-f" ] && FORCE=true
@@ -19,7 +18,7 @@ FORCE=false
 set -e pipefail
 
 # cd to your config dir
-pushd $DIR
+pushd "$DIR"
 
 # Early return if no changes were detected (thanks @singiamtel!)
 if $FORCE; then
@@ -42,7 +41,7 @@ git diff -U0 '*'
 echo "NixOS Rebuilding..."
 
 # Rebuild, output simplified errors, log trackebacks
-sudo nixos-rebuild switch --flake $DIR 2>&1 | tee nixos-switch.log
+sudo nixos-rebuild switch --flake "$DIR" 2>&1 | tee nixos-switch.log
 cat nixos-switch.log | grep --color error && exit 1
 
 # Get current generation metadata
@@ -58,4 +57,4 @@ git commit -am "$(hostname): $current"
 popd
 
 # Notify all OK!
-notify-send -e "NixOS Rebuilt OK!" --icon=software-update-available
+notify-send -e "NixOS Rebuilt OK!" --icon=software-update-available -a "nixos-rebuild"
