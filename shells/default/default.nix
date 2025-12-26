@@ -12,17 +12,16 @@
   # programmatically or you may add the named attributes as arguments here.
   pkgs,
   mkShell,
-  system,
+  stdenv,
   ...
 }:
 
 mkShell {
   packages = [
-    #inputs.deploy-rs.packages.${system}.deploy-rs
+    inputs.deploy-rs.packages.${stdenv.hostPlatform.system}.deploy-rs
   ];
 
   shellHook = ''
-    alias d="deploy"
-    echo "❄️  Flake DevShell aktywowany. Użyj 'd' dla deploy-rs."
+    echo "❄️  Flake DevShell aktywowany"
   '';
 }

@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   environment.systemPackages = with pkgs; [
     busybox
     vscode
@@ -7,10 +8,9 @@
     python3
     python3Packages.pip
     nodejs
-    deploy-rs
     nixfmt-rfc-style
   ];
 
   virtualisation.docker.enable = true;
-  users.users.pn.extraGroups = ["docker"];
+  users.users.pn.extraGroups = [ "docker" ];
 }
