@@ -1,6 +1,8 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   switch-theme = pkgs.writeShellScriptBin "switch-theme" (builtins.readFile ./switch-theme.sh);
-in {
+in
+{
   imports = [
     ./gnome-cast.nix
     ./appset-desktop.nix
@@ -13,7 +15,7 @@ in {
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
   services.xserver.desktopManager.xterm.enable = false;
-  services.xserver.excludePackages = [pkgs.xterm];
+  services.xserver.excludePackages = [ pkgs.xterm ];
 
   environment.gnome.excludePackages = with pkgs; [
     epiphany
@@ -35,7 +37,11 @@ in {
         lockAll = true;
         settings = {
           "org/gnome/shell" = {
-            favorite-apps = ["brave-browser.desktop" "thunderbird.desktop" "org.gnome.Nautilus.desktop"];
+            favorite-apps = [
+              "brave-browser.desktop"
+              "thunderbird.desktop"
+              "org.gnome.Nautilus.desktop"
+            ];
           };
 
           "org/gnome/desktop/interface" = {
@@ -44,7 +50,7 @@ in {
           };
 
           "org/gnome/desktop/wm/keybindings" = {
-            close = ["<Super>q"];
+            close = [ "<Super>q" ];
           };
 
           "org/gnome/settings-daemon/plugins/media-keys" = {
@@ -99,7 +105,6 @@ in {
   services.printing.enable = true;
 
   # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -131,12 +136,10 @@ in {
     gnomeExtensions.caffeine
     #brave #specified in home.nix
     (pkgs.brave.overrideAttrs (oldAttrs: {
-      installPhase =
-        oldAttrs.installPhase
-        + ''
-           	substituteInPlace $out/share/applications/brave-browser.desktop \
-          --replace %U "--profile-directory=Default %U"
-        '';
+      installPhase = oldAttrs.installPhase + ''
+         	substituteInPlace $out/share/applications/brave-browser.desktop \
+        --replace %U "--profile-directory=Default %U"
+      '';
     }))
 
     newsflash
