@@ -1,7 +1,6 @@
 { inputs, ... }:
 {
   imports = with inputs; [
-    agenix.nixosModules.default
     disko.nixosModules.disko
     impermanence.nixosModules.impermanence
     ./hardware-configuration.nix

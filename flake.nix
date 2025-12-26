@@ -13,9 +13,6 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
     impermanence.url = "github:nix-community/impermanence";
-    agenix.url = "github:ryantm/agenix";
-    nix-ld.url = "github:Mic92/nix-ld";
-    nix-ld.inputs.nixpkgs.follows = "nixpkgs";
     pnvf.url = "github:pniedzwiedzinski/pnvf";
     pnvf.inputs.nixpkgs.follows = "nixpkgs";
 

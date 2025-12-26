@@ -7,7 +7,6 @@ in
     nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen2
     home-manager.nixosModules.default
     nix-index-database.nixosModules.nix-index
-    agenix.nixosModules.default
     disko.nixosModules.disko
 
     ./hardware-configuration.nix
