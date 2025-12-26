@@ -3,7 +3,8 @@
   pkgs,
   config,
   ...
-}: {
+}:
+{
   services.vnstat.enable = true;
   environment.persistence."/persist".directories = [
     {
@@ -24,14 +25,15 @@
       ];
     };
     defaultGateway = "192.168.1.1";
-    nameservers = ["1.1.1.1" "8.8.8.8"];
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ];
     hostName = "srv3";
-
 
     firewall = {
       enable = true;
     };
   };
 
-  };
 }
