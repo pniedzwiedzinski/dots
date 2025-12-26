@@ -7,7 +7,7 @@ CONFIG_FILE="$CONFIG_DIR/config"
 
 # Function to store API key
 store_api_key() {
-    read -s -p "Enter your OpenRouter API key: " api_key
+    read -rs -p "Enter your OpenRouter API key: " api_key
     echo
     mkdir -p "$CONFIG_DIR"
     echo "OPENROUTER_API_KEY=\"$api_key\"" > "$CONFIG_FILE"
@@ -18,6 +18,7 @@ store_api_key() {
 # Function to load API key
 load_api_key() {
     if [[ -f "$CONFIG_FILE" ]]; then
+        # shellcheck source=/dev/null
         source "$CONFIG_FILE"
     fi
 }
@@ -26,7 +27,7 @@ load_api_key() {
 load_api_key
 if [[ -z "${OPENROUTER_API_KEY}" ]]; then
     echo "OpenRouter API key not found."
-    read -p "Would you like to store your API key now? [y/N]: " store_key
+    read -r -p "Would you like to store your API key now? [y/N]: " store_key
     if [[ "$store_key" =~ ^[Yy]$ ]]; then
         store_api_key
         load_api_key
@@ -92,7 +93,7 @@ fi
 
 # Confirm the command with the user before executing
 echo "Bash command generated: $bash_command"
-read -p "Do you want to execute this command? [y/N]: " confirmation
+read -r -p "Do you want to execute this command? [y/N]: " confirmation
 
 if [[ "$confirmation" =~ ^[Yy]$ ]]; then
     $bash_command

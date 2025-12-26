@@ -13,7 +13,6 @@
     ./modules/pass.nix
     ./modules/gnome.nix
     ./modules/keyd.nix
-    ./modules/gpt.nix
 
     ./disko-config.nix
     ./virt.nix

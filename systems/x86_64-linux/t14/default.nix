@@ -22,6 +22,8 @@ in
   environment.systemPackages = with inputs; [
     ronvim.packages.x86_64-linux.default
     pnvf.packages.x86_64-linux.default
+    self.packages.x86_64-linux.gpt
+
     rebuild
   ];
 
