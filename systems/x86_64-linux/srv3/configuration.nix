@@ -3,9 +3,11 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   domain = "niedzwiedzinski.cyou";
-in {
+in
+{
   imports = [
     ./disko-config.nix
 
@@ -19,8 +21,6 @@ in {
     # ./services/caddy.nix
     #./services/onedrive.nix
     ./backup.nix
-
-    ../../srv
   ];
 
   disko.devices.disk.main.device = "/dev/sdb";
@@ -28,13 +28,6 @@ in {
   srv = {
     enable = true;
     machineId = "srv3";
-    services = {
-      noip = {
-        enable = false;
-        agePasswdFile = ./secrets/noip-passwd.age;
-        ageLoginFile = ./secrets/noip-login.age;
-      };
-    };
   };
 
   networking.firewall.allowedTCPPorts = [
@@ -75,7 +68,7 @@ in {
       enable = true;
       staticConfigOptions = {
         certificatesResolvers = {
-          tailscale.tailscale = {};
+          tailscale.tailscale = { };
           letsencrypt = {
             acme = {
               email = "patryk@niedzwiedzinski.cyou";
@@ -104,40 +97,43 @@ in {
               domains = [
                 {
                   main = domain;
-                  sans = ["*.${domain}"];
+                  sans = [ "*.${domain}" ];
                 }
               ];
             };
           };
         };
       };
-      dynamicConfigOptions = let
-        generateService = service: {
-          loadBalancer.servers = [{url = "http://localhost:" + service.port;}];
-        };
-        generateRouter = service: {
-          entryPoints = ["web"];
-          rule = "Host(`" + service.name + ".${config.srv.machineId}.${domain}`)";
-          service = service.name;
-        };
-        makeServices = servicesList: {
-          services = lib.listToAttrs (map (s: {
-              inherit (s) name;
-              value = generateService s;
-            })
-            servicesList);
-          routers = lib.listToAttrs (map (s: {
-              inherit (s) name;
-              value = generateRouter s;
-            })
-            servicesList);
-        };
-      in {
-        http =
-          {
+      dynamicConfigOptions =
+        let
+          generateService = service: {
+            loadBalancer.servers = [ { url = "http://localhost:" + service.port; } ];
+          };
+          generateRouter = service: {
+            entryPoints = [ "web" ];
+            rule = "Host(`" + service.name + ".${config.srv.machineId}.${domain}`)";
+            service = service.name;
+          };
+          makeServices = servicesList: {
+            services = lib.listToAttrs (
+              map (s: {
+                inherit (s) name;
+                value = generateService s;
+              }) servicesList
+            );
+            routers = lib.listToAttrs (
+              map (s: {
+                inherit (s) name;
+                value = generateRouter s;
+              }) servicesList
+            );
+          };
+        in
+        {
+          http = {
             routers = {
               freshrss = {
-                entryPoints = ["websecure"];
+                entryPoints = [ "websecure" ];
                 tls.certResolver = "tailscale";
               };
             };
@@ -180,7 +176,7 @@ in {
               port = "3001";
             }
           ];
-      };
+        };
     };
   };
 }
