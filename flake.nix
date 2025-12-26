@@ -46,36 +46,7 @@
 
       deploy = {
         user = "root";
-        nodes = builtins.mapAttrs (
-          hostname: nixosConfig:
-          let
-            system = nixosConfig.config.nixpkgs.system;
-
-            pkgs =
-              let
-                srcPkgs = import inputs.nixpkgs { inherit system; };
-              in
-              import inputs.nixpkgs {
-                inherit system;
-                overlays = [
-                  inputs.deploy-rs.overlays.default
-                  (_: super: {
-                    deploy-rs = {
-                      inherit (srcPkgs) deploy-rs;
-                      inherit (super.deploy-rs) lib;
-                    };
-                  })
-                ];
-              };
-          in
-          {
-            hostname = hostname;
-
-            profiles.system = {
-              path = pkgs.deploy-rs.lib.activate.nixos nixosConfig;
-            };
-          }
-        ) inputs.self.nixosConfigurations;
+        nodes = inputs.self.lib.mkNodes inputs.self.nixosConfigurations;
       };
 
       checks = builtins.mapAttrs (
