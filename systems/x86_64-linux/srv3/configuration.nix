@@ -11,15 +11,9 @@ in
   imports = [
     ./disko-config.nix
 
-    ./hardware-configuration.nix
     ./network.nix
     ./persist.nix
-
-    ./services/ssh.nix
-    ./services/docker.nix
-    # ./services/noip.nix
-    # ./services/caddy.nix
-    #./services/onedrive.nix
+    ./docker.nix
     ./backup.nix
   ];
 
@@ -30,7 +24,25 @@ in
     machineId = "srv3";
   };
 
+  services.openssh = {
+    enable = true;
+    ports = lib.mkForce [ 19 ];
+    settings = {
+      PasswordAuthentication = false;
+      PermitRootLogin = "no";
+      AllowUsers = [ "pn" ];
+    };
+  };
+
+  services.sshguard = {
+    enable = true;
+    whitelist = [
+      "192.168.1.0/24"
+    ];
+  };
+
   networking.firewall.allowedTCPPorts = [
+    19
     80
     443
     8123
