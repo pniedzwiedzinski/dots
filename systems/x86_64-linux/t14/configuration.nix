@@ -16,6 +16,8 @@
 
     ./disko-config.nix
     ./virt.nix
+
+    ./xerox-printer.nix
   ];
 
   # Power management
