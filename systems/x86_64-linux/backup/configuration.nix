@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   imports = [
     ./disko-config.nix
   ];
@@ -11,25 +12,29 @@
   srv.enable = true;
   srv.machineId = "backup";
 
-  # Ensure Tailscale is enabled (also enabled by srv module)
-  services.tailscale.enable = true;
+  # Remote update
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
+  ];
 
-  networking.hostId = "8425e349";
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.loader.grub = {
+  networking.hostId = "5819a9e0";
+
+  boot.supportedFilesystems = [ "zfs" ];
+
+  services.zfs.autoScrub = {
     enable = true;
-    zfsSupport = true;
-    efiSupport = true;
-    efiInstallAsRemovable = true;
+    interval = "weekly"; # Co tydzień sprawdzaj spójność dysków
   };
-
-  boot.supportedFilesystems = ["zfs"];
 
   users.users.borg = {
     isNormalUser = true;
     description = "Borg Backup User";
-    home = "/home/borg";
-    packages = [pkgs.borgbackup];
+    home = "/data";
+    packages = [ pkgs.borgbackup ];
     openssh.authorizedKeys.keys = [
       "restrict,command=\"borg serve --restrict-to-path /data\" ssh-ed25519 AAAA..."
     ];
@@ -38,4 +43,6 @@
   systemd.tmpfiles.rules = [
     "d /data 0700 borg users - -"
   ];
+
+  system.stateVersion = "25.11";
 }

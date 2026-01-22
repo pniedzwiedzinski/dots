@@ -3,22 +3,19 @@
     disk = {
       main = {
         type = "disk";
-        device = "/dev/sda";
+        device = "/dev/disk/by-id/ata-SSDPR-CX400-01T-G2_4S0288440";
         content = {
           type = "gpt";
           partitions = {
-            boot = {
-              size = "1M";
-              type = "EF02"; # for grub MBR
-            };
             ESP = {
-              size = "1G";
+              size = "512M";
               type = "EF00";
+              priority = 1;
               content = {
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = ["umask=0077"];
+                mountOptions = [ "umask=0077" ];
               };
             };
             zfs = {
@@ -35,35 +32,37 @@
     zpool = {
       zroot = {
         type = "zpool";
+        options = {
+          ashift = "12";
+        };
+
         rootFsOptions = {
-          compression = "lz4";
+          compression = "zstd";
           "com.sun:auto-snapshot" = "false";
+
+          acltype = "posixacl";
+
+          xattr = "sa";
+          dnodesize = "auto";
+          atime = "off";
         };
         datasets = {
           system = {
             type = "zfs_fs";
             mountpoint = "/";
-            options = {
-              mountpoint = "legacy";
-            };
+            options.mountpoint = "legacy";
           };
           nix = {
             type = "zfs_fs";
             mountpoint = "/nix";
-            options = {
-              mountpoint = "legacy";
-              atime = "off";
-            };
+            options.mountpoint = "legacy";
           };
           data = {
             type = "zfs_fs";
             mountpoint = "/data";
             options = {
               mountpoint = "legacy";
-              atime = "off";
-              xattr = "sa";
               recordsize = "1M";
-              compression = "lz4";
             };
           };
         };
