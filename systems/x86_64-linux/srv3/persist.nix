@@ -38,13 +38,6 @@
           mode = "0755";
         }
         {
-          directory = "/var/lib/NetworkManager";
-          user = "root";
-          group = "root";
-          mode = "0755";
-        }
-
-        {
           directory = "/var/spool";
           user = "root";
           group = "root";
@@ -56,7 +49,6 @@
           group = "acme";
           mode = "0755";
         }
-        "/etc/NetworkManager"
         "/srv"
       ];
       files = [
