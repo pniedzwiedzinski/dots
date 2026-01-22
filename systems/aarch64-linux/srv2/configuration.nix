@@ -15,31 +15,14 @@
   srv.enable = true;
   system.autoUpgrade.enable = false;
 
-  # https://www.raspberrypi.com/documentation/computers/linux_kernel.html#native-build-configuration
-  raspberry-pi-nix.board = "bcm2711";
-  hardware = {
-    raspberry-pi = {
-      config = {
-        all = {
-          base-dt-params = {
-            BOOT_UART = {
-              value = 1;
-              enable = true;
-            };
-            uart_2ndstage = {
-              value = 1;
-              enable = true;
-            };
-          };
-          dt-overlays = {
-            disable-bt = {
-              enable = true;
-              params = {};
-            };
-          };
-        };
-      };
-    };
-  };
+  # Raspberry Pi 3 configuration via nixos-hardware
+  # Note: Firmware settings (config.txt) like BOOT_UART and dt-overlays
+  # are not managed declaratively by nixos-hardware in the same way as raspberry-pi-nix.
+  # If you need specific config.txt settings (like dtoverlay=disable-bt),
+  # you may need to apply them manually to /boot/config.txt or use a custom boot loader module.
+
+  # Disable Bluetooth software stack matching previous configuration
+  hardware.bluetooth.enable = false;
+
   security.rtkit.enable = true;
 }

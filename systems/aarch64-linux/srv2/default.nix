@@ -21,8 +21,7 @@
 }:
 {
   imports = with inputs; [
-    raspberry-pi-nix.nixosModules.raspberry-pi
-    raspberry-pi-nix.nixosModules.sd-image
+    nixos-hardware.nixosModules.raspberry-pi-3
     ./configuration.nix
   ];
 
