@@ -3,8 +3,7 @@
   lib,
   config,
   ...
-}:
-{
+}: {
   imports = [
     ./disko-config.nix
   ];
@@ -21,23 +20,24 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostId = "5819a9e0";
+  networking.hostId = "5819a9e0"; # Random ID for ZFS
 
-  boot.supportedFilesystems = [ "zfs" ];
+  boot.supportedFilesystems = ["zfs"];
 
   services.zfs.autoScrub = {
     enable = true;
     interval = "weekly"; # Co tydzień sprawdzaj spójność dysków
   };
 
-  users.users.borg = {
-    isNormalUser = true;
-    description = "Borg Backup User";
-    home = "/data";
-    packages = [ pkgs.borgbackup ];
-    openssh.authorizedKeys.keys = [
-      "restrict,command=\"borg serve --restrict-to-path /data\" ssh-ed25519 AAAA..."
-    ];
+  environment.systemPackages = with pkgs; [borgbackup];
+
+  services.borgbackup.repos = {
+    "srv3" = {
+      authorizedKeys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINd/ymGIlBST6Mhqlwwf+X4+KTsmNz6mvE+LE9kYIcBl borg srv3"
+      ];
+      path = "/data/borg/srv3";
+    };
   };
 
   systemd.tmpfiles.rules = [

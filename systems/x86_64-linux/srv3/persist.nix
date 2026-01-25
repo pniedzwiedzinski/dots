@@ -38,12 +38,6 @@
           mode = "0755";
         }
         {
-          directory = "/var/spool";
-          user = "root";
-          group = "root";
-          mode = "0777";
-        }
-        {
           directory = "/var/lib/acme";
           user = "acme";
           group = "acme";
