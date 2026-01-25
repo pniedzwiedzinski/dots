@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   pkgs,
   ...
@@ -130,6 +131,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    inputs.deploy-rs.packages.x86_64-linux.deploy-rs
     obsidian
     poppler-utils # pdfunite
   ];
