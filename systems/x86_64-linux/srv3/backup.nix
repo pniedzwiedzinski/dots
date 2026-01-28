@@ -17,6 +17,7 @@
       compression = "auto,lzma";
       startAt = "daily";
     };
+
     "backup" = {
       paths = [
         "/persist/etc"
@@ -27,9 +28,15 @@
       exclude = [
         "/persist/var/lib/docker" # ignore images
         "/persist/var/lib/systemd" # ignore systemd states
+        "/persist/srv/immich/thumbs" # immich save space
+        "/persist/srv/immich/encoded-video" # immich save space
         "/persist/srv/postgres-immich"
         "/persist/srv/to-remove-immich-postgres"
       ];
+      prune.keep = {
+        within = "1d";
+        daily = 7;
+      };
       repo = "borg@backup:.";
       encryption = {
         mode = "repokey-blake2";
