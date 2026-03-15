@@ -5,6 +5,10 @@ XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 CONFIG_DIR="$XDG_CONFIG_HOME/openrouter"
 CONFIG_FILE="$CONFIG_DIR/config"
 
+# Default model
+DEFAULT_MODEL="google/gemma-3-12b-it:free"
+MODEL=$DEFAULT_MODEL
+
 # Function to store API key
 store_api_key() {
     read -rs -p "Enter your OpenRouter API key: " api_key
@@ -23,7 +27,26 @@ load_api_key() {
     fi
 }
 
-# Check if API key exists, if not prompt to store it
+# --- Parse arguments ---
+# Separate flags from the actual prompt
+POSITIONAL_ARGS=()
+while [[ $# -gt 0 ]]; do
+  case $1 in
+    -m|--model)
+      MODEL="$2"
+      shift 2
+      ;;
+    *)
+      POSITIONAL_ARGS+=("$1")
+      shift
+      ;;
+  esac
+done
+
+# Restore positional parameters (the command to translate)
+set -- "${POSITIONAL_ARGS[@]}"
+
+# Check if API key exists
 load_api_key
 if [[ -z "${OPENROUTER_API_KEY}" ]]; then
     echo "OpenRouter API key not found."
@@ -32,12 +55,12 @@ if [[ -z "${OPENROUTER_API_KEY}" ]]; then
         store_api_key
         load_api_key
     else
-        echo "Error: OpenRouter API key is required. Please run the script again to store your key."
+        echo "Error: OpenRouter API key is required."
         exit 1
     fi
 fi
 
-# Read the plain English command from the user
+# Read the plain English command
 if [ -z "$1" ]; then
     echo "Please enter a command in plain English:"
     read -r plain_command
@@ -45,7 +68,7 @@ else
     plain_command="$*"
 fi
 
-# Define the prompt for the OpenRouter API
+# --- TWOJA ORYGINALNA TREŚĆ PROMPTU ---
 prompt="You are a helpful assistant that translates plain English requests into bash commands. Your task is to understand what the user wants to accomplish and provide the appropriate bash command(s) to achieve that goal.
 
 Rules:
@@ -56,9 +79,12 @@ Rules:
 
 Request: \"$plain_command\""
 
-# Properly format the JSON payload for OpenRouter
-json_payload=$(jq -n --arg prompt "$prompt" '{
-    model: "google/gemma-3-12b-it:free",
+# Properly format the JSON payload
+json_payload=$(jq -n \
+    --arg prompt "$prompt" \
+    --arg model "$MODEL" \
+    '{
+    model: $model,
     messages: [{"role": "user", "content": $prompt}],
     max_tokens: 60,
     temperature: 0.5
@@ -72,31 +98,29 @@ response=$(curl -s https://openrouter.ai/api/v1/chat/completions \
     -H "X-Title: Shell Command Generator" \
     -d "$json_payload")
 
-# Print the full response for debugging (uncomment if needed)
-# echo "API Response: $response"
-
-# Check if the response contains an error
+# Check for API errors
 if echo "$response" | jq -e '.error' > /dev/null 2>&1; then
     error_message=$(echo "$response" | jq -r '.error.message')
     echo "API Error: $error_message"
     exit 1
 fi
 
-# Extract the command from the API response using jq
+# Extract the command
 bash_command=$(echo "$response" | jq -r '.choices[0].message.content' | sed 's/^ *//;s/ *$//')
 
-# Check if the bash_command is null, empty, or cannot be executed
+# Validate result
 if [ -z "$bash_command" ] || [ "$bash_command" == "null" ] || [ "$bash_command" == "CANNOT_EXECUTE" ]; then
     echo "Error: No valid bash command was generated or request cannot be executed."
     exit 1
 fi
 
-# Confirm the command with the user before executing
+# Confirm and execute
+echo "Model used: $MODEL"
 echo "Bash command generated: $bash_command"
 read -r -p "Do you want to execute this command? [y/N]: " confirmation
 
 if [[ "$confirmation" =~ ^[Yy]$ ]]; then
-    $bash_command
+    eval "$bash_command"
 else
     echo "Command execution aborted."
 fi
