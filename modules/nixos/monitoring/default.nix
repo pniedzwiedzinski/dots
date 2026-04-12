@@ -40,6 +40,17 @@ in {
             }
           ];
         };
+
+        limits_config = {
+          retention_period = "120d";
+        };
+
+        compactor = {
+          working_directory = "/var/lib/loki/compactor";
+          retention_enabled = true;
+          retention_delete_delay = "2h";
+          retention_delete_worker_count = 150;
+        };
       };
     };
 
