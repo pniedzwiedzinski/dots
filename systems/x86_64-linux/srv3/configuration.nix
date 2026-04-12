@@ -48,9 +48,12 @@ in
     19
     80
     443
+    8123
+  ];
+
+  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
     3000 # grafana
     3100 # loki
-    8123
   ];
 
   time.timeZone = "Europe/Warsaw";
@@ -191,6 +194,10 @@ in
             {
               name = "research";
               port = "3001";
+            }
+            {
+              name = "grafana";
+              port = "3000";
             }
           ];
         };
