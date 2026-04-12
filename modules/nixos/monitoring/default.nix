@@ -57,6 +57,7 @@ in {
         datasources.settings.datasources = [
           {
             name = "Loki";
+            uid = "Loki";
             type = "loki";
             access = "proxy";
             url = "http://127.0.0.1:3100";
@@ -83,14 +84,15 @@ in {
             ];
           };
 
+          policies.settings.policies = [
+            {
+              orgId = 1;
+              receiver = "TelegramContact";
+              group_by = ["alertname"];
+            }
+          ];
+
           rules.settings = {
-            policies = [
-              {
-                orgId = 1;
-                receiver = "TelegramContact";
-                group_by = ["alertname"];
-              }
-            ];
             groups = [
               {
                 name = "BackupAlerts";
