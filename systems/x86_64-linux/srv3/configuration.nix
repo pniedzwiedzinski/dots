@@ -24,6 +24,9 @@ in
     machineId = "srv3";
   };
 
+  dots.services.monitoring.enable = true;
+  dots.services.alloy.enable = true;
+
   services.openssh = {
     enable = true;
     ports = lib.mkForce [ 19 ];
@@ -45,6 +48,8 @@ in
     19
     80
     443
+    3000 # grafana
+    3100 # loki
     8123
   ];
 
