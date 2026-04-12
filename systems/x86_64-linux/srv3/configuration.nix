@@ -24,6 +24,9 @@ in
     machineId = "srv3";
   };
 
+  dots.services.monitoring.enable = true;
+  dots.services.alloy.enable = true;
+
   services.openssh = {
     enable = true;
     ports = lib.mkForce [ 19 ];
@@ -46,6 +49,11 @@ in
     80
     443
     8123
+  ];
+
+  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
+    3000 # grafana
+    3100 # loki
   ];
 
   time.timeZone = "Europe/Warsaw";
@@ -186,6 +194,10 @@ in
             {
               name = "research";
               port = "3001";
+            }
+            {
+              name = "grafana";
+              port = "3000";
             }
           ];
         };
