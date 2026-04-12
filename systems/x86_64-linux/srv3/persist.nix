@@ -43,6 +43,18 @@
           group = "acme";
           mode = "0755";
         }
+        {
+          directory = "/var/lib/grafana";
+          user = "grafana";
+          group = "grafana";
+          mode = "0700";
+        }
+        {
+          directory = "/var/lib/loki";
+          user = "loki";
+          group = "loki";
+          mode = "0700";
+        }
         "/srv"
       ];
       files = [
