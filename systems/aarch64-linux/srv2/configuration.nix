@@ -15,8 +15,6 @@
   srv.enable = true;
   system.autoUpgrade.enable = false;
 
-  dots.services.alloy.enable = true;
-
   # Partition for config.txt and other overlays
   fileSystems."/boot/firmware" = {
     device = "/dev/disk/by-label/FIRMWARE";

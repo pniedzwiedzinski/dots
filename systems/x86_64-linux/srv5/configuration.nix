@@ -15,8 +15,6 @@
     machineId = "srv5";
   };
 
-  dots.services.alloy.enable = true;
-
   disko.devices.disk.main.device = "/dev/sda";
 
   services.openssh = {
