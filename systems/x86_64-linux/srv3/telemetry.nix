@@ -3,7 +3,21 @@
   services.prometheus.pushgateway = {
     enable = true;
     web.listen-address = "127.0.0.1:9091";
+    persistMetrics = true;
   };
+
+  # pushgateway uses DynamicUser by default, which breaks with impermanence
+  # when the user/group ID shifts. Let's make it a static user.
+  systemd.services.pushgateway.serviceConfig = {
+    DynamicUser = lib.mkForce false;
+    User = "pushgateway";
+    Group = "pushgateway";
+  };
+  users.users.pushgateway = {
+    isSystemUser = true;
+    group = "pushgateway";
+  };
+  users.groups.pushgateway = { };
 
   services.prometheus = {
     enable = true;
