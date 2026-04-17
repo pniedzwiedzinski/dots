@@ -15,6 +15,8 @@ in
     ./persist.nix
     ./docker.nix
     ./backup.nix
+    ./telemetry.nix
+    ./grafana.nix
   ];
 
   disko.devices.disk.main.device = "/dev/sdb";
@@ -186,6 +188,10 @@ in
             {
               name = "research";
               port = "3001";
+            }
+            {
+              name = "grafana";
+              port = "3000";
             }
           ];
         };

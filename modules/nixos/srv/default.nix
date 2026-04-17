@@ -7,6 +7,10 @@ let
   cfg = config.srv;
 in
 {
+  imports = [
+    ../monitoring.nix
+  ];
+
   options.srv = {
     enable = lib.mkEnableOption "The homelab services and configuration variables";
     timeZone = lib.mkOption {

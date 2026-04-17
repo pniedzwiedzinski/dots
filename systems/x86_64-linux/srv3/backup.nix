@@ -16,6 +16,15 @@
       environment.BORG_RSH = "ssh -i /persist/srv3_borgbase_backup";
       compression = "auto,lzma";
       startAt = "daily";
+      postHook = ''
+        status=$?
+        success=0
+        if [ $status -eq 0 ]; then success=1; fi
+        cat <<EOF | ${pkgs.curl}/bin/curl --data-binary @- http://localhost:9091/metrics/job/backup_borg/instance/srv3_borgbase
+        job_executed_successful{job="backup_borg"} $success
+        backup_last_success_time{job="backup_borg"} $(date +%s)
+        EOF
+      '';
     };
 
     "backup" = {
@@ -45,6 +54,15 @@
       environment.BORG_RSH = "ssh -i /persist/srv3_backup_ssh_key";
       compression = "auto,lzma";
       startAt = "daily";
+      postHook = ''
+        status=$?
+        success=0
+        if [ $status -eq 0 ]; then success=1; fi
+        cat <<EOF | ${pkgs.curl}/bin/curl --data-binary @- http://localhost:9091/metrics/job/backup_borg/instance/srv3_backup
+        job_executed_successful{job="backup_borg"} $success
+        backup_last_success_time{job="backup_borg"} $(date +%s)
+        EOF
+      '';
     };
   };
 
