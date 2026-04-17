@@ -3,7 +3,7 @@ let
   cfg = config.srv;
 in
 {
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (cfg.enable && cfg.monitoring) {
     services.prometheus.exporters.node = {
       enable = true;
       enabledCollectors = [ "systemd" ];

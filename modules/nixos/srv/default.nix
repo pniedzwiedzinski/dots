@@ -13,6 +13,13 @@ in
 
   options.srv = {
     enable = lib.mkEnableOption "The homelab services and configuration variables";
+    monitoring = lib.mkOption {
+      default = true;
+      type = lib.types.bool;
+      description = ''
+        Enable base telemetry (node exporter) for the homelab services
+      '';
+    };
     timeZone = lib.mkOption {
       default = "Europe/Warsaw";
       type = lib.types.str;
