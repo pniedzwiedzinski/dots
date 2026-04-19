@@ -7,15 +7,31 @@ on:
 jobs:
   lockfile:
     runs-on: ubuntu-latest
+    # Uprawnienia wymagane do zatwierdzania i mergowania PR-ów
+    permissions:
+      contents: write
+      pull-requests: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
+        
       - name: Update flake.lock
+        id: update
         uses: DeterminateSystems/update-flake-lock@main
         with:
-          pr-title: "Update flake.lock" # Title of PR to be created
-          pr-labels: | # Labels to be set on the PR
+          pr-title: "Update flake.lock"
+          pr-labels: |
             dependencies
             automated
+
+      - name: Enable Auto-merge
+        # Uruchamiamy ten krok tylko wtedy, gdy PR został faktycznie utworzony (zwrócono jego numer)
+        if: steps.update.outputs.pull-request-number != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # Włączamy auto-merge (squash) dla konkretnego numeru PR
+        run: gh pr merge ${{ steps.update.outputs.pull-request-number }} --auto --squash
