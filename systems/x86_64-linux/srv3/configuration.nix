@@ -50,6 +50,10 @@ in
     8123
   ];
 
+  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
+    3000
+  ];
+
   time.timeZone = "Europe/Warsaw";
   i18n.defaultLocale = "en_US.UTF-8"; # Less confusing locale than polish one
   console.keyMap = "pl";
