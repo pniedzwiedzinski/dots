@@ -15,6 +15,8 @@ in
     ./persist.nix
     ./docker.nix
     ./backup.nix
+    ./telemetry.nix
+    ./grafana.nix
   ];
 
   disko.devices.disk.main.device = "/dev/sdb";
@@ -46,6 +48,10 @@ in
     80
     443
     8123
+  ];
+
+  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
+    3000
   ];
 
   time.timeZone = "Europe/Warsaw";
@@ -186,6 +192,10 @@ in
             {
               name = "research";
               port = "3001";
+            }
+            {
+              name = "grafana";
+              port = "3000";
             }
           ];
         };

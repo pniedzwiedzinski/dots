@@ -43,6 +43,24 @@
           group = "acme";
           mode = "0755";
         }
+        {
+          directory = "/var/lib/grafana";
+          user = "grafana";
+          group = "grafana";
+          mode = "0700";
+        }
+        {
+          directory = "/var/lib/prometheus2";
+          user = "prometheus";
+          group = "prometheus";
+          mode = "0700";
+        }
+        {
+          directory = "/var/lib/pushgateway";
+          user = "pushgateway";
+          group = "pushgateway";
+          mode = "0700";
+        }
         "/srv"
       ];
       files = [
