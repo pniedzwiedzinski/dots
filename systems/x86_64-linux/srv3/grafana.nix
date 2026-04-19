@@ -44,10 +44,17 @@
                 data = [
                   {
                     refId = "A";
+                    queryType = "";
+                    relativeTimeRange = {
+                      from = 600;
+                      to = 0;
+                    };
                     datasourceUid = "prometheus-default";
                     model = {
                       expr = "node_systemd_unit_state{state=\"failed\"} == 1";
                       refId = "A";
+                      intervalMs = 1000;
+                      maxDataPoints = 43200;
                     };
                   }
                 ];
@@ -66,10 +73,17 @@
                 data = [
                   {
                     refId = "A";
+                    queryType = "";
+                    relativeTimeRange = {
+                      from = 600;
+                      to = 0;
+                    };
                     datasourceUid = "prometheus-default";
                     model = {
                       expr = "(time() - backup_last_success_time{job=\"backup_borg\"}) > 86400 or job_executed_successful{job=\"backup_borg\"} == 0";
                       refId = "A";
+                      intervalMs = 1000;
+                      maxDataPoints = 43200;
                     };
                   }
                 ];
