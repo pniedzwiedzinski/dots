@@ -39,10 +39,10 @@
                 uid = "telegram-receiver";
                 settings = {
                   parse_mode = "HTML";
-                  chatid = "$TELEGRAM_CHAT_ID";
+                  chatid = "$__file{/persist/telegram_chat_id}";
                 };
                 secureSettings = {
-                  bottoken = "$TELEGRAM_BOT_TOKEN";
+                  bottoken = "$__file{/persist/telegram_bot_token}";
                 };
               }
             ];
@@ -117,6 +117,9 @@
   # Link our pre-created dashboards into the location Grafana expects
   environment.etc."grafana/dashboards/homelab.json".source = ./dashboards/homelab.json;
 
-  # Load Telegram Bot secrets from environment file
-  systemd.services.grafana.serviceConfig.EnvironmentFile = [ "-/persist/telegram-bot.env" ];
+  # Telegram tokens shouldn't be read using systemd's EnvironmentFile because
+  # Grafana's contact points expect 'chatid' to be a string or a raw value, but
+  # EnvironmentFile injection doesn't bypass Grafana's unmarshaler strict typing for chatid.
+  # Thus we use the $__file{} interpolation syntax built into Grafana, which will read
+  # the secrets directly from files at runtime.
 }
