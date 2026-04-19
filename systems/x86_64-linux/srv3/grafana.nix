@@ -30,32 +30,6 @@
       ];
 
       alerting = {
-        contactPoints.settings.contactPoints = [
-          {
-            name = "Telegram";
-            receivers = [
-              {
-                type = "telegram";
-                uid = "telegram-receiver";
-                settings = {
-                  parse_mode = "HTML";
-                  chatid = "$__file{/persist/telegram_chat_id}";
-                };
-                secureSettings = {
-                  bottoken = "$__file{/persist/telegram_bot_token}";
-                };
-              }
-            ];
-          }
-        ];
-
-        policies.settings.policies = [
-          {
-            receiver = "Telegram";
-            group_by = [ "grafana_folder" "alertname" ];
-          }
-        ];
-
         rules.settings.groups = [
           {
             name = "Homelab Alerts";
@@ -116,10 +90,4 @@
 
   # Link our pre-created dashboards into the location Grafana expects
   environment.etc."grafana/dashboards/homelab.json".source = ./dashboards/homelab.json;
-
-  # Telegram tokens shouldn't be read using systemd's EnvironmentFile because
-  # Grafana's contact points expect 'chatid' to be a string or a raw value, but
-  # EnvironmentFile injection doesn't bypass Grafana's unmarshaler strict typing for chatid.
-  # Thus we use the $__file{} interpolation syntax built into Grafana, which will read
-  # the secrets directly from files at runtime.
 }
