@@ -64,4 +64,8 @@
       "--disable_metrics=percpu,sched,tcp,udp,disk,diskIO,accelerator,hugetlb,referenced_memory,cpu_topology,resctrl"
     ];
   };
+
+  # cadvisor postStart script checks /containers/ but cadvisor might not expose it
+  # depending on the version. We can override the postStart to prevent it from hanging
+  systemd.services.cadvisor.postStart = lib.mkForce "";
 }

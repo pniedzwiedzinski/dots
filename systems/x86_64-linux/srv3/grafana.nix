@@ -38,8 +38,11 @@
                 type = "telegram";
                 uid = "telegram-receiver";
                 settings = {
-                  bottoken = "$TELEGRAM_BOT_TOKEN";
+                  parse_mode = "HTML";
                   chatid = "$TELEGRAM_CHAT_ID";
+                };
+                secureSettings = {
+                  bottoken = "$TELEGRAM_BOT_TOKEN";
                 };
               }
             ];
