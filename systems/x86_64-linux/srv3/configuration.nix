@@ -17,6 +17,7 @@ in
     ./backup.nix
     ./telemetry.nix
     ./grafana.nix
+    ./nginx.nix
   ];
 
   disko.devices.disk.main.device = "/dev/sdb";
@@ -153,6 +154,26 @@ in
               freshrss = {
                 entryPoints = [ "websecure" ];
                 tls.certResolver = "tailscale";
+              };
+              www-main = {
+                entryPoints = [ "websecure" ];
+                rule = "Host(`${domain}`)";
+                service = "www-main";
+                tls.certResolver = "letsencrypt";
+              };
+              www-pics = {
+                entryPoints = [ "websecure" ];
+                rule = "Host(`pics.${domain}`)";
+                service = "www-pics";
+                tls.certResolver = "letsencrypt";
+              };
+            };
+            services = {
+              www-main = {
+                loadBalancer.servers = [ { url = "http://127.0.0.1:8888"; } ];
+              };
+              www-pics = {
+                loadBalancer.servers = [ { url = "http://127.0.0.1:8888"; } ];
               };
             };
           }
