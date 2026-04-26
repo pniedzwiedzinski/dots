@@ -17,6 +17,8 @@ in
     ./backup.nix
     ./telemetry.nix
     ./grafana.nix
+    ./nginx.nix
+    ./cloudflared.nix
   ];
 
   disko.devices.disk.main.device = "/dev/sdb";
@@ -85,6 +87,7 @@ in
     traefik = {
       enable = true;
       staticConfigOptions = {
+        accessLog = {};
         certificatesResolvers = {
           tailscale.tailscale = { };
           letsencrypt = {
