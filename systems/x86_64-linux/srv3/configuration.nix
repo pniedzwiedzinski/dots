@@ -86,6 +86,7 @@ in
     traefik = {
       enable = true;
       staticConfigOptions = {
+        accessLog = {};
         certificatesResolvers = {
           tailscale.tailscale = { };
           letsencrypt = {
@@ -159,13 +160,13 @@ in
                 entryPoints = [ "web" "websecure" ];
                 rule = "Host(`${domain}`)";
                 service = "www-main";
-                tls.certResolver = "letsencrypt";
+                tls = {};
               };
               www-pics = {
                 entryPoints = [ "web" "websecure" ];
                 rule = "Host(`pics.${domain}`)";
                 service = "www-pics";
-                tls.certResolver = "letsencrypt";
+                tls = {};
               };
             };
             services = {
