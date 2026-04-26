@@ -156,26 +156,6 @@ in
                 entryPoints = [ "websecure" ];
                 tls.certResolver = "tailscale";
               };
-              www-main = {
-                entryPoints = [ "web" "websecure" ];
-                rule = "Host(`${domain}`)";
-                service = "www-main";
-                tls = {};
-              };
-              www-pics = {
-                entryPoints = [ "web" "websecure" ];
-                rule = "Host(`pics.${domain}`)";
-                service = "www-pics";
-                tls = {};
-              };
-            };
-            services = {
-              www-main = {
-                loadBalancer.servers = [ { url = "http://127.0.0.1:8888"; } ];
-              };
-              www-pics = {
-                loadBalancer.servers = [ { url = "http://127.0.0.1:8888"; } ];
-              };
             };
           }
           // makeServices [
