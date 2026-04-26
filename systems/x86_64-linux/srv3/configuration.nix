@@ -156,13 +156,13 @@ in
                 tls.certResolver = "tailscale";
               };
               www-main = {
-                entryPoints = [ "websecure" ];
+                entryPoints = [ "web" "websecure" ];
                 rule = "Host(`${domain}`)";
                 service = "www-main";
                 tls.certResolver = "letsencrypt";
               };
               www-pics = {
-                entryPoints = [ "websecure" ];
+                entryPoints = [ "web" "websecure" ];
                 rule = "Host(`pics.${domain}`)";
                 service = "www-pics";
                 tls.certResolver = "letsencrypt";
