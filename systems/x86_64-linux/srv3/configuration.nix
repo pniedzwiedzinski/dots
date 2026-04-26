@@ -18,6 +18,7 @@ in
     ./telemetry.nix
     ./grafana.nix
     ./nginx.nix
+    ./cloudflared.nix
   ];
 
   disko.devices.disk.main.device = "/dev/sdb";
