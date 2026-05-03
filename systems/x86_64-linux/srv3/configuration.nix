@@ -19,6 +19,7 @@ in
     ./grafana.nix
     ./nginx.nix
     ./cloudflared.nix
+    ./changedetection.nix
   ];
 
   disko.devices.disk.main.device = "/dev/sdb";
