@@ -1,0 +1,27 @@
+name: update-containers
+on:
+  workflow_dispatch: # allows manual triggering
+  schedule:
+    - cron: "0 0 * * 0" # runs weekly on Sunday at 00:00
+
+jobs:
+  renovate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Self-hosted Renovate
+        uses: renovatebot/github-action@v40.1.11
+        env:
+          RENOVATE_REPOSITORIES: ${{ github.repository }}
+          # Required for automerge and creating PRs with the default token
+          RENOVATE_PLATFORM: github
+          RENOVATE_ONBOARDING: "false" # Use the renovate.json we just created
+          LOG_LEVEL: debug
+        with:
+          configurationFile: .github/renovate.json
+          token: ${{ secrets.GITHUB_TOKEN }}
