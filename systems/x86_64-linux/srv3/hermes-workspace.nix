@@ -4,11 +4,11 @@
     autoStart = true;
     image = "ghcr.io/outsourc-e/hermes-workspace:latest";
     ports = [ "127.0.0.1:3001:3000" ];
+    environmentFiles = [ "/srv/hermes/workspace.env" ];
     environment = {
       HERMES_API_URL = "http://hermes:8642";
       COOKIE_SECURE = "1";
       TRUST_PROXY = "1";
-      HERMES_PASSWORD = "changeme123";
     };
     extraOptions = [
       "--pull=always"
