@@ -22,7 +22,7 @@ in
     ./hermes.nix
   ];
 
-  disko.devices.disk.main.device = "/dev/sdb";
+  disko.devices.disk.main.device = "/dev/sda";
 
   srv = {
     enable = true;
