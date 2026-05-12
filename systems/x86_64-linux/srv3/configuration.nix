@@ -202,8 +202,16 @@ in
               name = "grafana";
               port = "3000";
             }
+            {
+              name = "workspace";
+              port = "3002";
+            }
+            {
+              name = "hermes";
+              port = "9119";
+            }
           ];
-        };
+      };
     };
   };
 }
