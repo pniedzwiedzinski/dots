@@ -20,7 +20,6 @@ in
     ./nginx.nix
     ./cloudflared.nix
     ./hermes.nix
-    ./hermes-workspace.nix
   ];
 
   disko.devices.disk.main.device = "/dev/sda";
