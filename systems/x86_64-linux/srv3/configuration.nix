@@ -106,11 +106,11 @@ in
         entryPoints = {
           web = {
             address = "0.0.0.0:80";
-            # http.redirections.entryPoint = {
-            #   to = "websecure";
-            #   scheme = "https";
-            #   permanent = true;
-            # };
+            http.redirections.entryPoint = {
+              to = "websecure";
+              scheme = "https";
+              permanent = true;
+            };
           };
 
           websecure = {
@@ -133,7 +133,7 @@ in
             loadBalancer.servers = [ { url = "http://localhost:" + service.port; } ];
           };
           generateRouter = service: {
-            entryPoints = [ "web" ];
+            entryPoints = [ "websecure" ];
             rule = "Host(`" + service.name + ".${config.srv.machineId}.${domain}`)";
             service = service.name;
           };
