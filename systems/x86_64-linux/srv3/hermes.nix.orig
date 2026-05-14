@@ -57,22 +57,6 @@
     dependsOn = ["hermes"];
   };
 
-  # Hermes WebUI
-  virtualisation.oci-containers.containers."hermes-webui" = {
-    autoStart = true;
-    image = "nesquena/hermes-webui:latest";
-    ports = ["127.0.0.1:8787:8787"];
-    volumes = ["/srv/hermes/data:/opt/data"];
-    environment = {
-      HERMES_WEBUI_PASSWORD = "secret"; # Placeholder password
-      HERMES_WEBUI_WORKSPACE = "/opt/data";
-    };
-    extraOptions = [
-      "--pull=always"
-      "--network=hermes-net"
-    ];
-  };
-
   # Docker network for Hermes containers
   systemd.services."docker-network-hermes-net" = {
     path = [pkgs.docker];

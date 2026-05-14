@@ -1,0 +1,13 @@
+--- systems/x86_64-linux/srv3/configuration.nix
++++ systems/x86_64-linux/srv3/configuration.nix
+@@ -201,6 +201,10 @@
+               name = "hermes";
+               port = "9119";
+             }
++            {
++              name = "hermes-ui";
++              port = "8787";
++            }
+           ];
+       };
+     };

@@ -209,10 +209,6 @@ in
               name = "hermes";
               port = "9119";
             }
-            {
-              name = "hermes-ui";
-              port = "8787";
-            }
           ];
       };
     };
