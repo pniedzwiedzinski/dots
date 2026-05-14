@@ -52,6 +52,7 @@
     extraOptions = [
       "--pull=always"
       "--network=hermes-net"
+      "--user=10000:10000" # share folder
     ];
     dependsOn = ["hermes"];
   };
