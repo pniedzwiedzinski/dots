@@ -20,6 +20,7 @@ in
     ./nginx.nix
     ./cloudflared.nix
     ./hermes.nix
+    ./firefly.nix
   ];
 
   disko.devices.disk.main.device = "/dev/sda";
@@ -208,6 +209,14 @@ in
             {
               name = "hermes";
               port = "9119";
+            }
+            {
+              name = "firefly";
+              port = "3007";
+            }
+            {
+              name = "importer";
+              port = "3008";
             }
           ];
       };
