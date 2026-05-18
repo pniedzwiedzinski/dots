@@ -13,7 +13,7 @@
       environment = {
         POSTGRES_USER = "firefly";
         POSTGRES_DB = "firefly";
-        POSTGRES_PASSWORD = "abf67942a6ea9c60cc8e7be054aef166";
+        POSTGRES_PASSWORD = "ffmpbqh4ht";
       };
       extraOptions = [
         "--pull=always"
@@ -33,7 +33,7 @@
         DB_PORT = "5432";
         DB_DATABASE = "firefly";
         DB_USERNAME = "firefly";
-        DB_PASSWORD = "abf67942a6ea9c60cc8e7be054aef166";
+        DB_PASSWORD = "ffmpbqh4ht";
         APP_KEY = "base64:uKamfqOYBbPEE7eGxTfarCWLRdsyy/VkVzIg3wKLb18=";
         TRUSTED_PROXIES = "**";
         SITE_OWNER = "patryk@niedzwiedzinski.cyou";
