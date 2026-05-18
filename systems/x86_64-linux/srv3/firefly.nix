@@ -13,7 +13,7 @@
       environment = {
         POSTGRES_USER = "firefly";
         POSTGRES_DB = "firefly";
-        POSTGRES_PASSWORD = "firefly_db_password"; # Consider moving to agenix/environmentFiles later
+        POSTGRES_PASSWORD = "efd4ea7ac0b68245572d2cfdfe1dc6b92acfe34c616169e2"; # Consider moving to agenix/environmentFiles later
       };
       extraOptions = [
         "--pull=always"
@@ -33,10 +33,10 @@
         DB_PORT = "5432";
         DB_DATABASE = "firefly";
         DB_USERNAME = "firefly";
-        DB_PASSWORD = "firefly_db_password"; # Should match POSTGRES_PASSWORD
-        APP_KEY = "c17bb3e5e2c28bb950f08ec8e0ca58d356f7c5fd581fae06d7d23194af8d8538";
+        DB_PASSWORD = "efd4ea7ac0b68245572d2cfdfe1dc6b92acfe34c616169e2"; # Should match POSTGRES_PASSWORD
+        APP_KEY = "base64:ugLQrF38Rf8U4OmFXlodYw1eM2IkfllZ2wR8qGNZOmA=";
         TRUSTED_PROXIES = "**";
-        SITE_OWNER = "mail@example.com";
+        SITE_OWNER = "patryk@niedzwiedzinski.cyou";
         TZ = "Europe/Warsaw";
       };
       extraOptions = [
