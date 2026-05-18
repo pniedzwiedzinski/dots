@@ -34,7 +34,7 @@
         DB_DATABASE = "firefly";
         DB_USERNAME = "firefly";
         DB_PASSWORD = "efd4ea7ac0b68245572d2cfdfe1dc6b92acfe34c616169e2"; # Should match POSTGRES_PASSWORD
-        APP_KEY = "base64:ugLQrF38Rf8U4OmFXlodYw1eM2IkfllZ2wR8qGNZOmA=";
+        APP_KEY = "base64:uKamfqOYBbPEE7eGxTfarCWLRdsyy/VkVzIg3wKLb18=";
         TRUSTED_PROXIES = "**";
         SITE_OWNER = "patryk@niedzwiedzinski.cyou";
         TZ = "Europe/Warsaw";
@@ -73,7 +73,7 @@
     serviceConfig = {
       Type = "oneshot";
       RemainAfterExit = true;
-      ExecStop = "${pkgs.docker}/bin/docker network rm -f firefly-net";
+      ExecStop = "${pkgs.docker}/bin/docker network rm firefly-net";
     };
     script = ''
       ${pkgs.docker}/bin/docker network inspect firefly-net || ${pkgs.docker}/bin/docker network create firefly-net
