@@ -20,6 +20,7 @@ in
     ./nginx.nix
     ./cloudflared.nix
     ./hermes.nix
+    ./actual.nix
   ];
 
   disko.devices.disk.main.device = "/dev/sda";
@@ -208,6 +209,10 @@ in
             {
               name = "hermes";
               port = "9119";
+            }
+            {
+              name = "actual";
+              port = "3006";
             }
           ];
       };
