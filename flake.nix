@@ -21,6 +21,8 @@
 
     deploy-rs.url = "github:serokell/deploy-rs";
 
+    hermes-agent.url = "github:NousResearch/hermes-agent";
+
     snowfall-lib = {
       url = "github:snowfallorg/lib";
       inputs.nixpkgs.follows = "nixpkgs";
