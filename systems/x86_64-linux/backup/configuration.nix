@@ -6,6 +6,7 @@
 }: {
   imports = [
     ./disko-config.nix
+    ./remote-logging.nix
   ];
 
   srv.enable = true;
