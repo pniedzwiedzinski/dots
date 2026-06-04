@@ -20,6 +20,8 @@ in
     ./nginx.nix
     ./cloudflared.nix
     ./hermes.nix
+    ./watchdog.nix
+    ./remote-logging.nix
   ];
 
   disko.devices.disk.main.device = "/dev/sda";
