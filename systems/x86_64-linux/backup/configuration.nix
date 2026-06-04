@@ -11,6 +11,14 @@
   srv.enable = true;
   srv.machineId = "backup";
 
+  nix = {
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 30d";
+    };
+    optimise.automatic = true;
+  };
+
   # Remote update
   nix.settings.trusted-users = [
     "root"
