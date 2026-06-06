@@ -22,6 +22,7 @@ in
     ./hermes.nix
     ./watchdog.nix
     ./remote-logging.nix
+    ./paperless.nix
   ];
 
   disko.devices.disk.main.device = "/dev/sda";
@@ -50,9 +51,14 @@ in
 
   networking.firewall.allowedTCPPorts = [
     19
+    21 # FTP
     80
     443
     8123
+  ];
+
+  networking.firewall.allowedTCPPortRanges = [
+    { from = 50000; to = 50100; } # FTP passive ports
   ];
 
   networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
