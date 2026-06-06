@@ -90,6 +90,8 @@
     userlistEnable = true;
     userlist = [ "scanner" ];
     extraConfig = ''
+      # Security: Only allow the 'scanner' user to log in. By default
+      # vsftpd denies the users in the list when userlistEnable is set.
       userlist_deny=NO
       pasv_enable=YES
       pasv_min_port=50000
