@@ -1,0 +1,9 @@
+FROM pytorch/pytorch:2.3.0-cuda12.1-cudnn8-runtime
+
+WORKDIR /app
+
+RUN pip install airllm flask pydantic bitsandbytes
+
+COPY server.py ./server.py
+
+ENTRYPOINT ["python", "/app/server.py"]

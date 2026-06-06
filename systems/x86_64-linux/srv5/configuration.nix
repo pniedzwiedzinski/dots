@@ -3,6 +3,7 @@
     ./disko-config.nix
     ./nvidia_gpu.nix
     ./ollama.nix
+    ./airllm.nix
     ../doas.nix
 
     ./docker-compose.nix
