@@ -10,10 +10,20 @@
   boot.tmp.cleanOnBoot = true;
 
   environment.systemPackages = with pkgs; [
-    wget vim curl htop file
-    stdenv git zip unzip
-    dnsutils ripgrep
-    any-nix-shell fd fzf
+    wget
+    vim
+    curl
+    htop
+    file
+    stdenv
+    git
+    zip
+    unzip
+    dnsutils
+    ripgrep
+    any-nix-shell
+    fd
+    fzf
     translate-shell
   ];
 
@@ -161,8 +171,6 @@
       autoload edit-command-line; zle -N edit-command-line
       bindkey '^e' edit-command-line
     '';
-
-
 
   };
 

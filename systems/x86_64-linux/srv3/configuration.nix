@@ -4,24 +4,12 @@
   config,
   ...
 }:
-let
-  domain = "niedzwiedzinski.cyou";
-in
 {
   imports = [
     ./disko-config.nix
-
     ./network.nix
     ./persist.nix
-    ./docker.nix
-    ./backup.nix
-    ./telemetry.nix
-    ./grafana.nix
     ./nginx.nix
-    ./cloudflared.nix
-    ./hermes.nix
-    ./watchdog.nix
-    ./remote-logging.nix
   ];
 
   disko.devices.disk.main.device = "/dev/sda";
@@ -29,6 +17,75 @@ in
   srv = {
     enable = true;
     machineId = "srv3";
+  };
+
+  dots = {
+    docker = {
+      enable = true;
+      storageDriver = "btrfs";
+      users = [ "pn" ];
+    };
+    watchdog.enable = true;
+    remoteLogging.enable = true;
+    nixGc.enable = true;
+    traefik = {
+      enable = true;
+      services = [
+        {
+          name = "home-assistant";
+          port = "8123";
+        }
+        {
+          name = "paperless";
+          port = "8000";
+        }
+        {
+          name = "paperless-gpt";
+          port = "8001";
+        }
+        {
+          name = "changedetection";
+          port = "5000";
+        }
+        {
+          name = "rss";
+          port = "8081";
+        }
+        {
+          name = "immich";
+          port = "2283";
+        }
+        {
+          name = "n8n";
+          port = "5678";
+        }
+        {
+          name = "ai";
+          port = "1111";
+        }
+        {
+          name = "research";
+          port = "3001";
+        }
+        {
+          name = "grafana";
+          port = "3000";
+        }
+        {
+          name = "workspace";
+          port = "3002";
+        }
+        {
+          name = "hermes";
+          port = "9119";
+        }
+      ];
+    };
+    telemetry.enable = true;
+    grafana.enable = true;
+    cloudflared.enable = true;
+    backup.enable = true;
+    hermes.enable = true;
   };
 
   services.openssh = {
@@ -43,9 +100,7 @@ in
 
   services.sshguard = {
     enable = true;
-    whitelist = [
-      "192.168.1.0/24"
-    ];
+    whitelist = [ "192.168.1.0/24" ];
   };
 
   networking.firewall.allowedTCPPorts = [
@@ -55,21 +110,11 @@ in
     8123
   ];
 
-  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [
-    3000
-  ];
+  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ 3000 ];
 
   time.timeZone = "Europe/Warsaw";
-  i18n.defaultLocale = "en_US.UTF-8"; # Less confusing locale than polish one
+  i18n.defaultLocale = "en_US.UTF-8";
   console.keyMap = "pl";
-
-  nix = {
-    gc = {
-      automatic = true;
-      options = "--delete-older-than 30d";
-    };
-    optimise.automatic = true;
-  };
 
   environment.systemPackages = with pkgs; [
     ripgrep
@@ -80,139 +125,4 @@ in
     vim
     lm_sensors
   ];
-
-  services = {
-    tailscale = {
-      enable = true;
-      permitCertUid = "traefik";
-    };
-
-    traefik = {
-      enable = true;
-      staticConfigOptions = {
-        accessLog = {};
-        certificatesResolvers = {
-          tailscale.tailscale = { };
-          letsencrypt = {
-            acme = {
-              email = "patryk@niedzwiedzinski.cyou";
-              storage = "/persistent/letsencrypt.json";
-              dnsChallenge = {
-                provider = "cloudflare";
-              };
-            };
-          };
-        };
-
-        entryPoints = {
-          web = {
-            address = "0.0.0.0:80";
-            # http.redirections.entryPoint = {
-            #   to = "websecure";
-            #   scheme = "https";
-            #   permanent = true;
-            # };
-          };
-
-          websecure = {
-            address = "0.0.0.0:443";
-            http.tls = {
-              certResolver = "letsencrypt";
-              domains = [
-                {
-                  main = domain;
-                  sans = [ "*.${domain}" ];
-                }
-              ];
-            };
-          };
-        };
-      };
-      dynamicConfigOptions =
-        let
-          generateService = service: {
-            loadBalancer.servers = [ { url = "http://localhost:" + service.port; } ];
-          };
-          generateRouter = service: {
-            entryPoints = [ "web" ];
-            rule = "Host(`" + service.name + ".${config.srv.machineId}.${domain}`)";
-            service = service.name;
-          };
-          makeServices = servicesList: {
-            services = lib.listToAttrs (
-              map (s: {
-                inherit (s) name;
-                value = generateService s;
-              }) servicesList
-            );
-            routers = lib.listToAttrs (
-              map (s: {
-                inherit (s) name;
-                value = generateRouter s;
-              }) servicesList
-            );
-          };
-        in
-        {
-          http = {
-            routers = {
-              freshrss = {
-                entryPoints = [ "websecure" ];
-                tls.certResolver = "tailscale";
-              };
-            };
-          }
-          // makeServices [
-            {
-              name = "home-assistant";
-              port = "8123";
-            }
-            {
-              name = "paperless";
-              port = "8000";
-            }
-            {
-              name = "paperless-gpt";
-              port = "8001";
-            }
-            {
-              name = "changedetection";
-              port = "5000";
-            }
-            {
-              name = "rss";
-              port = "8081";
-            }
-            {
-              name = "immich";
-              port = "2283";
-            }
-            {
-              name = "n8n";
-              port = "5678";
-            }
-            {
-              name = "ai";
-              port = "1111";
-            }
-            {
-              name = "research";
-              port = "3001";
-            }
-            {
-              name = "grafana";
-              port = "3000";
-            }
-            {
-              name = "workspace";
-              port = "3002";
-            }
-            {
-              name = "hermes";
-              port = "9119";
-            }
-          ];
-      };
-    };
-  };
 }

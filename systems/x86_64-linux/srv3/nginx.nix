@@ -3,7 +3,8 @@
   lib,
   pkgs,
   ...
-}: {
+}:
+{
   services.nginx = {
     enable = true;
     defaultListen = [
@@ -15,11 +16,11 @@
 
     virtualHosts = {
       "niedzwiedzinski.pl" = {
-        serverAliases = ["niedzwiedzinski.cyou"];
+        serverAliases = [ "niedzwiedzinski.cyou" ];
         root = "/srv/www/niedzwiedzinski.cyou";
       };
       "pics.niedzwiedzinski.pl" = {
-        serverAliases = ["pics.niedzwiedzinski.cyou"];
+        serverAliases = [ "pics.niedzwiedzinski.cyou" ];
         root = "/srv/www/pics.niedzwiedzinski.cyou";
       };
     };

@@ -16,9 +16,6 @@
     pnvf.url = "github:pniedzwiedzinski/pnvf";
     pnvf.inputs.nixpkgs.follows = "nixpkgs";
 
-    raspberry-pi-nix.url = "github:nix-community/raspberry-pi-nix";
-    raspberry-pi-nix.inputs.nixpkgs.follows = "nixpkgs";
-
     deploy-rs.url = "github:serokell/deploy-rs";
 
     snowfall-lib = {

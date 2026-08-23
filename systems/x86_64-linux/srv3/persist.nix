@@ -1,13 +1,18 @@
-{lib, ...}: {
+{ lib, ... }:
+{
   fileSystems."/persist" = {
     device = "/dev/disk/by-label/data";
     fsType = "btrfs";
-    options = ["subvol=data" "compress=zstd" "noatime"];
+    options = [
+      "subvol=data"
+      "compress=zstd"
+      "noatime"
+    ];
     neededForBoot = true;
   };
 
   users.mutableUsers = false;
-  systemd.tmpfiles.rules = ["d /var/lib/systemd/pstore 0755 root root 14d"];
+  systemd.tmpfiles.rules = [ "d /var/lib/systemd/pstore 0755 root root 14d" ];
 
   environment.persistence = {
     "/persist" = {
@@ -62,6 +67,7 @@
           mode = "0700";
         }
         "/srv"
+        "/var/lib/docker"
       ];
       files = [
         "/etc/adjtime"

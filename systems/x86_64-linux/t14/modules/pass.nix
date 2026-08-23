@@ -1,8 +1,8 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   environment.systemPackages = with pkgs; [
     #pkgs.pass-wayland
-    (pass.withExtensions
-      (exts: [exts.pass-otp]))
+    (pass.withExtensions (exts: [ exts.pass-otp ]))
   ];
 
   programs.browserpass.enable = true;
