@@ -23,7 +23,7 @@
                 type = "filesystem";
                 format = "vfat";
                 mountpoint = "/boot";
-                mountOptions = ["umask=0077"];
+                mountOptions = [ "umask=0077" ];
               };
             };
             root = {
@@ -34,11 +34,17 @@
                 postCreateHook = "mount /dev/disk/by-partlabel/disk-main-root /mnt && btrfs subvolume snapshot -r /mnt/root /mnt/root-blank && umount /mnt";
                 subvolumes = {
                   "/root" = {
-                    mountOptions = ["compress=zstd" "noatime"];
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
                     mountpoint = "/";
                   };
                   "/nix" = {
-                    mountOptions = ["compress=zstd" "noatime"];
+                    mountOptions = [
+                      "compress=zstd"
+                      "noatime"
+                    ];
                     mountpoint = "/nix";
                   };
                   "/swap" = {

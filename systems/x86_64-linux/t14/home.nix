@@ -2,7 +2,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   home.username = "pn";
   home.homeDirectory = "/home/pn";
 
@@ -14,7 +15,7 @@
       ];
     });
     extensions = [
-      {id = "fjcldmjmjhkklehbacihaiopjklihlgg";}
+      { id = "fjcldmjmjhkklehbacihaiopjklihlgg"; }
     ];
   };
 

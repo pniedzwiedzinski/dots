@@ -1,0 +1,88 @@
+name: "CI"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  flake-check:
+    name: "Flake check"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: wimpysworld/nothing-but-nix@main
+
+      - name: "QEMU binfmt (aarch64) 🐧"
+        run: sudo docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+
+      - name: "Install Nix ❄️"
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            accept-flake-config = true
+            extra-platforms = aarch64-linux
+
+      - name: "Evaluate flake ✅"
+        run: |
+          export NIXPKGS_ALLOW_UNFREE=1
+          nix flake check --impure --all-systems
+
+  build-hosts:
+    name: "Build ${{ matrix.host }}"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        host: [t14, srv2, srv3, srv5, backup]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: wimpysworld/nothing-but-nix@main
+
+      - name: "QEMU binfmt (aarch64) 🐧"
+        if: matrix.host == 'srv2'
+        run: sudo docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+
+      - name: "Install Nix ❄️"
+        uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            accept-flake-config = true
+            extra-platforms = aarch64-linux
+
+      - name: "Cachix ⚡"
+        uses: cachix/cachix-action@v16
+        with:
+          name: pn
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
+      - name: "Build ${{ matrix.host }} 🔧"
+        run: |
+          export NIXPKGS_ALLOW_UNFREE=1
+          nix build --impure .#deploy.nodes.${{ matrix.host }}.profiles.system.path
+
+  format:
+    name: "Formatting (nixfmt)"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: "Install Nix ❄️"
+        uses: cachix/install-nix-action@v31
+
+      - name: "Check Nix formatting 🎨"
+        run: |
+          FILES=$(git ls-files '*.nix' | grep -v 'hardware-configuration.nix' | grep -v 'docker-compose.nix')
+          if [ -z "$FILES" ]; then
+            echo "No Nix files found"; exit 0
+          fi
+          nix run nixpkgs#nixfmt-rfc-style -- --check $FILES

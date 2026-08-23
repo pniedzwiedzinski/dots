@@ -1,13 +1,19 @@
 # Configuration for my "Media" usb hard drive
 { pkgs, ... }:
 let
-	mediasync = pkgs.writeShellScriptBin "mediasync" (builtins.readFile ./mediasync);
+  mediasync = pkgs.writeShellScriptBin "mediasync" (builtins.readFile ./mediasync);
 in
 {
-	fileSystems."/media" = {
-		device = "/dev/disk/by-id/wwn-0x50014ee25fca2cb8-part1";
-		options = [ "nosuid" "nodev" "nofail" "x-gvfs-show" "x-gvfs-name=Media" ];
-	};
+  fileSystems."/media" = {
+    device = "/dev/disk/by-id/wwn-0x50014ee25fca2cb8-part1";
+    options = [
+      "nosuid"
+      "nodev"
+      "nofail"
+      "x-gvfs-show"
+      "x-gvfs-name=Media"
+    ];
+  };
 
-	environment.systemPackages = [ mediasync ];
+  environment.systemPackages = [ mediasync ];
 }

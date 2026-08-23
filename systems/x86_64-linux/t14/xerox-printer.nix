@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   hardware.sane.extraBackends = [
     (pkgs.writeTextFile {
       name = "xerox-mfp-config";

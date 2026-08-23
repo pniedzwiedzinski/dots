@@ -3,7 +3,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
   imports = [
     # Include the results of the hardware scan.
     ../base.nix
@@ -79,7 +80,7 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
   nix.optimise.automatic = true;
-  nix.settings.trusted-users = ["@wheel"];
+  nix.settings.trusted-users = [ "@wheel" ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -114,9 +115,9 @@
   services.avahi.enable = true;
   services.avahi.nssmdns4 = true;
   hardware.sane.enable = true;
-  hardware.sane.extraBackends = [pkgs.sane-airscan];
-  services.udev.packages = [pkgs.sane-airscan];
-  hardware.sane.disabledDefaultBackends = ["escl"];
+  hardware.sane.extraBackends = [ pkgs.sane-airscan ];
+  services.udev.packages = [ pkgs.sane-airscan ];
+  hardware.sane.disabledDefaultBackends = [ "escl" ];
 
   # programs.nix-ld.dev = {
   # 	enable = true;

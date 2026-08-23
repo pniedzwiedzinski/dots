@@ -1,18 +1,26 @@
-{pkgs, ...}: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
   imports = [
     ./disko-config.nix
-    ./nvidia_gpu.nix
-    ./ollama.nix
     ../doas.nix
-
     ./docker-compose.nix
-
-    ./auto-shutdown.nix
   ];
 
   srv = {
     enable = true;
     machineId = "srv5";
+  };
+
+  dots = {
+    docker.enable = true;
+    nvidia.enable = true;
+    ollamaProxy.enable = true;
+    autoShutdown.enable = true;
   };
 
   disko.devices.disk.main.device = "/dev/sda";
@@ -22,18 +30,22 @@
     settings = {
       PasswordAuthentication = false;
       PermitRootLogin = "no";
-      AllowUsers = ["pn"];
+      AllowUsers = [ "pn" ];
     };
   };
-
-  virtualisation.docker.enable = true;
 
   programs.nix-ld.enable = true;
 
   nixpkgs.config.nvidia.acceptLicense = true;
   nixpkgs.config.allowUnfree = true;
-  nix.settings.trusted-users = ["root" "@wheel"];
-  nix.settings.experimental-features = ["flakes" "nix-command"];
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
+  ];
+  nix.settings.experimental-features = [
+    "flakes"
+    "nix-command"
+  ];
 
   networking = {
     hostName = "srv5";
@@ -46,7 +58,10 @@
       ];
     };
     defaultGateway = "192.168.1.1";
-    nameservers = ["1.1.1.1" "8.8.8.8"];
+    nameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ];
   };
 
   environment.systemPackages = with pkgs; [

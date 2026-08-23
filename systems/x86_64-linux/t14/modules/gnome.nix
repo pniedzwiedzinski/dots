@@ -1,6 +1,8 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   switch-theme = pkgs.writeShellScriptBin "switch-theme" (builtins.readFile ./switch-theme.sh);
-in {
+in
+{
   imports = [
     ./gnome-cast.nix
     ./appset-desktop.nix
@@ -13,7 +15,7 @@ in {
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
   services.xserver.desktopManager.xterm.enable = false;
-  services.xserver.excludePackages = [pkgs.xterm];
+  services.xserver.excludePackages = [ pkgs.xterm ];
 
   environment.gnome.excludePackages = with pkgs; [
     epiphany
@@ -48,7 +50,7 @@ in {
           };
 
           "org/gnome/desktop/wm/keybindings" = {
-            close = ["<Super>q"];
+            close = [ "<Super>q" ];
           };
 
           "org/gnome/settings-daemon/plugins/media-keys" = {
@@ -134,12 +136,10 @@ in {
     gnomeExtensions.caffeine
     #brave #specified in home.nix
     (pkgs.brave.overrideAttrs (oldAttrs: {
-      installPhase =
-        oldAttrs.installPhase
-        + ''
-           	substituteInPlace $out/share/applications/brave-browser.desktop \
-          --replace %U "--profile-directory=Default %U"
-        '';
+      installPhase = oldAttrs.installPhase + ''
+         	substituteInPlace $out/share/applications/brave-browser.desktop \
+        --replace %U "--profile-directory=Default %U"
+      '';
     }))
 
     newsflash
