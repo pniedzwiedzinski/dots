@@ -3,13 +3,13 @@
   lib,
   config,
   ...
-}:
-{
+}: {
   imports = [
     ./disko-config.nix
     ./network.nix
     ./persist.nix
     ./nginx.nix
+    ./git-server.nix
   ];
 
   disko.devices.disk.main.device = "/dev/sda";
@@ -23,7 +23,7 @@
     docker = {
       enable = true;
       storageDriver = "btrfs";
-      users = [ "pn" ];
+      users = ["pn"];
     };
     watchdog.enable = true;
     remoteLogging.enable = true;
@@ -90,17 +90,17 @@
 
   services.openssh = {
     enable = true;
-    ports = lib.mkForce [ 19 ];
+    ports = lib.mkForce [19];
     settings = {
       PasswordAuthentication = false;
       PermitRootLogin = "no";
-      AllowUsers = [ "pn" ];
+      AllowUsers = ["pn"];
     };
   };
 
   services.sshguard = {
     enable = true;
-    whitelist = [ "192.168.1.0/24" ];
+    whitelist = ["192.168.1.0/24"];
   };
 
   networking.firewall.allowedTCPPorts = [
@@ -110,7 +110,7 @@
     8123
   ];
 
-  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [ 3000 ];
+  networking.firewall.interfaces."tailscale0".allowedTCPPorts = [3000];
 
   time.timeZone = "Europe/Warsaw";
   i18n.defaultLocale = "en_US.UTF-8";
